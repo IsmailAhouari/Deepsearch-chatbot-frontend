@@ -1,0 +1,74 @@
+{
+  "id": "welcome",
+  "name": "Benvenuto",
+  "steps": [
+    {
+      "id": "welcome_intro",
+      "type": "message",
+      "content": "Benvenuto in <strong>DeepSearch</strong>.<br><br>Sono il <strong>DeepSearch AI Assistant</strong>, il tuo gateway verso <strong>intelligence strutturata su controparti, relazioni e rischi</strong>.<br><br>Posso aiutarti a comprendere come la piattaforma supporta attivitÃ  di due diligence, analisi controparti, rischio reputazionale e intelligence decisionale.<br><br><strong>Cosa desideri esplorare?</strong>",
+      "options": [
+        {
+          "label": "Panoramica piattaforma",
+          "description": "Cosa fa DeepSearch e come funziona",
+          "action": "navigate",
+          "target": "/overview"
+        },
+        {
+          "label": "Casi d'uso",
+          "description": "Esplora applicazioni reali",
+          "action": "navigate",
+          "target": "/usecases"
+        },
+        {
+          "label": "A chi si rivolge",
+          "description": "Scopri il tuo profilo ideale",
+          "action": "navigate",
+          "target": "/audience"
+        },
+        {
+          "label": "Richiedi demo",
+          "description": "Prenota una sessione guidata",
+          "action": "navigate",
+          "target": "/demo"
+        },
+        {
+          "label": "Informazioni commerciali",
+          "description": "Condizioni e pacchetti",
+          "action": "navigate",
+          "target": "/commercial"
+        },
+        {
+          "label": "Contatta il team",
+          "description": "Parla con uno specialista",
+          "action": "navigate",
+          "target": "/contact"
+        },
+        {
+          "label": "FAQ",
+          "description": "Domande frequenti",
+          "action": "navigate",
+          "target": "/faq"
+        }
+      ]
+    },
+    {
+      "id": "welcome_value",
+      "type": "message",
+      "content": "<strong>PerchÃ© scegliere DeepSearch?</strong><br><br>DeepSearch trasforma le verifiche frammentate in <strong>intelligence strutturata</strong> attraverso:<br><br>â€¢ <strong>200+ fonti integrate</strong> (regolatori, proprietarie, OSINT)<br>â€¢ <strong>Analisi relazionale AI-powered</strong> per scoprire collegamenti nascosti<br>â€¢ <strong>Validazione analista umano</strong> per affidabilitÃ  garantita<br>â€¢ <strong>Documentazione certificata</strong> per audit e governance<br>â€¢ <strong>Monitoraggio continuativo</strong> con alert proattivi<br><br><span class=\"text-muted text-sm\">Nessuno scoring automatizzato. Tutte le valutazioni richiedono revisione umana.</span>",
+      "options": [
+        {
+          "label": "Richiedi demo",
+          "description": "Vedi la piattaforma in azione",
+          "action": "navigate",
+          "target": "/demo"
+        },
+        {
+          "label": "Scopri i casi d'uso",
+          "description": "Vedi come viene usato",
+          "action": "navigate",
+          "target": "/usecases"
+        }
+      ]
+    }
+  ]
+}

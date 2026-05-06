@@ -1,0 +1,30 @@
+{
+  "id": "audience-legal",
+  "name": "Legal & Compliance",
+  "steps": [
+    {
+      "type": "message",
+      "content": "Per funzioni <strong>Legal &amp; Compliance</strong>, DeepSearch supporta verifiche su controparti, strutture societarie e relazioni indirette, fornendo una base informativa utile a due diligence, audit e governance.<br><br>Il sistema non fornisce consulenza legale o valutazioni automatiche: organizza evidenze e percorsi di approfondimento per la revisione umana.",
+      "options": [
+        {
+          "label": "Richiedi demo",
+          "description": "Profilo-specifica",
+          "action": "navigate",
+          "target": "/demo"
+        },
+        {
+          "label": "Contatta il team",
+          "description": "Parla con uno specialista",
+          "action": "navigate",
+          "target": "/contact"
+        },
+        {
+          "label": "Torna ai profili",
+          "description": "Esplora altri ruoli",
+          "action": "navigate",
+          "target": "/audience"
+        }
+      ]
+    }
+  ]
+}

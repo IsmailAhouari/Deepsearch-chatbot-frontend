@@ -1,0 +1,30 @@
+{
+  "id": "usecases-investigations",
+  "name": "Indagini Aziendali",
+  "steps": [
+    {
+      "type": "message",
+      "content": "DeepSearch supporta indagini aziendali e attivitÃ  di <strong>ricostruzione relazionale</strong>, aiutando a organizzare strutture societarie, asset, controparti e segnali informativi dispersi.<br><br>Il flusso Ã¨ utile per corporate security, legal team e consulenti che devono preparare un quadro documentabile prima di un approfondimento umano.",
+      "options": [
+        {
+          "label": "Richiedi demo",
+          "description": "Personalizzata sul tuo caso",
+          "action": "navigate",
+          "target": "/demo"
+        },
+        {
+          "label": "Parla con il team",
+          "description": "Contatto riservato",
+          "action": "navigate",
+          "target": "/contact"
+        },
+        {
+          "label": "Torna ai casi d'uso",
+          "description": "Esplora altri scenari",
+          "action": "navigate",
+          "target": "/usecases"
+        }
+      ]
+    }
+  ]
+}

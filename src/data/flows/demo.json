@@ -1,0 +1,40 @@
+{
+  "id": "demo",
+  "name": "Richiedi demo",
+  "steps": [
+    {
+      "id": "demo_interest",
+      "type": "message",
+      "content": "Posso aiutarti a indirizzare correttamente la richiesta di demo.\n\n<strong>Qual Ã¨ la tua principale area di interesse?</strong>",
+      "options": [
+        {"label": "Due diligence", "description": "Verifica controparti", "action": "select_option", "key": "demoInterest"},
+        {"label": "Rischio controparti", "description": "Valutazione esposizioni", "action": "select_option", "key": "demoInterest"},
+        {"label": "Rischio reputazionale", "description": "Monitoraggio brand", "action": "select_option", "key": "demoInterest"},
+        {"label": "Litigation intelligence", "description": "Supporto legale", "action": "select_option", "key": "demoInterest"},
+        {"label": "Indagini aziendali", "description": "Ricostruzione strutture", "action": "select_option", "key": "demoInterest"},
+        {"label": "AML / KYC", "description": "Compliance anti-riciclaggio", "action": "select_option", "key": "demoInterest"},
+        {"label": "Demo generale", "description": "Panoramica completa", "action": "select_option", "key": "demoInterest"}
+      ]
+    },
+    {
+      "id": "demo_qualification",
+      "type": "message",
+      "content": "Perfetto. Per qualificare correttamente la richiesta e assegnarla al referente piÃ¹ appropriato, ho bisogno di alcune informazioni.\n\n<span class=\"text-muted text-sm\">Tutti i dati sono trasmessi direttamente al CRM protetto. Nessuna retention in questa interfaccia.</span>"
+    },
+    {
+      "id": "demo_form",
+      "type": "form",
+      "formType": "qualification"
+    },
+    {
+      "id": "demo_confirm",
+      "type": "message",
+      "content": "template:demo_confirmation",
+      "options": [
+        {"label": "Scarica brochure", "description": "PDF capabilities piattaforma", "action": "download", "target": "brochure"},
+        {"label": "Esplora altro", "description": "Torna al menu principale", "action": "navigate", "target": "/"},
+        {"label": "Chiudi sessione", "description": "Termina conversazione", "action": "close"}
+      ]
+    }
+  ]
+}

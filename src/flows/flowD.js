@@ -1,0 +1,68 @@
+export const flowDScreens = [
+  {
+    id: 'flowD_interest',
+    showSidebar: true,
+    title: 'Richiedi Demo',
+    message: "Posso aiutarti a indirizzare correttamente la richiesta di demo.",
+    prompt: "Qual è la tua principale area di interesse?",
+    choices: [
+      { label: 'Due diligence', target: 'flowD_role' },
+      { label: 'Rischio controparti', target: 'flowD_role' },
+      { label: 'Rischio reputazionale', target: 'flowD_role' },
+      { label: 'Litigation intelligence', target: 'flowD_role' },
+      { label: 'Indagini aziendali', target: 'flowD_role' },
+      { label: 'AML / KYC', target: 'flowD_role' },
+      { label: 'Demo generale', target: 'flowD_role' },
+    ],
+  },
+  {
+    id: 'flowD_role',
+    showSidebar: true,
+    prompt: "Qual è il tuo ruolo?",
+    choices: [
+      { label: 'Security / Risk', target: 'flowD_org' },
+      { label: 'Legale', target: 'flowD_org' },
+      { label: 'Compliance', target: 'flowD_org' },
+      { label: 'HR', target: 'flowD_org' },
+      { label: 'Direzione', target: 'flowD_org' },
+      { label: 'Altro', target: 'flowD_org' },
+    ],
+  },
+  {
+    id: 'flowD_org',
+    showSidebar: true,
+    prompt: 'Tipo di organizzazione:',
+    choices: [
+      { label: 'Azienda', target: 'flowD_timing' },
+      { label: 'Studio legale', target: 'flowD_timing' },
+      { label: 'Istituto finanziario', target: 'flowD_timing' },
+      { label: 'Consulenza', target: 'flowD_timing' },
+      { label: 'Fondo', target: 'flowD_timing' },
+      { label: 'Pubblico', target: 'flowD_timing' },
+      { label: 'Altro', target: 'flowD_timing' },
+    ],
+  },
+  {
+    id: 'flowD_timing',
+    showSidebar: true,
+    prompt: 'Tempistiche:',
+    choices: [
+      { label: 'Immediate', target: 'flowD_form' },
+      { label: 'Entro 7 giorni', target: 'flowD_form' },
+      { label: 'Entro il mese', target: 'flowD_form' },
+      { label: 'Valutazione preliminare', target: 'flowD_form' },
+    ],
+  },
+  {
+    id: 'flowD_form',
+    showSidebar: true,
+    component: 'form',
+    formType: 'demo',
+  },
+  {
+    id: 'flowD_thanks',
+    showSidebar: true,
+    component: 'thanks',
+    message: "Grazie.\nLa richiesta è stata acquisita.\nUn referente DeepSearch ti contatterà entro 24 ore.",
+  },
+];

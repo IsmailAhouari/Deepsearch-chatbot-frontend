@@ -1,0 +1,31 @@
+{
+  "id": "commercial",
+  "name": "Informazioni commerciali",
+  "steps": [
+    {
+      "id": "commercial_intro",
+      "type": "message",
+      "content": "Le <strong>condizioni commerciali</strong> dipendono da:<br><br>â€¢ <strong>Ambito di utilizzo</strong> â€” numero di indagini e complessitÃ <br>â€¢ <strong>Numero utenti</strong> â€” licenze individuali o enterprise<br>â€¢ <strong>Contesto operativo</strong> â€” giurisdizioni e integrazioni richieste<br><br><span class=\"text-muted text-sm\">I prezzi specifici sono forniti dopo qualificazione e sottoscrizione NDA.</span><br><br><strong>Preferisci:</strong>",
+      "options": [
+        {
+          "label": "Contatto commerciale",
+          "description": "Parla con il team vendite",
+          "action": "navigate",
+          "target": "/contact"
+        },
+        {
+          "label": "Richiedi informazioni",
+          "description": "Dettagli sui pacchetti",
+          "action": "navigate",
+          "target": "/demo"
+        },
+        {
+          "label": "Prenota demo",
+          "description": "Vedi la piattaforma",
+          "action": "navigate",
+          "target": "/demo"
+        }
+      ]
+    }
+  ]
+}

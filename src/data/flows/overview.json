@@ -1,0 +1,43 @@
+{
+  "id": "overview",
+  "name": "Panoramica piattaforma",
+  "steps": [
+    {
+      "id": "overview_intro",
+      "type": "message",
+      "content": "DeepSearch Ã¨ una <strong>piattaforma di intelligence</strong> progettata per individuare relazioni nascoste tra persone, aziende, controparti e segnali di rischio.\n\nConsente di superare verifiche frammentate e trasformare i dati in <strong>intelligence strutturata</strong>.\n\n<strong>Vuoi una spiegazione focalizzata su:</strong>",
+      "options": [
+        {
+          "label": "Analisi del rischio",
+          "description": "Valutazione controparti ed esposizioni",
+          "action": "navigate",
+          "target": "/overview/risk"
+        },
+        {
+          "label": "Due diligence",
+          "description": "Verifiche approfondite pre-transazione",
+          "action": "navigate",
+          "target": "/overview/due-diligence"
+        },
+        {
+          "label": "Analisi controparti",
+          "description": "Mapping relazionale e strutture",
+          "action": "navigate",
+          "target": "/overview/counterparties"
+        },
+        {
+          "label": "Rischio reputazionale",
+          "description": "Identificazione preventiva esposizioni",
+          "action": "navigate",
+          "target": "/overview/reputational"
+        },
+        {
+          "label": "Supporto investigativo",
+          "description": "Indagini aziendali e asset tracing",
+          "action": "navigate",
+          "target": "/overview/investigative"
+        }
+      ]
+    }
+  ]
+}

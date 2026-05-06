@@ -1,0 +1,37 @@
+{
+  "id": "audience-hr",
+  "name": "HR & Investigations",
+  "steps": [
+    {
+      "id": "hr_intro",
+      "type": "message",
+      "content": "<strong>Per HR Manager e Internal Investigations</strong><br><br>DeepSearch supporta background check, conflict of interest identification e investigazioni aziendali.<br><br>Applicazioni chiave:<br>• <strong>Executive onboarding</strong> - Background verifiche pre-assunzione<br>• <strong>Conflict identification</strong> - Relazioni familiari e affari<br>• <strong>Internal investigations</strong> - Traccia asset e strutture nascoste<br>• <strong>Due diligence su board members</strong><br><br><strong>Che cosa è la vostra priorità?</strong>",
+      "options": [
+        {
+          "label": "Background Screening",
+          "description": "Verifiche pre-assunzione executive",
+          "action": "navigate",
+          "target": "/demo"
+        },
+        {
+          "label": "Conflict of Interest",
+          "description": "Identificare relazioni e exposures",
+          "action": "navigate",
+          "target": "/usecases"
+        },
+        {
+          "label": "Investigazioni interne",
+          "description": "Supporto su asset tracing e strutture",
+          "action": "navigate",
+          "target": "/usecases/investigations"
+        },
+        {
+          "label": "Contatta il team",
+          "description": "Discussione dedicata",
+          "action": "navigate",
+          "target": "/contact"
+        }
+      ]
+    }
+  ]
+}

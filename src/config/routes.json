@@ -1,0 +1,123 @@
+{
+  "routes": [
+    {
+      "path": "/",
+      "flowId": "welcome",
+      "showSidebar": false,
+      "name": "Welcome"
+    },
+    {
+      "path": "/overview",
+      "flowId": "overview",
+      "showSidebar": true,
+      "name": "Platform Overview"
+    },
+    {
+      "path": "/overview/risk",
+      "flowId": "overview-risk",
+      "showSidebar": true,
+      "name": "Risk Analysis"
+    },
+    {
+      "path": "/overview/due-diligence",
+      "flowId": "overview-due-diligence",
+      "showSidebar": true,
+      "name": "Due Diligence"
+    },
+    {
+      "path": "/overview/counterparties",
+      "flowId": "overview-counterparties",
+      "showSidebar": true,
+      "name": "Counterparty Analysis"
+    },
+    {
+      "path": "/overview/reputational",
+      "flowId": "overview-reputational",
+      "showSidebar": true,
+      "name": "Reputational Risk"
+    },
+    {
+      "path": "/overview/investigative",
+      "flowId": "overview-investigative",
+      "showSidebar": true,
+      "name": "Investigative Support"
+    },
+    {
+      "path": "/usecases",
+      "flowId": "usecases",
+      "showSidebar": true,
+      "name": "Use Cases"
+    },
+    {
+      "path": "/usecases/due-diligence",
+      "flowId": "usecases-due-diligence",
+      "showSidebar": true,
+      "name": "Due Diligence Use Case"
+    },
+    {
+      "path": "/usecases/investigations",
+      "flowId": "usecases-investigations",
+      "showSidebar": true,
+      "name": "Corporate Investigations"
+    },
+    {
+      "path": "/usecases/litigation",
+      "flowId": "usecases-litigation",
+      "showSidebar": true,
+      "name": "Litigation Intelligence"
+    },
+    {
+      "path": "/usecases/reputational",
+      "flowId": "usecases-reputational",
+      "showSidebar": true,
+      "name": "Reputational Analysis"
+    },
+    {
+      "path": "/usecases/aml",
+      "flowId": "usecases-aml",
+      "showSidebar": true,
+      "name": "AML / KYC"
+    },
+    {
+      "path": "/usecases/suppliers",
+      "flowId": "usecases-suppliers",
+      "showSidebar": true,
+      "name": "Supplier Risk"
+    },
+    {
+      "path": "/audience",
+      "flowId": "audience",
+      "showSidebar": true,
+      "name": "Target Audience"
+    },
+    {
+      "path": "/demo",
+      "flowId": "demo",
+      "showSidebar": true,
+      "name": "Request Demo"
+    },
+    {
+      "path": "/contact",
+      "flowId": "contact",
+      "showSidebar": true,
+      "name": "Contact Team"
+    },
+    {
+      "path": "/commercial",
+      "flowId": "commercial",
+      "showSidebar": true,
+      "name": "Commercial Info"
+    }
+  ],
+  "sidebar": {
+    "items": [
+      {"key": "welcome", "label": "Benvenuto", "icon": "W", "path": "/"},
+      {"key": "overview", "label": "Panoramica piattaforma", "icon": "A", "path": "/overview"},
+      {"key": "usecases", "label": "Casi d'uso", "icon": "B", "path": "/usecases"},
+      {"key": "audience", "label": "A chi si rivolge", "icon": "C", "path": "/audience"},
+      {"key": "demo", "label": "Richiedi demo", "icon": "D", "path": "/demo"},
+      {"key": "commercial", "label": "Informazioni commerciali", "icon": "E", "path": "/commercial"},
+      {"key": "contact", "label": "Contatta il team", "icon": "F", "path": "/contact"}
+    ]
+  }
+}

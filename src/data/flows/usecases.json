@@ -1,0 +1,49 @@
+{
+  "id": "usecases",
+  "name": "Casi d'uso",
+  "steps": [
+    {
+      "id": "usecases_intro",
+      "type": "message",
+      "content": "<strong>Quale caso d'uso Ã¨ piÃ¹ vicino al tuo interesse?</strong>",
+      "options": [
+        {
+          "label": "Due diligence controparti",
+          "description": "Verifica fornitori, clienti, partner",
+          "action": "navigate",
+          "target": "/usecases/due-diligence"
+        },
+        {
+          "label": "Indagini aziendali",
+          "description": "Ricostruzione strutture e asset",
+          "action": "navigate",
+          "target": "/usecases/investigations"
+        },
+        {
+          "label": "Litigation intelligence",
+          "description": "Supporto contenzioso e dispute",
+          "action": "navigate",
+          "target": "/usecases/litigation"
+        },
+        {
+          "label": "Analisi reputazionale",
+          "description": "Monitoraggio esposizioni",
+          "action": "navigate",
+          "target": "/usecases/reputational"
+        },
+        {
+          "label": "AML / KYC",
+          "description": "Anti-riciclaggio e conoscenza cliente",
+          "action": "navigate",
+          "target": "/usecases/aml"
+        },
+        {
+          "label": "Rischio fornitori / terze parti",
+          "description": "Supply chain assessment",
+          "action": "navigate",
+          "target": "/usecases/suppliers"
+        }
+      ]
+    }
+  ]
+}

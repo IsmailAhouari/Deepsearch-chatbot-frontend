@@ -1,0 +1,31 @@
+{
+  "id": "faq",
+  "name": "FAQ",
+  "steps": [
+    {
+      "id": "faq_intro",
+      "type": "message",
+      "content": "<strong>Domande Frequenti (FAQ)</strong><br><br>Risposte veloci su DeepSearch:<br><br><strong>1. DeepSearch è solo una dashboard?</strong><br>No, è una piattaforma di Intelligence strutturata. Il chatbot è solo un gateway: la piattaforma offre reportistica, network mapping e data visualization.<br><br><strong>2. Quali fonti usa DeepSearch?</strong><br>200+ fonti tra cui: registri camerali, liste sanzioni (OFAC/EU), adverse media globali, PEP list e corporate ownership structures.<br><br><strong>3. Esiste uno scoring automatico?</strong><br>No. Nessuno scoring automatizzato. L'analista umano riceve un network relazionale ed esposizioni per effettuare la valutazione finale.<br><br><strong>4. Qual è la differenza rispetto al mio tool KYC?</strong><br>KYC checka identità individuali; DeepSearch mappa UBO, reti d'affari nascoste e contesti espansi (Parent-Subsidiary relationships).<br><br><strong>Altre informazioni:</strong>",
+      "options": [
+        {
+          "label": "Parla con il team",
+          "description": "Fai altre domande",
+          "action": "navigate",
+          "target": "/contact"
+        },
+        {
+          "label": "Vedi piattaforma",
+          "description": "Richiedi demo e pacchetti",
+          "action": "navigate",
+          "target": "/demo"
+        },
+        {
+          "label": "Panoramica",
+          "description": "Casi d'uso e capabilities",
+          "action": "navigate",
+          "target": "/overview"
+        }
+      ]
+    }
+  ]
+}

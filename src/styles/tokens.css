@@ -1,0 +1,47 @@
+/* DeepSearch Design Tokens */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --ds-bg:           #0A0C10;
+  --ds-bg-surface:   #111318;
+  --ds-bg-card:      #161A22;
+  --ds-border:       #1E2330;
+  --ds-border-hi:    #2A3145;
+  --ds-accent:       #1B6FEB;
+  --ds-accent-hover: #1560D0;
+  --ds-accent-dim:   #1B6FEB22;
+  --ds-text-1:       #E8ECF4;
+  --ds-text-2:       #8A93A8;
+  --ds-text-3:       #4A5166;
+  --ds-green:        #1D9E75;
+  --ds-red:          #C94F4F;
+  --ds-radius-sm:    6px;
+  --ds-radius-md:    10px;
+  --ds-radius-lg:    16px;
+  --ds-font:         'Inter', system-ui, -apple-system, sans-serif;
+  --ds-sidebar-w:    220px;
+  --ds-modal-w:      860px;
+  --ds-modal-h:      580px;
+}
+
+/* Reset */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: var(--ds-font);
+  background: var(--ds-bg);
+  color: var(--ds-text-1);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}

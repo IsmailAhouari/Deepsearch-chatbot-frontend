@@ -1,0 +1,30 @@
+{
+  "id": "overview-risk",
+  "name": "Analisi del Rischio",
+  "steps": [
+    {
+      "type": "message",
+      "content": "DeepSearch supporta attivitÃ  di <strong>analisi del rischio</strong> attraverso l'integrazione di fonti multiple, mapping relazionale e revisione analista umano.<br><br>La piattaforma aiuta a individuare esposizioni indirette, collegamenti sensibili e segnali che richiedono approfondimento prima di una decisione.<br><br><span class=\"text-muted text-sm\">Nota: DeepSearch non visualizza punteggi automatici. Tutte le valutazioni richiedono validazione umana.</span>",
+      "options": [
+        {
+          "label": "Esplora casi d'uso",
+          "description": "Vedi applicazioni concrete",
+          "action": "navigate",
+          "target": "/usecases"
+        },
+        {
+          "label": "Richiedi demo",
+          "description": "Vedi la piattaforma in azione",
+          "action": "navigate",
+          "target": "/demo"
+        },
+        {
+          "label": "Torna alla panoramica",
+          "description": "Rivedi le aree principali",
+          "action": "navigate",
+          "target": "/overview"
+        }
+      ]
+    }
+  ]
+}
