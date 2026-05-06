@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Deepsearch Chatbot Frontend
 
 A modern, production-grade chatbot interface built with React, Vite, and featuring a stunning cosmic-themed UI. This application is fully optimized for deployment on Vercel.
@@ -241,3 +242,6 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+=======
+# Deepsearch-chatbot-frontend
+>>>>>>> 4fa909077996c593b7b291519f5f01db18c1afab
