@@ -4,72 +4,155 @@
    Design System: tokens.css provides CSS custom properties
    ==================================================== */
 
-/* ── Trigger / Landing Page ── */
+/* ── Intelligence Access Widget (Launcher) ── */
 
 .trigger-container {
-  min-height: 100vh;
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background-image: url('./assets/background.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 32px;
+}
+
+.ds-trigger-widget {
+  width: 280px;
+  aspect-ratio: 1.1 / 1;
+  background: var(--ds-bg-card);
+  border: 1px solid var(--ds-border-hi);
+  border-radius: var(--ds-radius-lg);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  text-align: left;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(27, 111, 235, 0.1);
+  animation: ds-gateway-pop 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes ds-gateway-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.ds-trigger-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.ds-trigger-logo {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
 }
 
-.trigger-content {
-  text-align: center;
-  max-width: 640px;
-  animation: ds-fade-in 0.5s ease;
+.ds-trigger-logo-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 4px rgba(27, 111, 235, 0.4));
 }
 
-.trigger-title {
-  font-size: 2.4rem;
-  font-weight: 300;
+.ds-trigger-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
   color: var(--ds-text-1);
-  letter-spacing: -0.5px;
-  margin-bottom: 8px;
+  margin: 0;
 }
 
-.trigger-tagline {
-  font-size: 1.1rem;
+.ds-trigger-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ds-trigger-tagline {
+  font-size: 14px;
   color: var(--ds-accent);
   font-style: italic;
-  margin-bottom: 20px;
+  font-weight: 500;
+  margin: 0;
 }
 
-.trigger-subtitle {
+.ds-trigger-subtitle-top {
+  font-size: 11px;
+  font-weight: 600;
   color: var(--ds-text-2);
-  font-size: 0.95rem;
-  line-height: 1.7;
-  margin-bottom: 32px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin: 0;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
-.trigger-btn {
+.ds-trigger-sep {
+  color: var(--ds-accent);
+  font-weight: 800;
+  margin: 0 4px;
+}
+
+.ds-trigger-actions {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ds-trigger-btn {
+  width: 100%;
   background: var(--ds-bg-card);
   color: var(--ds-text-1);
   border: 1px solid var(--ds-accent);
-  padding: 14px 36px;
+  padding: 14px;
+  border-radius: var(--ds-radius-sm);
   font-size: 13px;
-  font-weight: 500;
-  border-radius: var(--ds-radius-md);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   cursor: pointer;
+  transition: all 0.2s;
   font-family: var(--ds-font);
-  transition: all 0.2s ease;
-  letter-spacing: 0.5px;
 }
 
-.trigger-btn:hover {
+.ds-trigger-btn:hover {
   background: var(--ds-accent);
   color: #fff;
   box-shadow: 0 0 24px rgba(27, 111, 235, 0.25);
+  transform: translateY(-1px);
 }
 
-.trigger-disclaimer {
-  margin-top: 28px;
-  font-size: 12px;
+.ds-trigger-demo-link {
+  font-size: 10px;
   color: var(--ds-text-3);
-  padding: 10px 16px;
-  border: 1px solid var(--ds-border);
-  border-radius: var(--ds-radius-sm);
-  display: inline-block;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: color 0.15s;
+  text-align: center;
+}
+
+.ds-trigger-demo-link:hover {
+  color: var(--ds-text-2);
 }
 
 /* ── Modal Overlay ── */
@@ -77,7 +160,9 @@
 .ds-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -121,15 +206,20 @@
 .ds-header-icon {
   width: 32px;
   height: 32px;
-  background: var(--ds-accent);
+  background: var(--ds-bg-card);
+  border: 1px solid var(--ds-border-hi);
   border-radius: var(--ds-radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  color: #fff;
-  font-size: 11px;
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.ds-header-logo-img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 .ds-header-title {
@@ -225,6 +315,25 @@
   flex-direction: column;
   overflow: hidden;
   min-width: 0;
+  position: relative;
+}
+
+/* Background Watermark */
+.ds-panel::before {
+  content: '';
+  position: absolute;
+  bottom: -150px;
+  right: -150px;
+  width: 750px;
+  height: 750px;
+  background-image: url('./assets/icon.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.012;
+  pointer-events: none;
+  z-index: 0;
+  filter: grayscale(1);
 }
 
 .ds-panel-content {
@@ -235,6 +344,8 @@
   flex-direction: column;
   gap: 16px;
   animation: ds-fade-in 0.2s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .ds-panel-content::-webkit-scrollbar {
@@ -322,23 +433,51 @@
 }
 
 .ds-choice-btn {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding: 10px 14px;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
   background: var(--ds-bg-card);
   border: 1px solid var(--ds-border);
-  border-radius: var(--ds-radius-sm);
+  border-radius: var(--ds-radius-md);
   color: var(--ds-text-1);
   font-family: var(--ds-font);
   text-align: left;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.ds-choice-icon {
+  width: 20px;
+  height: 20px;
+  background: none;
+  color: var(--ds-text-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all 0.2s;
+}
+
+.ds-choice-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .ds-choice-btn:hover {
   border-color: var(--ds-border-hi);
   background: rgba(255, 255, 255, 0.03);
+}
+
+.ds-choice-btn:hover .ds-choice-icon {
+  color: var(--ds-accent);
+  transform: scale(1.1);
 }
 
 .ds-choice-btn:active {
@@ -467,7 +606,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 480px;
 }
 
 .ds-freetext-input {
@@ -571,8 +709,13 @@
 /* ── Animations ── */
 
 @keyframes ds-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes ds-scale-in {
@@ -580,6 +723,7 @@
     opacity: 0;
     transform: scale(0.96);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -591,6 +735,7 @@
     opacity: 0;
     transform: translateY(6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

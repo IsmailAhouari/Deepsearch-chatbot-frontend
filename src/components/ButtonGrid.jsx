@@ -9,10 +9,13 @@ export default function ButtonGrid({ choices, onSelect, columns = 1, showSublabe
           className="ds-choice-btn"
           onClick={() => onSelect(choice)}
         >
-          <span className="ds-choice-label">{choice.label}</span>
-          {showSublabels && choice.sublabel && (
-            <span className="ds-choice-sublabel">{choice.sublabel}</span>
-          )}
+          {choice.icon && <div className="ds-choice-icon">{choice.icon}</div>}
+          <div className="ds-choice-content">
+            <span className="ds-choice-label">{choice.label}</span>
+            {showSublabels && choice.sublabel && (
+              <span className="ds-choice-sublabel">{choice.sublabel}</span>
+            )}
+          </div>
         </button>
       ))}
     </div>

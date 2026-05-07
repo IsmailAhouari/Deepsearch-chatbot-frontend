@@ -1,13 +1,33 @@
 import React, { useState } from 'react';
+import ButtonGrid from './ButtonGrid.jsx';
 
-export default function FreeText({ message, onSubmit }) {
+export default function FreeText({ message, successMessage, successButtons, submitLabel = 'Invia', onSubmit, onChoice }) {
   const [text, setText] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!text.trim()) return;
     onSubmit(text.trim());
+    if (successMessage) {
+      setIsSubmitted(true);
+    }
   };
+
+  if (isSubmitted && successMessage) {
+    return (
+      <div className="ds-freetext">
+        <div className="ds-message">
+          <div className="ds-message-text" style={{ whiteSpace: 'pre-line' }}>{successMessage}</div>
+        </div>
+        {successButtons && (
+          <div style={{ marginTop: '16px' }}>
+            <ButtonGrid choices={successButtons} onSelect={onChoice} />
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="ds-freetext">
@@ -25,7 +45,7 @@ export default function FreeText({ message, onSubmit }) {
           rows="3"
         />
         <button type="submit" className="ds-submit-btn" disabled={!text.trim()}>
-          Invia
+          {submitLabel}
         </button>
       </form>
     </div>

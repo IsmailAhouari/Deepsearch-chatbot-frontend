@@ -9,6 +9,7 @@ const SIDEBAR_ITEMS = [
   { key: 'flowD_interest', label: 'Richiedi demo' },
   { key: 'flowE', label: 'Informazioni commerciali' },
   { key: 'flowF', label: 'Contatta il team' },
+  { key: 'flowG_intro', label: 'Altro' },
 ];
 
 export default function Sidebar() {
@@ -45,7 +46,7 @@ export default function Sidebar() {
           );
         })}
       </div>
-      <div className="ds-sidebar-footer" style={{ padding: '16px', marginTop: 'auto' }}>
+      <div className="ds-sidebar-footer" style={{ padding: '16px 16px 0 16px', marginTop: 'auto' }}>
         <button 
           className="ds-choice-btn" 
           onClick={() => navigate('welcome')} 

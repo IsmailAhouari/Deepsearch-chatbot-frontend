@@ -81,7 +81,8 @@ export default function DemoForm({ formType, onSubmit }) {
     );
   }
 
-  if (formType === 'contact') {
+  if (formType === 'contact' || formType === 'genericRequest') {
+    const isGeneric = formType === 'genericRequest';
     return (
       <form className="ds-form" onSubmit={handleSubmit}>
         <div className="ds-form-row">
@@ -102,17 +103,21 @@ export default function DemoForm({ formType, onSubmit }) {
           <label>Telefono</label>
           <input name="telefono" type="tel" placeholder="Telefono" value={form.telefono || ''} onChange={handleChange} />
         </div>
-        <div className="ds-form-field">
-          <label>Messaggio</label>
-          <textarea name="messaggio" rows="3" placeholder="Descrivi la tua richiesta..." value={form.messaggio || ''} onChange={handleChange} />
-        </div>
-        <button type="submit" className="ds-submit-btn">Invia Messaggio</button>
+        {!isGeneric && (
+          <div className="ds-form-field">
+            <label>Messaggio</label>
+            <textarea name="messaggio" rows="3" placeholder="Descrivi la tua richiesta..." value={form.messaggio || ''} onChange={handleChange} />
+          </div>
+        )}
+        <button type="submit" className="ds-submit-btn">
+          {isGeneric ? 'Invia Richiesta' : 'Invia Messaggio'}
+        </button>
         <p className="ds-form-note">* Evita di inserire dati sensibili</p>
       </form>
     );
   }
 
-  // Generic form (flowG_form)
+  // Fallback / Generic form (standard)
   return (
     <form className="ds-form" onSubmit={handleSubmit}>
       <div className="ds-form-row">

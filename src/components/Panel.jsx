@@ -27,6 +27,11 @@ export default function Panel() {
     if (screen === 'flowD_timing') setQual({ timing: choice.label });
     if (screen === 'flowF') setQual({ interest: choice.label });
 
+    // flowG qualification
+    if (screen === 'flowG_function') setQual({ function: choice.label });
+    if (screen === 'flowG_geo') setQual({ geoArea: choice.label });
+    if (screen === 'flowG_need') setQual({ needType: choice.label });
+
     // Capture context for flowB sub-selections
     if (screen === 'flowB_dd') setQual({ interest: choice.label });
 
@@ -41,7 +46,7 @@ export default function Panel() {
   const handleFormSubmit = (formData) => {
     setLead(formData);
     // Navigate to thanks (for demo) or fallback confirmation
-    if (screen === 'flowD_form') {
+    if (screen === 'flowD_form' || screen === 'flowG_form') {
       navigate('flowD_thanks');
     } else {
       // Contact and generic forms navigate to thanks too
@@ -50,12 +55,17 @@ export default function Panel() {
   };
 
   const handleFreeTextSubmit = (text) => {
-    setLead({ note: text });
-    // After free text, route to form
-    if (screen === 'flowG') {
-      navigate('flowG_form');
-    } else if (screen === 'flowC_other') {
-      navigate('flowG_form');
+    if (screen === 'flowG_intro') {
+      setLead({ customRequestText: text });
+    } else {
+      setLead({ note: text });
+    }
+
+    // If no inline success message, handle navigation
+    if (!screenDef.successMessage) {
+      if (screen === 'flowC_other') {
+        navigate('flowG_form');
+      }
     }
   };
 
@@ -141,7 +151,14 @@ export default function Panel() {
           <button className="ds-back-btn" onClick={back}>← Indietro</button>
         )}
         <div className="ds-panel-content">
-          <FreeText message={screenDef.message} onSubmit={handleFreeTextSubmit} />
+          <FreeText
+            message={screenDef.message}
+            successMessage={screenDef.successMessage}
+            successButtons={screenDef.successButtons}
+            submitLabel={screenDef.submitLabel}
+            onSubmit={handleFreeTextSubmit}
+            onChoice={handleChoice}
+          />
         </div>
       </div>
     );

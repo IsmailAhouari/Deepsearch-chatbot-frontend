@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-      {!open && <Trigger />}
+      <Trigger />
       {open && <Modal />}
     </>
   );
