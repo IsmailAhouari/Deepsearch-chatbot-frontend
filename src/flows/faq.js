@@ -18,7 +18,7 @@ export const faqScreens = [
     choices: [
       { label: 'Panoramica piattaforma', target: 'flowA' },
       { label: "Casi d'uso", target: 'flowB' },
-      { label: 'Richiedi demo', target: 'flowD_interest' },
+      { label: 'Richiedi demo', action: { type: 'startDemo' } },
       { label: 'Contatta il team', target: 'flowF' },
     ],
   },

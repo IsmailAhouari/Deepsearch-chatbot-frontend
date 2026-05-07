@@ -16,27 +16,48 @@ export default function Sidebar() {
   const navigate = useSession((s) => s.navigate);
   const activeFlow = getActiveFlow(screen);
 
+  const startDemoFlow = useSession((s) => s.startDemoFlow);
+
   const handleClick = (item) => {
-    navigate(item.key);
+    if (item.key === 'flowD_interest') {
+      startDemoFlow();
+    } else {
+      navigate(item.key);
+    }
   };
 
   return (
     <div className="ds-sidebar">
-      {SIDEBAR_ITEMS.map((item) => {
-        const isActive =
-          (item.key === 'flowD_interest' && activeFlow === 'flowD') ||
-          (item.key !== 'flowD_interest' && activeFlow === item.key);
+      <div className="ds-sidebar-nav">
+        {SIDEBAR_ITEMS.map((item) => {
+          const isActive =
+            (item.key === 'flowD_interest' && activeFlow === 'flowD') ||
+            (item.key !== 'flowD_interest' && activeFlow === item.key);
 
-        return (
-          <button
-            key={item.key}
-            className={`ds-sidebar-item ${isActive ? 'active' : ''}`}
-            onClick={() => handleClick(item)}
-          >
-            {item.label}
-          </button>
-        );
-      })}
+          return (
+            <button
+              key={item.key}
+              className={`ds-sidebar-item ${isActive ? 'active' : ''}`}
+              onClick={() => handleClick(item)}
+            >
+              {item.label}
+            </button>
+          );
+        })}
+      </div>
+      <div className="ds-sidebar-footer" style={{ padding: '16px', marginTop: 'auto' }}>
+        <button 
+          className="ds-choice-btn" 
+          onClick={() => navigate('welcome')} 
+          style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '7px 10px' }}
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span className="ds-choice-label" style={{ fontSize: '10px' }}>Torna al Menu</span>
+        </button>
+      </div>
     </div>
   );
 }

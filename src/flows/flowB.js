@@ -31,7 +31,7 @@ export const flowBScreens = [
     showSidebar: true,
     message: "DeepSearch fornisce un framework strutturato per l'analisi della controparte: struttura societaria, UBO, esposizione mediatica e precedenti rilevanti — in un unico report di intelligence.",
     ctas: [
-      { label: 'Richiedi demo', target: 'flowD_interest' },
+      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Due diligence', sourceFlow: 'flowB', sourceScreen: 'flowB_dd_sub' } },
       { label: 'Contatta il team', target: 'flowF' },
     ],
   },
@@ -52,7 +52,7 @@ export const flowBScreens = [
     showSidebar: true,
     message: "DeepSearch ricostruisce reti relazionali e flussi di controllo utili a supportare la strategia legale: identificazione di asset, soggetti collegati e segnali di rischio documentati da fonti aperte.",
     ctas: [
-      { label: 'Richiedi demo', target: 'flowD_interest' },
+      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Litigation intelligence', sourceFlow: 'flowB', sourceScreen: 'flowB_lit_sub' } },
       { label: 'Contatto riservato', target: 'flowF' },
     ],
   },
@@ -61,7 +61,7 @@ export const flowBScreens = [
     showSidebar: true,
     message: "DeepSearch monitora e analizza l'esposizione reputazionale di soggetti e organizzazioni: segnali mediatici, associazioni negative e dinamiche di sentiment in contesti ad alto rischio.",
     ctas: [
-      { label: 'Richiedi demo', target: 'flowD_interest' },
+      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Rischio reputazionale', sourceFlow: 'flowB', sourceScreen: 'flowB_rep' } },
       { label: 'Contatta il team', target: 'flowF' },
     ],
   },
@@ -70,7 +70,7 @@ export const flowBScreens = [
     showSidebar: true,
     message: "DeepSearch supporta i processi AML e KYC attraverso l'analisi relazionale avanzata: identificazione di PEP, soggetti sanzionati, strutture societarie opache e reti di controllo non dichiarate.",
     ctas: [
-      { label: 'Richiedi demo', target: 'flowD_interest' },
+      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'AML / KYC', sourceFlow: 'flowB', sourceScreen: 'flowB_aml' } },
       { label: 'Contatta il team', target: 'flowF' },
     ],
   },
@@ -79,7 +79,7 @@ export const flowBScreens = [
     showSidebar: true,
     message: "DeepSearch analizza la catena di fornitura e le terze parti identificando rischi nascosti: esposizioni reputazionali, connessioni societarie a soggetti critici e segnali di instabilità operativa.",
     ctas: [
-      { label: 'Richiedi demo', target: 'flowD_interest' },
+      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Rischio controparti', sourceFlow: 'flowB', sourceScreen: 'flowB_supplier' } },
       { label: 'Contatta il team', target: 'flowF' },
     ],
   },
@@ -88,7 +88,7 @@ export const flowBScreens = [
     showSidebar: true,
     message: "DeepSearch supporta indagini aziendali attraverso la ricostruzione di strutture societarie, flussi di controllo e connessioni tra soggetti in contesti complessi.",
     ctas: [
-      { label: 'Richiedi demo', target: 'flowD_interest' },
+      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Indagini aziendali', sourceFlow: 'flowB', sourceScreen: 'flowB_other' } },
       { label: 'Contatta il team', target: 'flowF' },
     ],
   },

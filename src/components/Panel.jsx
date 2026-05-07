@@ -15,6 +15,7 @@ export default function Panel() {
   const setQual = useSession((s) => s.setQual);
   const setLead = useSession((s) => s.setLead);
   const close_modal = useSession((s) => s.close_modal);
+  const startDemoFlow = useSession((s) => s.startDemoFlow);
 
   const screenDef = SCREENS[screen] || SCREENS['fallback'];
 
@@ -28,6 +29,11 @@ export default function Panel() {
 
     // Capture context for flowB sub-selections
     if (screen === 'flowB_dd') setQual({ interest: choice.label });
+
+    if (choice.action && choice.action.type === 'startDemo') {
+      startDemoFlow(choice.action);
+      return;
+    }
 
     navigate(choice.target);
   };
@@ -98,7 +104,7 @@ export default function Panel() {
             ))}
           </div>
           <div className="ds-button-grid" style={{ marginTop: '16px' }}>
-            <button className="ds-choice-btn" onClick={() => navigate('flowD_interest')}>
+            <button className="ds-choice-btn" onClick={() => startDemoFlow()}>
               <span className="ds-choice-label">Richiedi demo</span>
             </button>
             <button className="ds-choice-btn" onClick={() => navigate('flowF')}>

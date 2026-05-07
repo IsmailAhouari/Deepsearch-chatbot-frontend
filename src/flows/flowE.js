@@ -7,7 +7,7 @@ export const flowEScreens = [
     choices: [
       { label: 'Contatto commerciale', target: 'flowF' },
       { label: 'Richiedi informazioni', target: 'flowF' },
-      { label: 'Prenota demo', target: 'flowD_interest' },
+      { label: 'Prenota demo', action: { type: 'startDemo' } },
     ],
   },
 ];
