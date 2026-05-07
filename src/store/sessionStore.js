@@ -9,6 +9,7 @@ export const useSession = create((set, get) => ({
 
   open_modal: () => set({ open: true, screen: 'welcome', history: [], qualification: {}, lead: {} }),
   close_modal: () => set({ open: false }),
+  setOpen: (isOpen = true) => set({ open: isOpen }),
 
   navigate: (to) => set((s) => ({
     history: [...s.history, s.screen],

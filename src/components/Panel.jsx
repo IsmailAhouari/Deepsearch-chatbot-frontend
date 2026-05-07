@@ -82,14 +82,6 @@ export default function Panel() {
             <div className="ds-message">
               <div className="ds-message-text" style={{ whiteSpace: 'pre-line' }}>{screenDef.message}</div>
             </div>
-            <div className="ds-thanks-actions">
-              <button className="ds-choice-btn" onClick={() => navigate('welcome')}>
-                <span className="ds-choice-label">Torna al menu</span>
-              </button>
-              <button className="ds-choice-btn" onClick={close_modal}>
-                <span className="ds-choice-label">Chiudi sessione</span>
-              </button>
-            </div>
           </div>
         </div>
       </div>
