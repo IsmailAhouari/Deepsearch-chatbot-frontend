@@ -25,3 +25,5 @@ dist-ssr
 perme/*
 *.env.example
 *.example
+PRODUCT_GUIDE.md
+.env.example

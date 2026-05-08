@@ -2,6 +2,7 @@ import React from 'react';
 import { useSession } from '../store/sessionStore.js';
 import Sidebar from './Sidebar.jsx';
 import Panel from './Panel.jsx';
+import FAQButton from './FAQButton.jsx';
 import { SCREENS } from '../flows/index.js';
 
 export default function Modal() {
@@ -34,6 +35,8 @@ export default function Modal() {
           {showSidebar && <Sidebar />}
           <Panel />
         </div>
+
+        <FAQButton />
       </div>
     </div>
   );
