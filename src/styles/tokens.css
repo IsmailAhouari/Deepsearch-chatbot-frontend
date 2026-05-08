@@ -20,8 +20,8 @@
   --ds-radius-lg:    16px;
   --ds-font:         'Inter', system-ui, -apple-system, sans-serif;
   --ds-sidebar-w:    220px;
-  --ds-modal-w:      860px;
-  --ds-modal-h:      580px;
+  --ds-modal-w:      940px;
+  --ds-modal-h:      680px;
 }
 
 /* Reset */

@@ -186,9 +186,9 @@
 
 .ds-modal {
   width: var(--ds-modal-w);
-  max-width: 95vw;
+  max-width: 98vw;
   height: var(--ds-modal-h);
-  max-height: 90vh;
+  max-height: 95vh;
   background: var(--ds-bg-surface);
   border: 1px solid var(--ds-border);
   border-radius: var(--ds-radius-lg);
