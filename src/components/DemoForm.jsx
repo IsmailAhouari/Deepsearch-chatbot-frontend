@@ -42,7 +42,7 @@ export default function DemoForm({ formType, onSubmit }) {
 
   if (formType === 'demo') {
     return (
-      <form className="ds-form" onSubmit={handleSubmit}>
+      <form className="ds-form ds-form--centered" onSubmit={handleSubmit}>
         <div className="ds-form-row">
           <div className="ds-form-field">
             <label>Nome *</label>
@@ -76,7 +76,7 @@ export default function DemoForm({ formType, onSubmit }) {
           <textarea name="note" rows="2" placeholder="Informazioni aggiuntive (opzionale)" value={form.note || ''} onChange={handleChange} />
         </div>
         <button type="submit" className="ds-submit-btn">Richiedi Demo Riservata</button>
-        <p className="ds-form-note">* Evita di inserire dati sensibili</p>
+        
       </form>
     );
   }
@@ -84,7 +84,7 @@ export default function DemoForm({ formType, onSubmit }) {
   if (formType === 'contact' || formType === 'genericRequest') {
     const isGeneric = formType === 'genericRequest';
     return (
-      <form className="ds-form" onSubmit={handleSubmit}>
+      <form className="ds-form ds-form--centered" onSubmit={handleSubmit}>
         <div className="ds-form-row">
           <div className="ds-form-field">
             <label>Nome *</label>
@@ -112,14 +112,14 @@ export default function DemoForm({ formType, onSubmit }) {
         <button type="submit" className="ds-submit-btn">
           {isGeneric ? 'Invia Richiesta' : 'Invia Messaggio'}
         </button>
-        <p className="ds-form-note">* Evita di inserire dati sensibili</p>
+        
       </form>
     );
   }
 
   // Fallback / Generic form (standard)
   return (
-    <form className="ds-form" onSubmit={handleSubmit}>
+    <form className="ds-form ds-form--centered" onSubmit={handleSubmit}>
       <div className="ds-form-row">
         <div className="ds-form-field">
           <label>Nome *</label>
@@ -139,7 +139,7 @@ export default function DemoForm({ formType, onSubmit }) {
         <input name="telefono" type="tel" placeholder="Telefono" value={form.telefono || ''} onChange={handleChange} />
       </div>
       <button type="submit" className="ds-submit-btn">Invia Richiesta</button>
-      <p className="ds-form-note">* Evita di inserire dati sensibili</p>
+      
     </form>
   );
 }

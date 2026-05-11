@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export const useSession = create((set, get) => ({
+export const useSession = create((set) => ({
   open: false,
   screen: 'welcome',
   history: [],

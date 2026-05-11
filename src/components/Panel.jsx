@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSession } from '../store/sessionStore.js';
 import { SCREENS } from '../flows/index.js';
 import { FAQ } from '../flows/faq.js';
@@ -14,7 +13,6 @@ export default function Panel() {
   const back = useSession((s) => s.back);
   const setQual = useSession((s) => s.setQual);
   const setLead = useSession((s) => s.setLead);
-  const close_modal = useSession((s) => s.close_modal);
   const startDemoFlow = useSession((s) => s.startDemoFlow);
 
   const screenDef = SCREENS[screen] || SCREENS['fallback'];

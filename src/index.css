@@ -545,6 +545,11 @@
   gap: 12px;
 }
 
+.ds-form--centered {
+  margin: auto;
+  width: 100%;
+}
+
 .ds-form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;

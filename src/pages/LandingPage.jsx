@@ -1,4 +1,3 @@
-import React from 'react';
 import { useChatStore } from '../store/chatStore';
 
 export function LandingPage() {

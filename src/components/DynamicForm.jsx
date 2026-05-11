@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useChatStore } from '../store/chatStore';
+import { useState } from 'react';
 
 export function DynamicForm({ formType, onSubmit }) {
   const [formData, setFormData] = useState({});
@@ -60,35 +59,35 @@ export function DynamicForm({ formType, onSubmit }) {
 
   if (formType === 'qualification') {
     return (
-      <form className="form-container" onSubmit={handleSubmit}>
-        <div className="form-row">
-          <div className="form-group">
+      <form className="ds-form ds-form--centered" onSubmit={handleSubmit}>
+        <div className="ds-form-row">
+          <div className="ds-form-field">
             <label htmlFor="fname">Nome *</label>
             <input
               id="fname"
               type="text"
               name="fname"
               placeholder="Nome"
+              className={errors.fname ? 'ds-field-error' : ''}
               value={formData.fname || ''}
               onChange={handleInputChange}
             />
-            {errors.fname && <small style={{ color: 'var(--danger)' }}>{errors.fname}</small>}
           </div>
-          <div className="form-group">
+          <div className="ds-form-field">
             <label htmlFor="lname">Cognome *</label>
             <input
               id="lname"
               type="text"
               name="lname"
               placeholder="Cognome"
+              className={errors.lname ? 'ds-field-error' : ''}
               value={formData.lname || ''}
               onChange={handleInputChange}
             />
-            {errors.lname && <small style={{ color: 'var(--danger)' }}>{errors.lname}</small>}
           </div>
         </div>
 
-        <div className="form-group">
+        <div className="ds-form-field">
           <label htmlFor="email">Email aziendale *</label>
           <input
             id="email"
@@ -100,7 +99,7 @@ export function DynamicForm({ formType, onSubmit }) {
           />
         </div>
 
-        <div className="form-group">
+        <div className="ds-form-field">
           <label htmlFor="org">Azienda *</label>
           <input
             id="org"
@@ -112,8 +111,8 @@ export function DynamicForm({ formType, onSubmit }) {
           />
         </div>
 
-        <div className="form-row">
-          <div className="form-group">
+        <div className="ds-form-row">
+          <div className="ds-form-field">
             <label htmlFor="role">Ruolo *</label>
             <select
               id="role"
@@ -130,7 +129,7 @@ export function DynamicForm({ formType, onSubmit }) {
               <option>Altro</option>
             </select>
           </div>
-          <div className="form-group">
+          <div className="ds-form-field">
             <label htmlFor="orgType">Tipo di organizzazione *</label>
             <select
               id="orgType"
@@ -150,67 +149,70 @@ export function DynamicForm({ formType, onSubmit }) {
           </div>
         </div>
 
-        <div style={{ marginTop: '18px', borderTop: '1px solid var(--border)', paddingTop: '16px' }}>
-          <label style={{ fontSize: '0.78rem', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '12px', display: 'block' }}>
+        <div style={{ marginTop: '18px', borderTop: '1px solid var(--ds-border)', paddingTop: '16px' }}>
+          <label style={{ fontSize: '0.78rem', fontWeight: '600', color: 'var(--ds-text-3)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '12px', display: 'block' }}>
             Dichiarazione di consenso (GDPR Art. 7 / FADP)
           </label>
           
-          <div className="checkbox-group">
+          <div className="ds-form-field" style={{ flexDirection: 'row', gap: '10px', alignItems: 'flex-start', marginBottom: '8px' }}>
             <input
               type="checkbox"
               id="consent1"
               name="consent1"
+              style={{ width: 'auto', marginTop: '3px' }}
               checked={consent.consent1}
               onChange={handleConsentChange}
             />
-            <label htmlFor="consent1">
+            <label htmlFor="consent1" style={{ textTransform: 'none', fontSize: '12px', color: 'var(--ds-text-2)' }}>
               <strong>Livello 1 — Elaborazione contatto</strong><br />
               Acconsento a che DeepSearch elabori i miei dati di contatto per rispondere a questa richiesta.
             </label>
           </div>
 
-          <div className="checkbox-group">
+          <div className="ds-form-field" style={{ flexDirection: 'row', gap: '10px', alignItems: 'flex-start', marginBottom: '8px' }}>
             <input
               type="checkbox"
               id="consent2"
               name="consent2"
+              style={{ width: 'auto', marginTop: '3px' }}
               checked={consent.consent2}
               onChange={handleConsentChange}
             />
-            <label htmlFor="consent2">
+            <label htmlFor="consent2" style={{ textTransform: 'none', fontSize: '12px', color: 'var(--ds-text-2)' }}>
               <strong>Livello 2 — Marketing &amp; Arricchimento</strong> (Opzionale)<br />
               Acconsento a ricevere aggiornamenti sui prodotti.
             </label>
           </div>
 
-          <div className="checkbox-group">
+          <div className="ds-form-field" style={{ flexDirection: 'row', gap: '10px', alignItems: 'flex-start' }}>
             <input
               type="checkbox"
               id="consent3"
               name="consent3"
+              style={{ width: 'auto', marginTop: '3px' }}
               checked={consent.consent3}
               onChange={handleConsentChange}
             />
-            <label htmlFor="consent3">
+            <label htmlFor="consent3" style={{ textTransform: 'none', fontSize: '12px', color: 'var(--ds-text-2)' }}>
               <strong>Livello 3 — Condivisione dati</strong> (Opzionale)<br />
               Acconsento alla condivisione con partner certificati DeepSearch.
             </label>
           </div>
         </div>
 
-        <button type="submit" className="submit-btn">
+        <button type="submit" className="ds-submit-btn">
           Invia richiesta — Instradamento al team umano
         </button>
-        <p className="form-note">*Evita di inserire dati sensibili. I dati transitano direttamente al CRM protetto.</p>
+        
       </form>
     );
   }
 
   if (formType === 'contact') {
     return (
-      <form className="form-container" onSubmit={handleSubmit}>
-        <div className="form-row">
-          <div className="form-group">
+      <form className="ds-form ds-form--centered" onSubmit={handleSubmit}>
+        <div className="ds-form-row">
+          <div className="ds-form-field">
             <label htmlFor="cname">Nome *</label>
             <input
               id="cname"
@@ -221,7 +223,7 @@ export function DynamicForm({ formType, onSubmit }) {
               onChange={handleInputChange}
             />
           </div>
-          <div className="form-group">
+          <div className="ds-form-field">
             <label htmlFor="corg">Azienda *</label>
             <input
               id="corg"
@@ -234,7 +236,7 @@ export function DynamicForm({ formType, onSubmit }) {
           </div>
         </div>
 
-        <div className="form-group">
+        <div className="ds-form-field">
           <label htmlFor="cemail">Email *</label>
           <input
             id="cemail"
@@ -246,7 +248,7 @@ export function DynamicForm({ formType, onSubmit }) {
           />
         </div>
 
-        <div className="form-group">
+        <div className="ds-form-field">
           <label htmlFor="cphone">Telefono</label>
           <input
             id="cphone"
@@ -258,7 +260,7 @@ export function DynamicForm({ formType, onSubmit }) {
           />
         </div>
 
-        <div className="form-group">
+        <div className="ds-form-field">
           <label htmlFor="cmessage">Messaggio *</label>
           <textarea
             id="cmessage"
@@ -270,7 +272,8 @@ export function DynamicForm({ formType, onSubmit }) {
           />
         </div>
 
-        <button type="submit" className="submit-btn">Invia al team</button>
+        <button type="submit" className="ds-submit-btn">Invia al team</button>
+        
       </form>
     );
   }

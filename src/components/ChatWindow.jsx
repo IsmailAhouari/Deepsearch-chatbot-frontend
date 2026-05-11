@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useChatStore } from '../store/chatStore';
 import MessageBubble, { SystemMessage } from './MessageBubble';
@@ -39,7 +39,7 @@ const FLOWS = {
 function ChatWindow() {
   const navigate = useNavigate();
   const location = useLocation();
-  const messagesRef = React.useRef(null);
+  const messagesRef = useRef(null);
 
   const {
     messages,
@@ -67,22 +67,7 @@ function ChatWindow() {
   const flowId = getFlowIdFromPath(location.pathname);
   const flow = FLOWS[flowId];
 
-  // Render initial step when flow changes
-  useEffect(() => {
-    if (flow) {
-      clearMessages();
-      setTimeout(() => renderStep(0), 50);
-    }
-  }, [flowId]);
-
-  // Auto-scroll to bottom
-  useEffect(() => {
-    if (messagesRef.current) {
-      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
-    }
-  }, [messages]);
-
-  const renderStep = (stepIndex) => {
+  const renderStep = useCallback((stepIndex) => {
     if (!flow || !flow.steps[stepIndex]) return;
 
     const step = flow.steps[stepIndex];
@@ -98,7 +83,22 @@ function ChatWindow() {
         addMessage(`Compila il modulo di contatto per procedere.`, 'bot');
       }
     }, 700);
-  };
+  }, [flow, userData, setTyping, addMessage]);
+
+  // Render initial step when flow changes
+  useEffect(() => {
+    if (flow) {
+      clearMessages();
+      setTimeout(() => renderStep(0), 50);
+    }
+  }, [flowId, clearMessages, renderStep, flow]);
+
+  // Auto-scroll to bottom
+  useEffect(() => {
+    if (messagesRef.current) {
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const handleOptionClick = (option) => {
     addMessage(option.label, 'user');
