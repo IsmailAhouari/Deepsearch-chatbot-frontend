@@ -98,23 +98,29 @@ export default function Panel() {
         <div className="ds-panel-content">
           <div className="ds-faq">
             <div className="ds-faq-title">Domande Frequenti</div>
-            {Object.entries(FAQ).map(([question, answer]) => (
-              <div key={question} className="ds-faq-item">
-                <div className="ds-faq-q">{question}</div>
-                <div className="ds-faq-a">{answer}</div>
-              </div>
-            ))}
-          </div>
-          <div className="ds-button-grid" style={{ marginTop: '16px' }}>
-            <button className="ds-choice-btn" onClick={() => startDemoFlow()}>
-              <span className="ds-choice-label">Richiedi demo</span>
-            </button>
-            <button className="ds-choice-btn" onClick={() => navigate('flowF')}>
-              <span className="ds-choice-label">Contatta il team</span>
-            </button>
-            <button className="ds-choice-btn" onClick={() => navigate('welcome')}>
-              <span className="ds-choice-label">Torna al menu</span>
-            </button>
+            {FAQ.map((item, idx) => {
+              const isClickable = item.target || item.action;
+              return (
+                <div key={idx} className="ds-faq-group" style={{ marginBottom: '12px' }}>
+                  <div className="ds-faq-q" style={{ paddingLeft: '4px', marginBottom: '8px' }}>{item.question}</div>
+                  <div 
+                    className={`ds-faq-item ${isClickable ? 'clickable' : ''}`}
+                    onClick={() => {
+                      if (item.action?.type === 'startDemo') {
+                        startDemoFlow(item.action);
+                      } else if (item.target) {
+                        navigate(item.target);
+                      }
+                    }}
+                  >
+                    <div className="ds-faq-a">{item.answer}</div>
+                    {isClickable && (
+                      <span className="ds-faq-chevron" style={{ color: 'var(--ds-accent)', fontWeight: 'bold', fontSize: '14px', opacity: 0.6 }}>›</span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

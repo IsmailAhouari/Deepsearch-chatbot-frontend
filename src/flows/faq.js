@@ -1,15 +1,31 @@
-export const FAQ = {
-  "Cos'è DeepSearch?": "Una piattaforma di intelligence che individua relazioni tra soggetti, controparti e strutture societarie.",
-  "È un chatbot?": "No. Il chatbot guida l'utente. DeepSearch è una piattaforma di analisi.",
-  "Posso richiedere una demo?": "Sì, è possibile richiedere una demo personalizzata.",
-  "A chi è rivolto?": "Funzioni risk, legale, compliance, HR e direzione.",
-};
+export const FAQ = [
+  {
+    question: "Cos'è DeepSearch?",
+    answer: "Una piattaforma di intelligence che individua relazioni tra soggetti, controparti e segnali di rischio.",
+    target: "flowA",
+  },
+  {
+    question: "È un chatbot?",
+    answer: "No. Il chatbot guida l'utente. DeepSearch è una piattaforma di analisi.",
+  },
+  {
+    question: "Posso richiedere una demo?",
+    answer: "Sì, è possibile richiedere una demo personalizzata.",
+    action: { type: 'startDemo' },
+  },
+  {
+    question: "A chi è rivolto?",
+    answer: "Funzioni risk, legale, compliance, HR e direzione.",
+    target: "flowC",
+  },
+];
 
 export const faqScreens = [
   {
     id: 'faq',
     showSidebar: true,
     component: 'faq',
+    title: 'FAQ',
   },
   {
     id: 'fallback',

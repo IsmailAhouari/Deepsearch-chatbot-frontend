@@ -732,6 +732,29 @@
   line-height: 1.5;
 }
 
+.ds-faq-item.clickable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ds-faq-item.clickable:hover {
+  border-color: var(--ds-accent);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.ds-faq-item.clickable:hover .ds-faq-chevron {
+  opacity: 1 !important;
+  transform: translateX(2px);
+}
+
+.ds-faq-chevron {
+  transition: all 0.2s ease;
+}
+
 /* ── Animations ── */
 
 @keyframes ds-fade-in {

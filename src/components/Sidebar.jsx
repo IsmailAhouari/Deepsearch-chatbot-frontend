@@ -10,6 +10,7 @@ const SIDEBAR_ITEMS = [
   { key: 'flowE', label: 'Informazioni commerciali' },
   { key: 'flowF', label: 'Contatta il team' },
   { key: 'flowG_intro', label: 'Altro' },
+  { key: 'faq', label: 'FAQ' },
 ];
 
 export default function Sidebar() {

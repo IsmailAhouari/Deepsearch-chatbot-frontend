@@ -11,5 +11,6 @@ export const welcomeScreen = {
     { label: 'Informazioni commerciali', sublabel: 'Licenze, piani e condizioni', target: 'flowE', icon: '▤' },
     { label: 'Contatta il team', sublabel: 'Richieste dirette al team DeepSearch', target: 'flowF', icon: '✉' },
     { label: 'Altro', sublabel: 'Richieste personalizzate e approfondimenti', target: 'flowG_intro', icon: '⋯' },
+    { label: 'FAQ', sublabel: 'Risposte alle domande più frequenti', target: 'faq', icon: '?' },
   ],
 };

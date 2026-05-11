@@ -42,6 +42,6 @@ export function getActiveFlow(screenId) {
   if (screenId.startsWith('flowE')) return 'flowE';
   if (screenId.startsWith('flowF')) return 'flowF';
   if (screenId.startsWith('flowG')) return 'flowG';
-  if (screenId === 'faq' || screenId === 'fallback') return null;
+  if (screenId === 'faq' || screenId === 'fallback') return 'faq';
   return null;
 }
