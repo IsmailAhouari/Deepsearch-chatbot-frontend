@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSession } from '../store/sessionStore.js';
+import logo from '../assets/icon.png';
 
 export default function Trigger() {
   const open_modal = useSession((s) => s.open_modal);
@@ -13,7 +14,7 @@ export default function Trigger() {
         <div className="ds-trigger-widget">
           <div className="ds-trigger-header">
             <div className="ds-trigger-logo">
-              <img src="/icons.png" alt="DeepSearch Logo" className="ds-trigger-logo-img" />
+              <img src={logo} alt="DeepSearch Logo" className="ds-trigger-logo-img" />
             </div>
             <h2 className="ds-trigger-title">DeepSearch™ Intelligence</h2>
           </div>
