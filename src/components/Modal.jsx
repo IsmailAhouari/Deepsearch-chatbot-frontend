@@ -3,7 +3,7 @@ import { useSession } from '../store/sessionStore.js';
 import Sidebar from './Sidebar.jsx';
 import Panel from './Panel.jsx';
 import { SCREENS } from '../flows/index.js';
-import logo from '../assets/icon.png';
+import dsLogo from '../assets/icon.png';
 
 export default function Modal() {
   const close_modal = useSession((s) => s.close_modal);
@@ -26,7 +26,7 @@ export default function Modal() {
               </button>
             )}
             <div className="ds-header-icon">
-              <img src={logo} alt="Logo" className="ds-header-logo-img" />
+              <img src={dsLogo} alt="Logo" className="ds-header-logo-img" />
             </div>
             <div>
               <div className="ds-header-title">DeepSearch ● AI Assistant</div>
