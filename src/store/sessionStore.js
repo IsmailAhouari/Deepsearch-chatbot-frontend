@@ -6,20 +6,28 @@ export const useSession = create((set, get) => ({
   history: [],
   qualification: {},
   lead: {},
+  mobileSidebarOpen: false,
 
   open_modal: () => set({ open: true, screen: 'welcome', history: [], qualification: {}, lead: {} }),
-  close_modal: () => set({ open: false }),
+  close_modal: () => set({ open: false, mobileSidebarOpen: false }),
   setOpen: (isOpen = true) => set({ open: isOpen }),
 
-  navigate: (to) => set((s) => ({
-    history: [...s.history, s.screen],
-    screen: to,
-  })),
+  toggleMobileSidebar: () => set((s) => ({ mobileSidebarOpen: !s.mobileSidebarOpen })),
+  closeMobileSidebar: () => set({ mobileSidebarOpen: false }),
+
+  navigate: (to) => set((s) => {
+    // Auto-close sidebar on mobile navigation
+    return {
+      history: [...s.history, s.screen],
+      screen: to,
+      mobileSidebarOpen: false,
+    };
+  }),
 
   back: () => set((s) => {
     const h = [...s.history];
     const prev = h.pop() ?? 'welcome';
-    return { screen: prev, history: h };
+    return { screen: prev, history: h, mobileSidebarOpen: false };
   }),
 
   setQual: (data) => set((s) => ({
@@ -50,7 +58,8 @@ export const useSession = create((set, get) => ({
     return {
       qualification: newQual,
       history: [...s.history, s.screen],
-      screen: nextScreen
+      screen: nextScreen,
+      mobileSidebarOpen: false
     };
   }),
 }));

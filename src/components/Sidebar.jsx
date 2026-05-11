@@ -16,6 +16,7 @@ const SIDEBAR_ITEMS = [
 export default function Sidebar() {
   const screen = useSession((s) => s.screen);
   const navigate = useSession((s) => s.navigate);
+  const mobileSidebarOpen = useSession((s) => s.mobileSidebarOpen);
   const activeFlow = getActiveFlow(screen);
 
   const startDemoFlow = useSession((s) => s.startDemoFlow);
@@ -29,7 +30,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="ds-sidebar">
+    <div className={`ds-sidebar ${mobileSidebarOpen ? 'mobile-open' : ''}`}>
       <div className="ds-sidebar-nav">
         {SIDEBAR_ITEMS.map((item) => {
           const isActive =

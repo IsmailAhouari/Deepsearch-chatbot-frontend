@@ -250,6 +250,27 @@
   margin-top: 1px;
 }
 
+.ds-mobile-menu-trigger {
+  display: none;
+  background: none;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-sm);
+  color: var(--ds-text-2);
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+  margin-right: 4px;
+}
+
+.ds-mobile-menu-trigger:hover {
+  border-color: var(--ds-border-hi);
+  color: var(--ds-text-1);
+}
+
 .ds-header-actions {
   display: flex;
   align-items: center;
@@ -791,6 +812,15 @@
   }
 }
 
+@keyframes ds-slide-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 /* ── Mobile (≤640px) ── */
 
 @media (max-width: 640px) {
@@ -804,6 +834,24 @@
 
   .ds-sidebar {
     display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 240px;
+    z-index: 1000;
+    background: var(--ds-bg-surface);
+    box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+    border-right: 1px solid var(--ds-border-hi);
+    animation: ds-slide-in-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .ds-sidebar.mobile-open {
+    display: flex;
+  }
+
+  .ds-body {
+    position: relative;
   }
 
   .ds-button-grid--2col {
@@ -828,6 +876,10 @@
 
   .ds-form-row {
     grid-template-columns: 1fr;
+  }
+
+  .ds-mobile-menu-trigger {
+    display: flex;
   }
 
   .trigger-title {
