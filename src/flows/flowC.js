@@ -35,7 +35,7 @@ export const flowCScreens = [
   {
     id: 'flowC_compliance',
     showSidebar: true,
-    message: "DeepSearch supporta i processi di compliance attraverso analisi relazionali avanzate: verifica KYC, identificazione PEP e soggetti sanzionati, monitoraggio continuo delle esposizioni.",
+    message: "DeepSearch supporta i processi di compliance attraverso analisi relazionali avanzate, migliorando la visibilità su strutture complesse, controparti ed esposizioni indirette.",
     ctas: [
       { label: 'Richiedi demo', action: { type: 'startDemo', role: 'Compliance', selectedPersona: 'Compliance / AML', selectedPersonaLabel: 'Compliance / AML', sourceFlow: 'flowC', sourceScreen: 'flowC_compliance' } },
       { label: 'Contatto commerciale', target: 'flowF' },
@@ -53,7 +53,7 @@ export const flowCScreens = [
   {
     id: 'flowC_board',
     showSidebar: true,
-    message: "DeepSearch è progettato per supportare decisioni strategiche, fornendo intelligence sintetica su controparti, mercati e rischi emergenti — direttamente fruibile a livello di direzione e board.",
+    message: "DeepSearch è progettato per supportare decisioni strategiche, fornendo intelligence strutturata su controparti, relazioni e rischi.",
     ctas: [
       { label: 'Demo executive', action: { type: 'startDemo', role: 'Direzione', selectedPersona: 'Direzione / Board', selectedPersonaLabel: 'Direzione / Board', sourceFlow: 'flowC', sourceScreen: 'flowC_board' } },
       { label: 'Contatta il team', target: 'flowF' },

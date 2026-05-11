@@ -16,7 +16,7 @@ export const flowBScreens = [
   {
     id: 'flowB_dd',
     showSidebar: true,
-    message: "DeepSearch consente di comprendere con chi si sta realmente operando, individuando relazioni societarie, esposizioni e segnali di rischio prima della formalizzazione di un accordo.",
+    message: "DeepSearch consente di comprendere con chi si sta realmente operando, individuando relazioni indirette, strutture complesse ed esposizioni non evidenti.",
     prompt: 'Il tuo caso riguarda:',
     choices: [
       { label: 'Fornitore', target: 'flowB_dd_sub' },
@@ -38,7 +38,7 @@ export const flowBScreens = [
   {
     id: 'flowB_lit',
     showSidebar: true,
-    message: "DeepSearch supporta studi legali e consulenti nella ricostruzione delle relazioni tra soggetti coinvolti in contenziosi, identificando asset, connessioni e precedenti utili alla strategia legale.",
+    message: "DeepSearch supporta studi legali e consulenti nella ricostruzione delle relazioni tra soggetti, nell’individuazione di controparti rilevanti e nel rafforzamento della strategia informativa.",
     prompt: 'Il contesto è:',
     choices: [
       { label: 'Contenzioso civile', target: 'flowB_lit_sub' },

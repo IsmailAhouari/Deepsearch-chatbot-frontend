@@ -2,7 +2,7 @@ export const flowAScreens = [
   {
     id: 'flowA',
     showSidebar: true,
-    message: "DeepSearch è una piattaforma di intelligence progettata per individuare relazioni tra soggetti, controparti e strutture societarie in contesti ad alto rischio.",
+    message: "DeepSearch è una piattaforma di intelligence progettata per individuare relazioni nascoste tra persone, aziende, controparti e segnali di rischio.\n\nConsente di superare verifiche frammentate e trasformare i dati in intelligence strutturata.",
     prompt: 'Vuoi una spiegazione focalizzata su:',
     choices: [
       { label: 'Analisi del rischio', target: 'flowA_risk' },
@@ -24,7 +24,7 @@ export const flowAScreens = [
   {
     id: 'flowA_dd',
     showSidebar: true,
-    message: "DeepSearch supporta attività di due diligence avanzata attraverso l'analisi di fonti aperte strutturate: relazioni societarie, esposizioni mediatiche, precedenti giudiziari e reti di controllo.",
+    message: "DeepSearch supporta attività di due diligence avanzata attraverso l’analisi delle relazioni, l’identificazione delle entità e l’integrazione di fonti multiple.\n\nQuesto consente di individuare strutture complesse, collegamenti indiretti ed esposizioni che spesso non emergono da verifiche tradizionali.",
     ctas: [
       { label: "Esplora casi d'uso", target: 'flowB' },
       { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Due diligence', sourceFlow: 'flowA', sourceScreen: 'flowA_dd' } },
@@ -42,7 +42,7 @@ export const flowAScreens = [
   {
     id: 'flowA_rep',
     showSidebar: true,
-    message: "DeepSearch consente di organizzare informazioni rilevanti in un framework di intelligence reputazionale: esposizione mediatica, associazioni negative, sentiment e segnali di rischio emergenti.",
+    message: "DeepSearch consente di organizzare informazioni rilevanti in un framework di intelligence, supportando l’identificazione preventiva di esposizioni reputazionali e collegamenti sensibili.",
     ctas: [
       { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Rischio reputazionale', sourceFlow: 'flowA', sourceScreen: 'flowA_rep' } },
       { label: 'Contatta il team', target: 'flowF' },

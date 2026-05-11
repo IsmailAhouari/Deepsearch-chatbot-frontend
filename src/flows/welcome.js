@@ -1,7 +1,7 @@
 export const welcomeScreen = {
   id: 'welcome',
   showSidebar: false,
-  message: 'La maggior parte degli strumenti cerca dati.\nDeepSearch individua relazioni nascoste tra soggetti, controparti e strutture societarie.',
+  message: 'La maggior parte degli strumenti cerca dati.\nDeepSearch individua relazioni nascoste.\n\nPosso guidarti tra funzionalità, casi d’uso o aiutarti a richiedere una demo.',
   prompt: 'Scegli cosa desideri esplorare:',
   choices: [
     { label: 'Panoramica piattaforma', sublabel: 'Comprendi come DeepSearch trasforma i dati in intelligence', target: 'flowA', icon: '◈' },
