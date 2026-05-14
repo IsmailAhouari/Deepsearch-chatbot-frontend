@@ -21,7 +21,7 @@
   --ds-font:         'Inter', system-ui, -apple-system, sans-serif;
   --ds-sidebar-w:    220px;
   --ds-modal-w:      940px;
-  --ds-modal-h:      680px;
+  --ds-modal-h:      fit-content;
 }
 
 /* Reset */

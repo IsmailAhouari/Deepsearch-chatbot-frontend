@@ -316,31 +316,8 @@
   flex-direction: column;
 }
 
-.ds-sidebar-item {
-  display: block;
-  width: 100%;
-  padding: 9px 16px;
-  border: none;
-  background: none;
-  color: var(--ds-text-2);
-  font-size: 13px;
-  font-family: var(--ds-font);
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.15s;
-  border-left: 2px solid transparent;
-}
+/* Sidebar item styles are defined in the "Sidebar Step Indicators" section below */
 
-.ds-sidebar-item:hover {
-  color: var(--ds-text-1);
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.ds-sidebar-item.active {
-  color: var(--ds-text-1);
-  border-left-color: var(--ds-accent);
-  background: rgba(27, 111, 235, 0.05);
-}
 
 /* ── Panel ── */
 
@@ -779,6 +756,145 @@
 
 .ds-faq-chevron {
   transition: all 0.2s ease;
+}
+
+/* ── Qualification Summary (shown in demo form) ── */
+
+.ds-qual-summary {
+  background: var(--ds-bg-card);
+  border: 1px solid var(--ds-border-hi);
+  border-radius: var(--ds-radius-md);
+  padding: 16px 18px;
+  margin-bottom: 8px;
+}
+
+.ds-qual-summary-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--ds-accent);
+  margin-bottom: 12px;
+}
+
+.ds-qual-summary-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ds-qual-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ds-qual-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--ds-text-3);
+  min-width: 110px;
+  flex-shrink: 0;
+}
+
+.ds-qual-value {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ds-text-1);
+}
+
+/* ── Sidebar Step Indicators ── */
+
+.ds-sidebar-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--ds-text-3);
+  padding: 4px 16px 10px;
+  opacity: 0.7;
+}
+
+.ds-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 16px;
+  border: none;
+  background: none;
+  color: var(--ds-text-2);
+  font-size: 13px;
+  font-family: var(--ds-font);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+}
+
+.ds-step-indicator {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--ds-bg-card);
+  border: 1px solid var(--ds-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+  color: var(--ds-text-3);
+  transition: all 0.2s;
+}
+
+.ds-step-label {
+  font-size: 12px;
+  font-weight: 500;
+  flex: 1;
+}
+
+.ds-step-value {
+  font-size: 10px;
+  color: var(--ds-text-3);
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-sidebar-item.active .ds-step-indicator {
+  background: var(--ds-accent);
+  border-color: var(--ds-accent);
+  color: #fff;
+}
+
+.ds-sidebar-item.active {
+  color: var(--ds-text-1);
+  border-left-color: var(--ds-accent);
+  background: rgba(27, 111, 235, 0.05);
+}
+
+.ds-sidebar-item.completed .ds-step-indicator {
+  background: rgba(29, 158, 117, 0.15);
+  border-color: var(--ds-green);
+  color: var(--ds-green);
+}
+
+.ds-sidebar-item.completed {
+  color: var(--ds-text-2);
+}
+
+.ds-sidebar-item.pending {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.ds-sidebar-item.pending:hover {
+  background: none;
+  color: var(--ds-text-2);
 }
 
 /* ── Animations ── */

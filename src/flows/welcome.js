@@ -1,16 +1,10 @@
 export const welcomeScreen = {
   id: 'welcome',
   showSidebar: false,
-  message: 'La maggior parte degli strumenti cerca dati.\nDeepSearch individua relazioni nascoste.\n\nPosso guidarti tra funzionalità, casi d’uso o aiutarti a richiedere una demo.',
-  prompt: 'Scegli cosa desideri esplorare:',
+  message: 'La maggior parte degli strumenti cerca dati.\nDeepSearch individua relazioni nascoste.\n\nPosso aiutarti a capire come DeepSearch può supportare le tue esigenze.',
+  prompt: 'Stai cercando informazioni su:',
   choices: [
-    { label: 'Panoramica piattaforma', sublabel: 'Comprendi come DeepSearch trasforma i dati in intelligence', target: 'flowA', icon: '◈' },
-    { label: "Casi d'uso", sublabel: 'Esplora applicazioni reali', target: 'flowB', icon: '⌥' },
-    { label: 'A chi si rivolge', sublabel: 'Identifica il tuo profilo', target: 'flowC', icon: '❖' },
-    { label: 'Richiedi demo', sublabel: 'Prenota una sessione guidata', action: { type: 'startDemo' }, icon: '✧' },
-    { label: 'Informazioni commerciali', sublabel: 'Licenze, piani e condizioni', target: 'flowE', icon: '▤' },
-    { label: 'Contatta il team', sublabel: 'Richieste dirette al team DeepSearch', target: 'flowF', icon: '✉' },
-    { label: 'Altro', sublabel: 'Richieste personalizzate e approfondimenti', target: 'flowG_intro', icon: '⋯' },
-    { label: 'FAQ', sublabel: 'Risposte alle domande più frequenti', target: 'faq', icon: '?' },
+    { label: 'Aziende', sublabel: 'Verifica societaria, due diligence, controparti', target: 'funnel_intent_company', icon: '◈' },
+    { label: 'Persone', sublabel: 'Background check, verifica profili, screening', target: 'funnel_intent_person', icon: '❖' },
   ],
 };

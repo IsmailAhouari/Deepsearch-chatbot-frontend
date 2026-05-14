@@ -4,9 +4,11 @@ import { useSession } from '../store/sessionStore.js';
 export default function DemoForm({ formType, onSubmit }) {
   const qualification = useSession((s) => s.qualification);
   const [form, setForm] = useState(() => {
-    // Pre-fill ruolo from qualification.role for demo form
-    if (formType === 'demo' && qualification.role) {
-      return { ruolo: qualification.role };
+    if (formType === 'demo') {
+      return {
+        ...(qualification.role ? { ruolo: qualification.role } : {}),
+        ...(qualification.geoArea ? { paese: qualification.geoArea } : {}),
+      };
     }
     return {};
   });
@@ -37,12 +39,59 @@ export default function DemoForm({ formType, onSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validate()) return;
-    onSubmit(form);
+    // Merge qualification data into the submission payload with requested schema
+    const mappedQual = {
+      subject_type: qualification.subjectType?.toLowerCase(),
+      motivation: qualification.intent,
+      country: qualification.geoArea,
+      user_role: qualification.role
+    };
+    
+    onSubmit({
+      ...form,
+      qualification: mappedQual,
+    });
   };
+
+  // Check if we have qualification data to show
+  const hasQualification = qualification.subjectType || qualification.intent || qualification.geoArea || qualification.role;
 
   if (formType === 'demo') {
     return (
       <form className="ds-form ds-form--centered" onSubmit={handleSubmit}>
+        {/* Qualification summary — shows all previously collected answers */}
+        {hasQualification && (
+          <div className="ds-qual-summary">
+            <div className="ds-qual-summary-title">Riepilogo qualificazione</div>
+            <div className="ds-qual-summary-grid">
+              {qualification.subjectType && (
+                <div className="ds-qual-row">
+                  <span className="ds-qual-label">Soggetto</span>
+                  <span className="ds-qual-value">{qualification.subjectType}</span>
+                </div>
+              )}
+              {qualification.intent && (
+                <div className="ds-qual-row">
+                  <span className="ds-qual-label">Motivazione</span>
+                  <span className="ds-qual-value">{qualification.intent}</span>
+                </div>
+              )}
+              {qualification.geoArea && (
+                <div className="ds-qual-row">
+                  <span className="ds-qual-label">Area geografica</span>
+                  <span className="ds-qual-value">{qualification.geoArea}</span>
+                </div>
+              )}
+              {qualification.role && (
+                <div className="ds-qual-row">
+                  <span className="ds-qual-label">Funzione</span>
+                  <span className="ds-qual-value">{qualification.role}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         <div className="ds-form-row">
           <div className="ds-form-field">
             <label>Nome *</label>

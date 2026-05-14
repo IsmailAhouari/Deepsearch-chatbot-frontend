@@ -1,64 +1,102 @@
 import React from 'react';
 import { useSession } from '../store/sessionStore.js';
-import { getActiveFlow } from '../flows/index.js';
+import { getFunnelStep } from '../flows/index.js';
 
-const SIDEBAR_ITEMS = [
-  { key: 'flowA', label: 'Panoramica piattaforma' },
-  { key: 'flowB', label: "Casi d'uso" },
-  { key: 'flowC', label: 'A chi si rivolge' },
-  { key: 'flowD_interest', label: 'Richiedi demo' },
-  { key: 'flowE', label: 'Informazioni commerciali' },
-  { key: 'flowF', label: 'Contatta il team' },
-  { key: 'flowG_intro', label: 'Altro' },
-  { key: 'faq', label: 'FAQ' },
+const FUNNEL_STEPS = [
+  { step: 1, label: 'Soggetto', screen: 'welcome', qualKey: 'subjectType' },
+  { step: 2, label: 'Motivazione', screen: null, qualKey: 'intent' },
+  { step: 3, label: 'Area Geografica', screen: 'funnel_geo', qualKey: 'geoArea' },
+  { step: 4, label: 'Funzione', screen: null, qualKey: 'role' },
+  { step: 5, label: 'Contatto', screen: 'funnel_form', qualKey: null },
 ];
 
 export default function Sidebar() {
   const screen = useSession((s) => s.screen);
   const navigate = useSession((s) => s.navigate);
+  const qualification = useSession((s) => s.qualification);
   const mobileSidebarOpen = useSession((s) => s.mobileSidebarOpen);
-  const activeFlow = getActiveFlow(screen);
 
-  const startDemoFlow = useSession((s) => s.startDemoFlow);
+  const currentStep = getFunnelStep(screen);
+  const isFunnel = currentStep > 0;
 
-  const handleClick = (item) => {
-    if (item.key === 'flowD_interest') {
-      startDemoFlow();
-    } else {
-      navigate(item.key);
-    }
-  };
+  // For funnel screens, show step progress
+  if (isFunnel) {
+    return (
+      <div className={`ds-sidebar ${mobileSidebarOpen ? 'mobile-open' : ''}`}>
+        <div className="ds-sidebar-nav">
+          <div className="ds-sidebar-section-label">Qualificazione</div>
+          {FUNNEL_STEPS.map((item) => {
+            const isActive = item.step === currentStep;
+            const isCompleted = item.qualKey ? !!qualification[item.qualKey] : item.step < currentStep;
+            const isPending = !isActive && !isCompleted;
 
+            // Determine the target screen for navigation
+            let targetScreen = item.screen;
+            if (item.step === 2) {
+              // Step 2 depends on subject type
+              targetScreen = qualification.subjectType === 'Persone' 
+                ? 'funnel_intent_person' 
+                : 'funnel_intent_company';
+            }
+            if (item.step === 4) {
+              // Step 4 depends on subject type
+              targetScreen = qualification.subjectType === 'Persone' 
+                ? 'funnel_role_person' 
+                : 'funnel_role_company';
+            }
+
+            const canClick = isCompleted && !isActive;
+
+            return (
+              <button
+                key={item.step}
+                className={`ds-sidebar-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''} ${isPending ? 'pending' : ''}`}
+                onClick={() => canClick && targetScreen && navigate(targetScreen)}
+                disabled={isPending}
+              >
+                <span className="ds-step-indicator">
+                  {isCompleted && !isActive ? '✓' : item.step}
+                </span>
+                <span className="ds-step-label">{item.label}</span>
+                {isCompleted && !isActive && qualification[item.qualKey] && (
+                  <span className="ds-step-value">{qualification[item.qualKey]}</span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="ds-sidebar-footer" style={{ padding: '16px 16px 0 16px', marginTop: 'auto' }}>
+          <button
+            className="ds-sidebar-item"
+            onClick={() => navigate('faq')}
+            style={{ opacity: 0.7, fontSize: '11px' }}
+          >
+            <span className="ds-step-indicator" style={{ fontSize: '10px' }}>?</span>
+            <span className="ds-step-label">FAQ</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // For non-funnel screens (legacy flows, FAQ), show minimal sidebar
   return (
     <div className={`ds-sidebar ${mobileSidebarOpen ? 'mobile-open' : ''}`}>
       <div className="ds-sidebar-nav">
-        {SIDEBAR_ITEMS.map((item) => {
-          const isActive =
-            (item.key === 'flowD_interest' && activeFlow === 'flowD') ||
-            (item.key !== 'flowD_interest' && activeFlow === item.key);
-
-          return (
-            <button
-              key={item.key}
-              className={`ds-sidebar-item ${isActive ? 'active' : ''}`}
-              onClick={() => handleClick(item)}
-            >
-              {item.label}
-            </button>
-          );
-        })}
-      </div>
-      <div className="ds-sidebar-footer" style={{ padding: '16px 16px 0 16px', marginTop: 'auto' }}>
-        <button 
-          className="ds-choice-btn" 
-          onClick={() => navigate('welcome')} 
-          style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '7px 10px' }}
+        <button
+          className="ds-sidebar-item"
+          onClick={() => navigate('welcome')}
         >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-          </svg>
-          <span className="ds-choice-label" style={{ fontSize: '10px' }}>Torna al Menu</span>
+          <span className="ds-step-indicator">←</span>
+          <span className="ds-step-label">Torna al Menu</span>
+        </button>
+        <button
+          className={`ds-sidebar-item ${screen === 'faq' ? 'active' : ''}`}
+          onClick={() => navigate('faq')}
+        >
+          <span className="ds-step-indicator">?</span>
+          <span className="ds-step-label">FAQ</span>
         </button>
       </div>
     </div>

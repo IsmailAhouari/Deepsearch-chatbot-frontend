@@ -4,8 +4,6 @@ import dsLogo from '../assets/icon.png';
 
 export default function Trigger() {
   const open_modal = useSession((s) => s.open_modal);
-  const startDemoFlow = useSession((s) => s.startDemoFlow);
-  const setOpen = useSession((s) => s.setOpen);
   const open = useSession((s) => s.open);
 
   return (
@@ -26,9 +24,6 @@ export default function Trigger() {
           </div>
 
           <div className="ds-trigger-actions">
-            <div className="ds-trigger-demo-link" onClick={() => { startDemoFlow(); setOpen(); }}>
-              Richiedi Demo
-            </div>
             <button className="ds-trigger-btn" onClick={open_modal}>
               <span className="ds-trigger-sep">● </span> Avvia Sessione DeepSearch
             </button>

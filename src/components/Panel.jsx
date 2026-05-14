@@ -18,19 +18,32 @@ export default function Panel() {
   const screenDef = SCREENS[screen] || SCREENS['fallback'];
 
   const handleChoice = (choice) => {
-    // Capture qualification data before navigating
+    // === Funnel qualification capture ===
+    // Step 1: Subject type (welcome screen)
+    if (screen === 'welcome') {
+      const subjectType = choice.target === 'funnel_intent_company' ? 'Aziende' : 'Persone';
+      setQual({ subjectType });
+    }
+
+    // Step 2: Intent
+    if (screen === 'funnel_intent_company' || screen === 'funnel_intent_person') {
+      setQual({ intent: choice.label });
+    }
+
+    // Step 4: Role (dynamic based on subject type)
+    if (screen === 'funnel_role_company' || screen === 'funnel_role_person') {
+      setQual({ role: choice.label });
+    }
+
+    // === Legacy flow qualification capture ===
     if (screen === 'flowD_interest') setQual({ interest: choice.label });
     if (screen === 'flowD_role') setQual({ role: choice.label });
     if (screen === 'flowD_org') setQual({ org: choice.label });
     if (screen === 'flowD_timing') setQual({ timing: choice.label });
     if (screen === 'flowF') setQual({ interest: choice.label });
-
-    // flowG qualification
     if (screen === 'flowG_function') setQual({ function: choice.label });
     if (screen === 'flowG_geo') setQual({ geoArea: choice.label });
     if (screen === 'flowG_need') setQual({ needType: choice.label });
-
-    // Capture context for flowB sub-selections
     if (screen === 'flowB_dd') setQual({ interest: choice.label });
 
     if (choice.action && choice.action.type === 'startDemo') {
@@ -43,16 +56,26 @@ export default function Panel() {
 
   const handleFormSubmit = (formData) => {
     setLead(formData);
-    // Navigate to thanks (for demo) or fallback confirmation
-    if (screen === 'flowD_form' || screen === 'flowG_form') {
+    // Navigate to the appropriate thanks screen
+    if (screen === 'funnel_form') {
+      navigate('funnel_thanks');
+    } else if (screen === 'flowD_form' || screen === 'flowG_form') {
       navigate('flowD_thanks');
     } else {
-      // Contact and generic forms navigate to thanks too
       navigate('flowD_thanks');
     }
   };
 
   const handleFreeTextSubmit = (text) => {
+    // Step 3: Geography (funnel) → route to correct role screen based on subject type
+    if (screen === 'funnel_geo') {
+      setQual({ geoArea: text });
+      const qual = useSession.getState().qualification;
+      navigate(qual.subjectType === 'Persone' ? 'funnel_role_person' : 'funnel_role_company');
+      return;
+    }
+
+    // Legacy flows
     if (screen === 'flowG_intro') {
       setLead({ customRequestText: text });
     } else {
@@ -67,8 +90,8 @@ export default function Panel() {
     }
   };
 
-  // Back button: show if history > 0, never on welcome or flowD_thanks
-  const showBack = history.length > 0 && screen !== 'welcome' && screen !== 'flowD_thanks';
+  // Back button: show if history > 0, never on welcome or thanks screens
+  const showBack = history.length > 0 && screen !== 'welcome' && screen !== 'flowD_thanks' && screen !== 'funnel_thanks';
 
   // Thanks screen
   if (screenDef.component === 'thanks') {
@@ -152,6 +175,7 @@ export default function Panel() {
             successMessage={screenDef.successMessage}
             successButtons={screenDef.successButtons}
             submitLabel={screenDef.submitLabel}
+            placeholder={screenDef.placeholder}
             onSubmit={handleFreeTextSubmit}
             onChoice={handleChoice}
           />

@@ -16,7 +16,6 @@ export const useSession = create((set) => ({
   closeMobileSidebar: () => set({ mobileSidebarOpen: false }),
 
   navigate: (to) => set((s) => {
-    // Auto-close sidebar on mobile navigation
     return {
       history: [...s.history, s.screen],
       screen: to,
@@ -38,28 +37,14 @@ export const useSession = create((set) => ({
     lead: { ...s.lead, ...data },
   })),
 
-  startDemoFlow: ({ interest, role, selectedPersona, selectedPersonaLabel, sourceFlow, sourceScreen } = {}) => set((s) => {
-    let nextScreen = 'flowD_interest';
-    const newQual = { ...s.qualification, sourceFlow, sourceScreen };
-
-    if (interest) {
-      newQual.interest = interest;
-      newQual.selectedUseCase = interest;
-      nextScreen = 'flowD_role';
-    }
-
-    if (role) {
-      newQual.role = role;
-      newQual.selectedPersona = selectedPersona;
-      newQual.selectedPersonaLabel = selectedPersonaLabel;
-      nextScreen = 'flowD_org';
-    }
-
-    return {
-      qualification: newQual,
-      history: [...s.history, s.screen],
-      screen: nextScreen,
-      mobileSidebarOpen: false
-    };
-  }),
+  /**
+   * Start the qualification funnel from the beginning.
+   * Used by the trigger widget's "Richiedi Demo" shortcut.
+   */
+  startDemoFlow: () => set((s) => ({
+    open: true,
+    history: s.screen !== 'welcome' ? [...s.history, s.screen] : s.history,
+    screen: 'welcome',
+    mobileSidebarOpen: false,
+  })),
 }));

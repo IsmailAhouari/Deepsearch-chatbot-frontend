@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ButtonGrid from './ButtonGrid.jsx';
 
-export default function FreeText({ message, successMessage, successButtons, submitLabel = 'Invia', onSubmit, onChoice }) {
+export default function FreeText({ message, successMessage, successButtons, submitLabel = 'Invia', placeholder = 'Scrivi la tua richiesta...', onSubmit, onChoice }) {
   const [text, setText] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -41,7 +41,7 @@ export default function FreeText({ message, successMessage, successButtons, subm
           className="ds-freetext-input"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Scrivi la tua richiesta..."
+          placeholder={placeholder}
           rows="3"
         />
         <button type="submit" className="ds-submit-btn" disabled={!text.trim()}>
