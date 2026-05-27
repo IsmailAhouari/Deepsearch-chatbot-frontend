@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSession } from '../store/sessionStore.js';
 import { SCREENS } from '../flows/index.js';
 import { FAQ } from '../flows/faq.js';
@@ -48,22 +48,6 @@ function reorderChoices(choices, qualification) {
 }
 
 /**
- * Returns a contextual engagement message based on the strongest intent signal.
- */
-function getEngagementMessage(intentSignals) {
-  const entries = Object.entries(intentSignals).filter(([, v]) => v > 0);
-  if (!entries.length) return null;
-  const [topKey] = entries.sort(([, a], [, b]) => b - a)[0];
-  const map = {
-    aml:            "Vedo che ti interessano i processi AML/KYC.",
-    dueDiligence:   "Vedo che ti interessa la due diligence.",
-    riskManagement: "Vedo che ti interessa l'analisi del rischio.",
-    suppliers:      "Vedo che ti interessano le verifiche sui fornitori.",
-  };
-  return map[topKey] || null;
-}
-
-/**
  * Sorts FAQ items so those matching the user's role or intent float to top.
  */
 function sortFAQ(faqItems, qualification) {
@@ -109,8 +93,6 @@ export default function Panel() {
   const setLead         = useSession((s) => s.setLead);
   const startDemoFlow   = useSession((s) => s.startDemoFlow);
   const qualification   = useSession((s) => s.qualification);
-  const engagementScore = useSession((s) => s.engagementScore);
-  const intentSignals   = useSession((s) => s.intentSignals);
   const lead            = useSession((s) => s.lead);
 
   const screenDef = SCREENS[screen] || SCREENS['fallback'];
@@ -122,12 +104,6 @@ export default function Panel() {
       setQual(ac);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [screen]);
-
-  // ── Engagement prompt local dismiss state (resets on screen change) ─────
-  const [engagementDismissed, setEngagementDismissed] = useState(false);
-  useEffect(() => {
-    setEngagementDismissed(false);
   }, [screen]);
 
   // ── Handlers ────────────────────────────────────────────────────────────
@@ -159,7 +135,12 @@ export default function Panel() {
     // Route based on subject type (funnel_geo)
     if (screenDef.freeTextTargetFn === 'bySubjectType') {
       const q = useSession.getState().qualification;
-      navigate(q.subjectType === 'Persone' ? 'funnel_role_person' : 'funnel_role_company');
+      // Skip role step if already captured (e.g. came through flowC which sets role via autoCapture)
+      if (q.role) {
+        navigate('funnel_form');
+      } else {
+        navigate(q.subjectType === 'Persone' ? 'funnel_role_person' : 'funnel_role_company');
+      }
       return;
     }
 
@@ -305,15 +286,6 @@ export default function Panel() {
     label: resolveCTALabel(btn, qualification),
   }));
 
-  // Engagement prompt: show after score ≥ 5 on non-funnel exploratory screens
-  const engagementMsg = getEngagementMessage(intentSignals);
-  const showEngagementPrompt =
-    engagementScore >= 5 &&
-    !screen.startsWith('funnel_') &&
-    screen !== 'welcome' &&
-    !engagementDismissed &&
-    !!engagementMsg;
-
   return (
     <div className="ds-panel">
       {showBack && (
@@ -322,30 +294,33 @@ export default function Panel() {
       <div className="ds-panel-content">
         {screenDef.title && <div className="ds-panel-title">{screenDef.title}</div>}
         <MessageBubble text={screenDef.message} />
-        {screenDef.prompt && <div className="ds-prompt">{screenDef.prompt}</div>}
 
-        {/* Engagement prompt injection */}
-        {showEngagementPrompt && (
-          <div className="ds-engagement-prompt">
-            <div className="ds-engagement-text">
-              {engagementMsg} Vuoi che configuri una demo personalizzata?
-            </div>
-            <div className="ds-engagement-actions">
-              <button
-                className="ds-choice-btn ds-choice-btn--accent"
-                onClick={() => startDemoFlow()}
-              >
-                Sì, configura demo
-              </button>
-              <button
-                className="ds-choice-btn ds-choice-btn--ghost"
-                onClick={() => setEngagementDismissed(true)}
-              >
-                No, continua a esplorare
-              </button>
-            </div>
-          </div>
+        {/* Inline selector groups — captures without navigating; accepts single object or array */}
+        {screenDef.topChoices && (
+          (Array.isArray(screenDef.topChoices) ? screenDef.topChoices : [screenDef.topChoices])
+            .map((group, gi) => (
+              <div key={gi} className="ds-top-selector">
+                <div className="ds-prompt">{group.prompt}</div>
+                <div className="ds-top-selector-row">
+                  {group.options.map((opt, i) => {
+                    const isSelected = qualification[group.captureKey] === opt.value;
+                    return (
+                      <button
+                        key={i}
+                        className={`ds-top-selector-btn${isSelected ? ' ds-top-selector-btn--selected' : ''}`}
+                        onClick={() => setQual({ [group.captureKey]: opt.value })}
+                      >
+                        {opt.icon && <span className="ds-top-selector-icon">{opt.icon}</span>}
+                        <span>{opt.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))
         )}
+
+        {screenDef.prompt && <div className="ds-prompt">{screenDef.prompt}</div>}
 
         {buttons.length > 0 && (
           <ButtonGrid

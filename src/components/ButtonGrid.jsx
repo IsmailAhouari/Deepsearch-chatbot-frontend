@@ -4,7 +4,8 @@ export default function ButtonGrid({ choices, onSelect, columns = 1, showSublabe
   return (
     <div className={`ds-button-grid ${columns === 2 ? 'ds-button-grid--2col' : ''}`}>
       {choices.map((choice, i) => {
-        const isDemoCta = choice.action?.type === 'startDemo';
+        const isDemoCta = choice.action?.type === 'startDemo'
+          && !!choice.label?.toLowerCase().includes('demo');
         return (
           <button
             key={i}

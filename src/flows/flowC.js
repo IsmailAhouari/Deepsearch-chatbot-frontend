@@ -4,6 +4,14 @@ export const flowCScreens = [
     showSidebar: true,
     autoCapture: { sourceFlow: 'flowC' },
     message: "DeepSearch è progettato per contesti decisionali complessi e ad alto rischio.",
+    topChoices: {
+      prompt: 'Stai analizzando principalmente:',
+      captureKey: 'subjectType',
+      options: [
+        { label: 'Aziende',         value: 'Aziende',  icon: '◈' },
+        { label: 'Persone fisiche', value: 'Persone',  icon: '❖' },
+      ],
+    },
     prompt: 'Quale profilo ti rappresenta?',
     choices: [
       { label: 'Security / Risk',     target: 'flowC_risk' },

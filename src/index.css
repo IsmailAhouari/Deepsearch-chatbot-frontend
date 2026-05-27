@@ -1473,3 +1473,54 @@
     color: var(--ds-green);
   }
 }
+
+/* ── Top inline selector (entity type toggle on flowA entry screen) ── */
+
+.ds-top-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.ds-top-selector-row {
+  display: flex;
+  gap: 8px;
+}
+
+.ds-top-selector-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--ds-bg-card);
+  border: 1.5px solid var(--ds-border-hi);
+  border-radius: var(--ds-radius-sm);
+  color: var(--ds-text-2);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ds-top-selector-btn:hover {
+  border-color: var(--ds-accent);
+  color: var(--ds-text-1);
+}
+
+.ds-top-selector-btn--selected {
+  background: var(--ds-accent);
+  border-color: var(--ds-accent);
+  color: #fff;
+}
+
+.ds-top-selector-btn--selected:hover {
+  background: var(--ds-accent-hover);
+  border-color: var(--ds-accent-hover);
+}
+
+.ds-top-selector-icon {
+  font-size: 15px;
+  flex-shrink: 0;
+}

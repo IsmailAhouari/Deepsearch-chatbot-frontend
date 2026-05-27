@@ -1,66 +1,59 @@
 export const flowAScreens = [
+
+  // ── STEP 0 — Entry screen ─────────────────────────────────────────────────
   {
     id: 'flowA',
     showSidebar: true,
     autoCapture: { sourceFlow: 'flowA' },
     message: "DeepSearch è una piattaforma di intelligence progettata per individuare relazioni nascoste tra persone, aziende, controparti e segnali di rischio.\n\nConsente di superare verifiche frammentate e trasformare i dati in intelligence strutturata.",
+    topChoices: {
+      prompt: 'Stai analizzando principalmente:',
+      captureKey: 'subjectType',
+      options: [
+        { label: 'Aziende', value: 'Aziende', icon: '◈' },
+        { label: 'Persone', value: 'Persone', icon: '❖' },
+      ],
+    },
     prompt: 'Vuoi una spiegazione focalizzata su:',
     choices: [
-      { label: 'Analisi del rischio', target: 'flowA_risk' },
-      { label: 'Due Diligence', target: 'flowA_dd' },
-      { label: 'Analisi controparti', target: 'flowA_contra' },
-      { label: 'Rischio reputazionale', target: 'flowA_rep' },
-      { label: 'Supporto investigativo', target: 'flowA_inv' },
+      { label: 'Analisi del rischio',    target: 'flowA_geo', capture: { key: 'intent', value: 'Analisi del rischio' },   sublabel: 'Esposizione, reti relazionali, connessioni indirette' },
+      { label: 'Due Diligence',          target: 'flowA_geo', capture: { key: 'intent', value: 'Due Diligence' },          sublabel: 'Strutture societarie, UBO, screening controparti' },
+      { label: 'Analisi controparti',    target: 'flowA_geo', capture: { key: 'intent', value: 'Rischio controparti' },    sublabel: 'Legami, conflitti di interesse, esposizioni' },
+      { label: 'Rischio reputazionale',  target: 'flowA_geo', capture: { key: 'intent', value: 'Rischio reputazionale' }, sublabel: 'Segnali mediatici, sentiment, associazioni negative' },
+      { label: 'Supporto investigativo', target: 'flowA_geo', capture: { key: 'intent', value: 'Indagini aziendali' },    sublabel: 'Reti opache, asset tracing, flussi di controllo' },
     ],
   },
+
+  // ── STEP 1 — Area geografica (free text) ─────────────────────────────────
   {
-    id: 'flowA_risk',
+    id: 'flowA_geo',
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowA', intent: 'Analisi del rischio' },
-    message: "DeepSearch consente di mappare l'esposizione al rischio attraverso l'analisi delle reti relazionali di persone fisiche e giuridiche, identificando connessioni non evidenti tra soggetti, strutture e settori.",
-    ctas: [
-      { label: "Esplora casi d'uso", target: 'flowB' },
-      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Demo generale', sourceFlow: 'flowA', sourceScreen: 'flowA_risk' } },
-    ],
+    autoCapture: { sourceFlow: 'flowA' },
+    component: 'freetext',
+    message: "DeepSearch copre oltre 40 giurisdizioni con dataset strutturati e fonti localizzate.",
+    prompt: 'In quale area geografica operi principalmente?',
+    placeholder: 'Es. Svizzera, Europa, GCC, Globale…',
+    freeTextCaptureKey: 'geoArea',
+    freeTextTarget: 'flowA_role',
   },
+
+  // ── STEP 2 — Funzione / Ruolo → directly to demo form ────────────────────
   {
-    id: 'flowA_dd',
+    id: 'flowA_role',
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowA', intent: 'Due Diligence' },
-    message: "DeepSearch supporta attività di due diligence avanzata attraverso l'analisi delle relazioni, l'identificazione delle entità e l'integrazione di fonti multiple.\n\nQuesto consente di individuare strutture complesse, collegamenti indiretti ed esposizioni che spesso non emergono da verifiche tradizionali.",
-    ctas: [
-      { label: "Esplora casi d'uso", target: 'flowB' },
-      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Due diligence', sourceFlow: 'flowA', sourceScreen: 'flowA_dd' } },
+    autoCapture: { sourceFlow: 'flowA' },
+    message: "Ogni funzione applica DeepSearch con obiettivi operativi e flussi di lavoro specifici.",
+    prompt: 'Quale funzione ti rappresenta maggiormente?',
+    choices: [
+      { label: 'Compliance / AML',     capture: { key: 'role', value: 'Compliance / AML' },     action: { type: 'startDemo', sourceFlow: 'flowA', sourceScreen: 'flowA_role' } },
+      { label: 'Legale / Contenzioso', capture: { key: 'role', value: 'Legale / Contenzioso' }, action: { type: 'startDemo', sourceFlow: 'flowA', sourceScreen: 'flowA_role' } },
+      { label: 'Security / Risk',      capture: { key: 'role', value: 'Security / Risk' },      action: { type: 'startDemo', sourceFlow: 'flowA', sourceScreen: 'flowA_role' } },
+      { label: 'Risk Management',      capture: { key: 'role', value: 'Risk Management' },      action: { type: 'startDemo', sourceFlow: 'flowA', sourceScreen: 'flowA_role' } },
+      { label: 'Investigazioni',       capture: { key: 'role', value: 'Investigazioni' },       action: { type: 'startDemo', sourceFlow: 'flowA', sourceScreen: 'flowA_role' } },
+      { label: 'HR',                   capture: { key: 'role', value: 'HR' },                   action: { type: 'startDemo', sourceFlow: 'flowA', sourceScreen: 'flowA_role' } },
+      { label: 'Direzione / Board',    capture: { key: 'role', value: 'Direzione / Board' },    action: { type: 'startDemo', sourceFlow: 'flowA', sourceScreen: 'flowA_role' } },
+      { label: 'Altro',                capture: { key: 'role', value: 'Altro' },                action: { type: 'startDemo', sourceFlow: 'flowA', sourceScreen: 'flowA_role' } },
     ],
   },
-  {
-    id: 'flowA_contra',
-    showSidebar: true,
-    autoCapture: { sourceFlow: 'flowA', intent: 'Rischio controparti' },
-    message: "DeepSearch consente di analizzare controparti commerciali e finanziarie identificando legami societari, esposizioni e conflitti di interesse non dichiarati, prima che diventino rischi operativi.",
-    ctas: [
-      { label: "Esplora casi d'uso", target: 'flowB' },
-      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Rischio controparti', sourceFlow: 'flowA', sourceScreen: 'flowA_contra' } },
-    ],
-  },
-  {
-    id: 'flowA_rep',
-    showSidebar: true,
-    autoCapture: { sourceFlow: 'flowA', intent: 'Rischio reputazionale' },
-    message: "DeepSearch consente di organizzare informazioni rilevanti in un framework di intelligence, supportando l'identificazione preventiva di esposizioni reputazionali e collegamenti sensibili.",
-    ctas: [
-      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Rischio reputazionale', sourceFlow: 'flowA', sourceScreen: 'flowA_rep' } },
-      { label: 'Contatta il team', target: 'flowF' },
-    ],
-  },
-  {
-    id: 'flowA_inv',
-    showSidebar: true,
-    autoCapture: { sourceFlow: 'flowA', intent: 'Indagini aziendali' },
-    message: "DeepSearch supporta attività investigative attraverso la ricostruzione di reti relazionali complesse: strutture societarie opache, flussi di controllo e connessioni tra soggetti in contesti di indagine.",
-    ctas: [
-      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Indagini aziendali', sourceFlow: 'flowA', sourceScreen: 'flowA_inv' } },
-      { label: 'Contatta il team', target: 'flowF' },
-    ],
-  },
+
 ];

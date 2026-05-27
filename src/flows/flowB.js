@@ -3,6 +3,14 @@ export const flowBScreens = [
     id: 'flowB',
     showSidebar: true,
     autoCapture: { sourceFlow: 'flowB' },
+    topChoices: {
+      prompt: 'Stai analizzando principalmente:',
+      captureKey: 'subjectType',
+      options: [
+        { label: 'Aziende',         value: 'Aziende',  icon: '◈' },
+        { label: 'Persone fisiche', value: 'Persone',  icon: '❖' },
+      ],
+    },
     prompt: "Quale caso d'uso è più vicino al tuo interesse?",
     choices: [
       { label: 'Due diligence controparti',    target: 'flowB_dd' },
