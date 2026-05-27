@@ -43,7 +43,7 @@ export default function Sidebar() {
             onClick={() => navigate('welcome')}
             style={{ marginBottom: '4px' }}
           >
-            <span className="ds-step-indicator">←</span>
+            <span className="ds-step-indicator">⌂</span>
             <span className="ds-step-label">Menu principale</span>
           </button>
 
