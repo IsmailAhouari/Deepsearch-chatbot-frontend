@@ -441,7 +441,7 @@
 .ds-button-grid--2col {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6px;
+  gap: 8px;
 }
 
 .ds-choice-btn {
@@ -496,6 +496,44 @@
   border-color: var(--ds-accent);
   background: var(--ds-accent-dim);
 }
+
+/* ── Demo CTA variant — visually distinct from navigation choices ── */
+
+.ds-choice-btn--demo {
+  border-color: var(--ds-accent);
+  background: rgba(27, 111, 235, 0.05);
+}
+
+.ds-choice-btn--demo .ds-choice-label {
+  color: var(--ds-accent);
+  font-weight: 600;
+}
+
+.ds-choice-btn--demo .ds-choice-demo-arrow {
+  margin-left: auto;
+  color: var(--ds-accent);
+  font-size: 14px;
+  opacity: 0.7;
+  flex-shrink: 0;
+  align-self: center;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.ds-choice-btn--demo:hover {
+  background: rgba(27, 111, 235, 0.10);
+  border-color: var(--ds-accent-hover);
+}
+
+.ds-choice-btn--demo:hover .ds-choice-demo-arrow {
+  transform: translateX(3px);
+  opacity: 1;
+}
+
+.ds-choice-btn--demo:active {
+  background: rgba(27, 111, 235, 0.18);
+}
+
+/* ── End demo CTA variant ── */
 
 .ds-choice-label {
   font-size: 13px;
@@ -1166,4 +1204,272 @@
 .ds-faq-popup-content::-webkit-scrollbar-thumb {
   background: var(--ds-border-hi);
   border-radius: 2px;
+}
+
+/* ── Engagement prompt — styled as AI message bubble (V1 identity) ── */
+
+.ds-engagement-prompt {
+  background: var(--ds-bg-card);
+  border: 1px solid var(--ds-border);
+  border-left: 3px solid var(--ds-accent);
+  border-radius: var(--ds-radius-md);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+  animation: ds-msg-in 0.25s ease;
+}
+
+.ds-engagement-text {
+  font-size: 13px;
+  color: var(--ds-text-1);
+  line-height: 1.5;
+}
+
+.ds-engagement-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.ds-choice-btn--accent {
+  background: var(--ds-accent) !important;
+  color: #fff !important;
+  border-color: var(--ds-accent) !important;
+  flex: 1;
+}
+
+.ds-choice-btn--accent:hover {
+  background: var(--ds-accent-hover) !important;
+  border-color: var(--ds-accent-hover) !important;
+}
+
+.ds-choice-btn--ghost {
+  background: transparent !important;
+  border-color: var(--ds-border-hi) !important;
+  color: var(--ds-text-2) !important;
+  flex: 1;
+}
+
+.ds-choice-btn--ghost:hover {
+  background: var(--ds-bg-card) !important;
+  color: var(--ds-text-1) !important;
+}
+
+/* ── Sidebar exploration mode ── */
+
+.ds-sidebar-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ds-text-3);
+  padding: 4px 8px 8px 8px;
+}
+
+.ds-sidebar-item.visited {
+  opacity: 0.75;
+}
+
+.ds-visited-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ds-accent);
+  opacity: 0.6;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.ds-sidebar-demo-cta {
+  background: var(--ds-accent-dim) !important;
+  border: 1px solid var(--ds-accent) !important;
+  color: var(--ds-accent) !important;
+}
+
+.ds-sidebar-demo-cta:hover {
+  background: var(--ds-accent) !important;
+  color: #fff !important;
+}
+
+/* ── Sidebar: general hover (V1 tactile feedback) ── */
+
+.ds-sidebar-item:not(.pending):not([disabled]):hover {
+  color: var(--ds-text-1);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+/* ── Sidebar: exploration context items shown during qualification mode ── */
+
+.ds-sidebar-item--ctx {
+  opacity: 0.42;
+  transition: opacity 0.2s ease, color 0.15s, background 0.15s;
+}
+
+.ds-sidebar-item--ctx:hover {
+  opacity: 0.88;
+}
+
+.ds-sidebar-item--ctx.visited {
+  opacity: 0.58;
+}
+
+.ds-sidebar-item--ctx.visited:hover {
+  opacity: 0.9;
+}
+
+/* ── Sidebar: compact qualification progress section ── */
+
+.ds-sidebar-qual-section {
+  border-top: 1px solid var(--ds-border);
+  padding: 10px 0 8px;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+/* Compact step items: smaller padding + type than the full step list */
+
+.ds-sidebar-item--compact {
+  padding: 6px 16px;
+}
+
+.ds-sidebar-item--compact .ds-step-indicator {
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
+}
+
+.ds-sidebar-item--compact .ds-step-label {
+  font-size: 11px;
+}
+
+.ds-sidebar-item--compact .ds-step-value {
+  font-size: 9px;
+  max-width: 72px;
+}
+
+/* ── Calendly embed ── */
+
+.ds-calendly-wrapper {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 20px;
+}
+
+.ds-calendly-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ds-text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 10px;
+}
+
+.ds-calendly-frame {
+  border-radius: var(--ds-radius-md);
+  border: 1px solid var(--ds-border);
+  display: block;
+}
+
+.ds-modal--calendly {
+  max-height: 98vh;
+}
+
+/* ── Form error message ── */
+
+.ds-form-error-msg {
+  color: var(--ds-red);
+  font-size: 12px;
+  margin-top: 8px;
+  text-align: center;
+  padding: 8px 12px;
+  background: rgba(201, 79, 79, 0.08);
+  border-radius: var(--ds-radius-sm);
+  border: 1px solid rgba(201, 79, 79, 0.2);
+}
+
+/* ── Mobile stepper (hidden on desktop) ── */
+
+.ds-mobile-stepper {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .ds-mobile-stepper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 10px 16px 8px 16px;
+    border-bottom: 1px solid var(--ds-border);
+    background: var(--ds-bg);
+    overflow-x: auto;
+    flex-shrink: 0;
+    gap: 0;
+  }
+
+  .ds-mobile-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    position: relative;
+    min-width: 48px;
+  }
+
+  .ds-mobile-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: calc(50% + 6px);
+    right: calc(-50% + 6px);
+    height: 1px;
+    background: var(--ds-border);
+  }
+
+  .ds-mobile-step.completed::after {
+    background: var(--ds-green);
+  }
+
+  .ds-mobile-step.active::after {
+    background: var(--ds-border);
+  }
+
+  .ds-mobile-step-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--ds-bg-card);
+    border: 1.5px solid var(--ds-border-hi);
+    z-index: 1;
+    flex-shrink: 0;
+  }
+
+  .ds-mobile-step.active .ds-mobile-step-dot {
+    background: var(--ds-accent);
+    border-color: var(--ds-accent);
+    box-shadow: 0 0 0 3px var(--ds-accent-dim);
+  }
+
+  .ds-mobile-step.completed .ds-mobile-step-dot {
+    background: var(--ds-green);
+    border-color: var(--ds-green);
+  }
+
+  .ds-mobile-step-label {
+    font-size: 9px;
+    color: var(--ds-text-3);
+    text-align: center;
+    white-space: nowrap;
+    line-height: 1.2;
+  }
+
+  .ds-mobile-step.active .ds-mobile-step-label {
+    color: var(--ds-accent);
+    font-weight: 600;
+  }
+
+  .ds-mobile-step.completed .ds-mobile-step-label {
+    color: var(--ds-green);
+  }
 }

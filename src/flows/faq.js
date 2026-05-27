@@ -3,20 +3,24 @@ export const FAQ = [
     question: "Cos'è DeepSearch?",
     answer: "Una piattaforma di intelligence che individua relazioni tra soggetti, controparti e segnali di rischio.",
     target: "flowA",
+    relevance: [],
   },
   {
     question: "È un chatbot?",
     answer: "No. Il chatbot guida l'utente. DeepSearch è una piattaforma di analisi.",
+    relevance: [],
   },
   {
     question: "Posso richiedere una demo?",
     answer: "Sì, è possibile richiedere una demo personalizzata.",
     action: { type: 'startDemo' },
+    relevance: [],
   },
   {
     question: "A chi è rivolto?",
     answer: "Funzioni risk, legale, compliance, HR e direzione.",
     target: "flowC",
+    relevance: ['HR', 'Compliance / AML', 'Security / Risk', 'Legale / Contenzioso'],
   },
 ];
 

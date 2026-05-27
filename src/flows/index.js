@@ -1,8 +1,8 @@
 import { welcomeScreen } from './welcome.js';
-import { funnelScreens } from './funnel.js';
+import { funnelScreens, getFunnelStep } from './funnel.js';
 import { faqScreens } from './faq.js';
 
-// Legacy flows — kept for backward compatibility (accessible via FAQ links, etc.)
+// Exploratory flows — first-class navigation (no longer "legacy")
 import { flowAScreens } from './flowA.js';
 import { flowBScreens } from './flowB.js';
 import { flowCScreens } from './flowC.js';
@@ -19,7 +19,6 @@ const allScreens = [
   welcomeScreen,
   ...funnelScreens,
   ...faqScreens,
-  // Legacy flows (still accessible but not primary navigation)
   ...flowAScreens,
   ...flowBScreens,
   ...flowCScreens,
@@ -34,19 +33,8 @@ for (const screen of allScreens) {
   SCREENS[screen.id] = screen;
 }
 
-/**
- * Determine funnel step number from screen ID.
- * Returns 0 for non-funnel screens.
- */
-export function getFunnelStep(screenId) {
-  if (screenId === 'welcome') return 1;
-  if (screenId === 'funnel_intent_company' || screenId === 'funnel_intent_person') return 2;
-  if (screenId === 'funnel_geo') return 3;
-  if (screenId === 'funnel_role_company' || screenId === 'funnel_role_person') return 4;
-  if (screenId === 'funnel_form') return 5;
-  if (screenId === 'funnel_thanks') return 6;
-  return 0;
-}
+// Re-export getFunnelStep from funnel.js (used by Sidebar.jsx)
+export { getFunnelStep };
 
 /**
  * Determine which sidebar flow is active for a given screen ID.

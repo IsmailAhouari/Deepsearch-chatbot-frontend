@@ -2,21 +2,26 @@ import React from 'react';
 import { useSession } from '../store/sessionStore.js';
 import Sidebar from './Sidebar.jsx';
 import Panel from './Panel.jsx';
+import MobileStepper from './MobileStepper.jsx';
 import { SCREENS } from '../flows/index.js';
 import dsLogo from '../assets/icon.png';
 
 export default function Modal() {
-  const close_modal = useSession((s) => s.close_modal);
-  const screen = useSession((s) => s.screen);
+  const close_modal         = useSession((s) => s.close_modal);
+  const screen              = useSession((s) => s.screen);
   const toggleMobileSidebar = useSession((s) => s.toggleMobileSidebar);
-  const mobileSidebarOpen = useSession((s) => s.mobileSidebarOpen);
+  const mobileSidebarOpen   = useSession((s) => s.mobileSidebarOpen);
+  const lead                = useSession((s) => s.lead);
 
-  const screenDef = SCREENS[screen] || SCREENS['fallback'];
+  const screenDef   = SCREENS[screen] || SCREENS['fallback'];
   const showSidebar = screenDef?.showSidebar ?? false;
+
+  // Expand modal height when Calendly iframe is shown
+  const showCalendly = screenDef?.showCalendly && !!lead.email;
 
   return (
     <div className="ds-overlay" onClick={(e) => { if (e.target === e.currentTarget) close_modal(); }}>
-      <div className={`ds-modal ${mobileSidebarOpen ? 'sidebar-open' : ''}`}>
+      <div className={`ds-modal ${mobileSidebarOpen ? 'sidebar-open' : ''} ${showCalendly ? 'ds-modal--calendly' : ''}`}>
         {/* Header */}
         <div className="ds-header">
           <div className="ds-header-brand">
@@ -37,6 +42,9 @@ export default function Modal() {
             <button className="ds-header-close" onClick={close_modal} aria-label="Chiudi sessione">✕</button>
           </div>
         </div>
+
+        {/* Mobile qualification progress stepper (hidden on desktop via CSS) */}
+        <MobileStepper />
 
         {/* Body */}
         <div className="ds-body">

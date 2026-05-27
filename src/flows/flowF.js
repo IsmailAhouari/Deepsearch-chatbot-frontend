@@ -2,13 +2,14 @@ export const flowFScreens = [
   {
     id: 'flowF',
     showSidebar: true,
+    autoCapture: { sourceFlow: 'flowF' },
     prompt: 'Indica la natura della richiesta:',
     choices: [
-      { label: 'Commerciale', target: 'flowF_form' },
-      { label: 'Partnership', target: 'flowF_form' },
-      { label: 'Presentazione piattaforma', target: 'flowF_form' },
-      { label: 'Richiesta tecnica', target: 'flowF_form' },
-      { label: 'Altro', target: 'flowF_form' },
+      { label: 'Commerciale',              target: 'flowF_form', capture: { key: 'interest', value: 'Commerciale' } },
+      { label: 'Partnership',              target: 'flowF_form', capture: { key: 'interest', value: 'Partnership' } },
+      { label: 'Presentazione piattaforma',target: 'flowF_form', capture: { key: 'interest', value: 'Presentazione piattaforma' } },
+      { label: 'Richiesta tecnica',        target: 'flowF_form', capture: { key: 'interest', value: 'Richiesta tecnica' } },
+      { label: 'Altro',                    target: 'flowF_form', capture: { key: 'interest', value: 'Altro' } },
     ],
   },
   {
@@ -16,5 +17,6 @@ export const flowFScreens = [
     showSidebar: true,
     component: 'form',
     formType: 'contact',
+    formSuccessTarget: 'flowD_thanks',
   },
 ];

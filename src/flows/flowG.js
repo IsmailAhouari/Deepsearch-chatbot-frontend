@@ -5,6 +5,7 @@ export const flowGScreens = [
     component: 'freetext',
     message: "Descrivi brevemente la tua esigenza.",
     submitLabel: "Continua",
+    freeTextCaptureKey: 'customRequestText',
     successMessage: "Grazie.\n\nLa richiesta richiede un approfondimento diretto.\n\nPuoi lasciare i tuoi riferimenti per essere ricontattato.",
     successButtons: [
       { label: 'Invia richiesta', target: 'flowG_function' },
@@ -14,14 +15,15 @@ export const flowGScreens = [
   {
     id: 'flowG_function',
     showSidebar: true,
+    autoCapture: { sourceFlow: 'flowG' },
     message: "Per indirizzare correttamente la richiesta:",
     prompt: "Funzione",
     choices: [
-      { label: 'Risk / Security', target: 'flowG_geo' },
-      { label: 'Legale', target: 'flowG_geo' },
-      { label: 'Compliance', target: 'flowG_geo' },
-      { label: 'HR', target: 'flowG_geo' },
-      { label: 'Direzione', target: 'flowG_geo' },
+      { label: 'Risk / Security', target: 'flowG_geo', capture: { key: 'function', value: 'Risk / Security' } },
+      { label: 'Legale',          target: 'flowG_geo', capture: { key: 'function', value: 'Legale' } },
+      { label: 'Compliance',      target: 'flowG_geo', capture: { key: 'function', value: 'Compliance' } },
+      { label: 'HR',              target: 'flowG_geo', capture: { key: 'function', value: 'HR' } },
+      { label: 'Direzione',       target: 'flowG_geo', capture: { key: 'function', value: 'Direzione' } },
     ],
   },
   {
@@ -29,11 +31,11 @@ export const flowGScreens = [
     showSidebar: true,
     prompt: "Area geografica",
     choices: [
-      { label: 'Svizzera', target: 'flowG_need' },
-      { label: 'Italia', target: 'flowG_need' },
-      { label: 'Europa', target: 'flowG_need' },
-      { label: 'Medio Oriente', target: 'flowG_need' },
-      { label: 'Globale', target: 'flowG_need' },
+      { label: 'Svizzera',      target: 'flowG_need', capture: { key: 'geoArea', value: 'Svizzera' } },
+      { label: 'Italia',        target: 'flowG_need', capture: { key: 'geoArea', value: 'Italia' } },
+      { label: 'Europa',        target: 'flowG_need', capture: { key: 'geoArea', value: 'Europa' } },
+      { label: 'Medio Oriente', target: 'flowG_need', capture: { key: 'geoArea', value: 'Medio Oriente' } },
+      { label: 'Globale',       target: 'flowG_need', capture: { key: 'geoArea', value: 'Globale' } },
     ],
   },
   {
@@ -41,10 +43,10 @@ export const flowGScreens = [
     showSidebar: true,
     prompt: "Esigenza",
     choices: [
-      { label: 'Progetto immediato', target: 'flowG_form' },
-      { label: 'Valutazione piattaforma', target: 'flowG_form' },
-      { label: 'Analisi interna', target: 'flowG_form' },
-      { label: 'Informazioni commerciali', target: 'flowG_form' },
+      { label: 'Progetto immediato',       target: 'flowG_form', capture: { key: 'needType', value: 'Progetto immediato' } },
+      { label: 'Valutazione piattaforma',  target: 'flowG_form', capture: { key: 'needType', value: 'Valutazione piattaforma' } },
+      { label: 'Analisi interna',          target: 'flowG_form', capture: { key: 'needType', value: 'Analisi interna' } },
+      { label: 'Informazioni commerciali', target: 'flowG_form', capture: { key: 'needType', value: 'Informazioni commerciali' } },
     ],
   },
   {
@@ -52,5 +54,6 @@ export const flowGScreens = [
     showSidebar: true,
     component: 'form',
     formType: 'genericRequest',
+    formSuccessTarget: 'flowD_thanks',
   },
 ];
