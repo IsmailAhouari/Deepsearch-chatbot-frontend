@@ -9,7 +9,6 @@ export const flowFScreens = [
       { label: 'Partnership',              target: 'flowF_geo', capture: { key: 'interest', value: 'Partnership' } },
       { label: 'Presentazione piattaforma',target: 'flowF_geo', capture: { key: 'interest', value: 'Presentazione piattaforma' } },
       { label: 'Richiesta tecnica',        target: 'flowF_geo', capture: { key: 'interest', value: 'Richiesta tecnica' } },
-      { label: 'Altro',                    target: 'flowF_geo', capture: { key: 'interest', value: 'Altro' } },
     ],
   },
 

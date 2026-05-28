@@ -99,6 +99,16 @@ export default function Sidebar() {
           })}
         </div>
 
+        <div className="ds-sidebar-footer" style={{ padding: '16px 16px 0 16px', marginTop: 'auto' }}>
+          <button
+            className="ds-sidebar-item"
+            onClick={() => navigateReset('welcome')}
+          >
+            <span className="ds-step-indicator">←</span>
+            <span className="ds-step-label">Menu principale</span>
+          </button>
+        </div>
+
       </div>
     );
   }

@@ -30,7 +30,7 @@ export const flowAScreens = [
     showSidebar: true,
     autoCapture: { sourceFlow: 'flowA' },
     component: 'freetext',
-    message: "DeepSearch copre oltre 40 giurisdizioni con dataset strutturati e fonti localizzate.",
+    message: "Qual è il contesto geografico principale del tuo interesse?",
     prompt: 'In quale area geografica operi principalmente?',
     placeholder: 'Es. Svizzera, Europa, GCC, Globale…',
     freeTextCaptureKey: 'geoArea',
