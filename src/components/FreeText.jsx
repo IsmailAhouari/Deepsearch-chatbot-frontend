@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ButtonGrid from './ButtonGrid.jsx';
 
 export default function FreeText({ message, successMessage, successButtons, submitLabel = 'Invia', placeholder = 'Scrivi la tua richiesta...', onSubmit, onChoice }) {

@@ -1,4 +1,3 @@
-import React from 'react';
 
 export default function MessageBubble({ text }) {
   if (!text) return null;

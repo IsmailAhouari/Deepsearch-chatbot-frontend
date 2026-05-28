@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useSession } from '../store/sessionStore.js';
 import Sidebar from './Sidebar.jsx';
 import Panel from './Panel.jsx';

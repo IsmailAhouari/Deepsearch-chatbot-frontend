@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSession } from '../store/sessionStore.js';
 
 const API_URL = import.meta.env.VITE_LEADS_API_URL || 'https://api.deepsearch.com/leads/capture';
@@ -107,7 +107,7 @@ export default function DemoForm({ formType, onSubmit }) {
   const hasQualification = qualification.subjectType || qualification.intent || qualification.interest
     || qualification.geoArea || qualification.role || qualification.funcRole || qualification.needType;
 
-  const QualSummary = () => !hasQualification ? null : (
+  const qualSummaryEl = !hasQualification ? null : (
     <div className="ds-qual-summary">
       <div className="ds-qual-summary-title">Riepilogo qualificazione</div>
       <div className="ds-qual-summary-grid">
@@ -157,15 +157,15 @@ export default function DemoForm({ formType, onSubmit }) {
     </div>
   );
 
-  const ErrorMsg = () => submissionStatus === 'error' ? (
-    <div className="ds-form-error-msg">{errorMessage}</div>
-  ) : null;
+  const errorMsgEl = submissionStatus === 'error'
+    ? <div className="ds-form-error-msg">{errorMessage}</div>
+    : null;
 
   // ── Demo form ────────────────────────────────────────────────────────────
   if (formType === 'demo') {
     return (
       <form className="ds-form ds-form--centered" onSubmit={handleSubmit}>
-        <QualSummary />
+        {qualSummaryEl}
 
         <div className="ds-form-row">
           <div className="ds-form-field">
@@ -203,7 +203,7 @@ export default function DemoForm({ formType, onSubmit }) {
         <button type="submit" className="ds-submit-btn" disabled={isSubmitting}>
           {isSubmitting ? 'Invio in corso...' : 'Richiedi Demo Riservata'}
         </button>
-        <ErrorMsg />
+        {errorMsgEl}
       </form>
     );
   }
@@ -213,7 +213,7 @@ export default function DemoForm({ formType, onSubmit }) {
     const isGeneric = formType === 'genericRequest';
     return (
       <form className="ds-form ds-form--centered" onSubmit={handleSubmit}>
-        <QualSummary />
+        {qualSummaryEl}
 
         <div className="ds-form-row">
           <div className="ds-form-field">
@@ -248,7 +248,7 @@ export default function DemoForm({ formType, onSubmit }) {
         <button type="submit" className="ds-submit-btn" disabled={isSubmitting}>
           {isSubmitting ? 'Invio in corso...' : (isGeneric ? 'Invia Richiesta' : 'Invia Messaggio')}
         </button>
-        <ErrorMsg />
+        {errorMsgEl}
       </form>
     );
   }

@@ -86,7 +86,6 @@ function resolveCTALabel(choice, qualification) {
 
 export default function Panel() {
   const screen          = useSession((s) => s.screen);
-  const history         = useSession((s) => s.history);
   const navigate        = useSession((s) => s.navigate);
   const back            = useSession((s) => s.back);
   const setQual         = useSession((s) => s.setQual);

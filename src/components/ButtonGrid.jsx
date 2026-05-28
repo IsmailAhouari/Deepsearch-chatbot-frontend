@@ -1,4 +1,3 @@
-import React from 'react';
 
 export default function ButtonGrid({ choices, onSelect, columns = 1, showSublabels = false, locked = false }) {
   return (
