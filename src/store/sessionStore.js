@@ -112,8 +112,10 @@ export const useSession = create((set, get) => ({
     };
   }),
 
-  // Explicit flow switch (sidebar / main-menu): resets all qualification first,
-  // then navigates — prevents stale data from a previous branch bleeding through.
+  // Explicit flow switch (sidebar / main-menu): resets all qualification AND
+  // clears the navigation history — the previous flow trail is no longer relevant.
+  // back() will then behave as a pure stack pop, so pressing Indietro from the
+  // new flow's entry goes straight to welcome (not back into the old flow).
   navigateReset: (to) => set((s) => {
     const SIGNAL_MAP = {
       aml:            ['aml', 'kyc'],
@@ -133,7 +135,7 @@ export const useSession = create((set, get) => ({
     };
 
     return {
-      history: [...s.history, s.screen],
+      history: [],          // ← clears the old flow trail; back() uses pure-pop
       screen: to,
       mobileSidebarOpen: false,
       engagementScore: s.engagementScore + 1,
@@ -149,19 +151,12 @@ export const useSession = create((set, get) => ({
   }),
 
   back: () => set((s) => {
-    // ── Helper: extract the flow family from a screen ID ──────────────────
-    const getFamily = (id) => {
-      if (!id) return null;
-      const m = id.match(/^(flowA|flowB|flowC|flowD|flowF|flowG|funnel)/);
-      return m ? m[1] : null;
-    };
-
-    // Entry screens for each exploration flow — back goes no further than these
-    const FLOW_ROOTS = {
-      flowA: 'flowA', flowB: 'flowB', flowC: 'flowC',
-      flowD: 'flowD', flowF: 'flowF', flowG: 'flowG_intro',
-    };
-
+    // ── Pure history-stack pop ────────────────────────────────────────────
+    // navigateReset() (sidebar / menu) clears history on every explicit flow
+    // switch, so the stack only ever contains screens from the current
+    // conversational path.  A CTA that crosses flows (e.g. flowB_aml →
+    // "Contatta il team" → flowF) uses navigate(), which appends to history,
+    // so pressing back correctly returns to the originating screen.
     const EMPTY_QUAL = {
       subjectType: null, intent: null, interest: null, geoArea: null, role: null,
       funcRole: null, needType: null,
@@ -209,31 +204,10 @@ export const useSession = create((set, get) => ({
       'flowG_need':            { needType: null },
     };
 
-    const currentFamily = getFamily(s.screen);
     const h = [...s.history];
-    let prev;
+    const prev = h.pop() ?? 'welcome';
 
-    if (currentFamily && FLOW_ROOTS[currentFamily]) {
-      // ── Exploration flow: stay within the same flow ──────────────────────
-      // Find the most recent history entry that belongs to the same flow family.
-      let targetIdx = -1;
-      for (let i = h.length - 1; i >= 0; i--) {
-        if (getFamily(h[i]) === currentFamily) { targetIdx = i; break; }
-      }
-      if (targetIdx >= 0) {
-        prev = h[targetIdx];
-        h.length = targetIdx; // discard everything after the target
-      } else {
-        // Nothing in history for this flow — go to Menu principale
-        prev = 'welcome';
-        h.length = 0;
-      }
-    } else {
-      // ── Funnel or other: standard pop ────────────────────────────────────
-      prev = h.pop() ?? 'welcome';
-    }
-
-    // Going back to welcome always wipes everything
+    // Going back to welcome always wipes all qualification
     const goingHome = prev === 'welcome';
     const qualUpdate = goingHome ? EMPTY_QUAL : SCREEN_QUAL_CLEAR[s.screen];
 

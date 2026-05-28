@@ -157,8 +157,9 @@ export default function Panel() {
 
   // Back button: hide only on welcome and thanks screens.
   // At a flow entry screen the button still shows — pressing it goes to Menu principale.
-  const showBack = history.length > 0
-    && screen !== 'welcome'
+  // history.length can be 0 at a flow entry (when the user arrived via sidebar/navigateReset
+  // which clears history); back() handles an empty stack gracefully by returning 'welcome'.
+  const showBack = screen !== 'welcome'
     && !screen.endsWith('_thanks');
 
   // ── Thanks screen ──────────────────────────────────────────────────────
