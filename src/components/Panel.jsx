@@ -275,6 +275,12 @@ export default function Panel() {
   }
 
   // ── Standard screen: message + prompt + choices ────────────────────────
+  // Lock main choices until every topChoices selector on this screen has been picked.
+  const topGroups = screenDef.topChoices
+    ? (Array.isArray(screenDef.topChoices) ? screenDef.topChoices : [screenDef.topChoices])
+    : [];
+  const choicesLocked = topGroups.length > 0 && !topGroups.every(g => !!qualification[g.captureKey]);
+
   // If the screen declares per-subject-type choice sets, pick the matching one;
   // fall back to the default choices list when no subjectType is selected yet.
   const rawButtons = (
@@ -334,6 +340,7 @@ export default function Panel() {
             onSelect={handleChoice}
             columns={screenDef.columns || 1}
             showSublabels={true}
+            locked={choicesLocked}
           />
         )}
       </div>

@@ -36,7 +36,7 @@ export const funnelScreens = [
   {
     id: 'funnel_intent_company',
     showSidebar: true,
-    message: 'DeepSearch supporta analisi diverse a seconda dell\'obiettivo: due diligence, rischio controparti, AML, litigation, reputazione.\n\nIndica l\'ambito più vicino alla tua esigenza.',
+    message: 'Per capire meglio il tuo scenario,\nqual è l\'ambito più vicino alla tua esigenza?',
     prompt: 'Obiettivo principale:',
     choices: [
       { label: 'Due Diligence',          target: 'funnel_geo', capture: { key: 'intent', value: 'Due Diligence' } },
@@ -71,7 +71,7 @@ export const funnelScreens = [
     id: 'funnel_geo',
     showSidebar: true,
     component: 'freetext',
-    message: 'DeepSearch integra dataset strutturati su oltre 40 giurisdizioni, con copertura variabile per area geografica.\n\nIndicami il contesto principale del tuo interesse.',
+    message: 'Qual è il contesto geografico principale del tuo interesse?',
     submitLabel: 'Continua',
     placeholder: 'Inserisci la nazione',
     freeTextCaptureKey: 'geoArea',

@@ -497,6 +497,15 @@
   background: var(--ds-accent-dim);
 }
 
+/* ── Locked state — choices blocked until required selectors are filled ── */
+
+.ds-choice-btn--locked,
+.ds-choice-btn:disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 /* ── Demo CTA variant — visually distinct from navigation choices ── */
 
 .ds-choice-btn--demo {

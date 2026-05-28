@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ButtonGrid({ choices, onSelect, columns = 1, showSublabels = false }) {
+export default function ButtonGrid({ choices, onSelect, columns = 1, showSublabels = false, locked = false }) {
   return (
     <div className={`ds-button-grid ${columns === 2 ? 'ds-button-grid--2col' : ''}`}>
       {choices.map((choice, i) => {
@@ -9,7 +9,8 @@ export default function ButtonGrid({ choices, onSelect, columns = 1, showSublabe
         return (
           <button
             key={i}
-            className={`ds-choice-btn${isDemoCta ? ' ds-choice-btn--demo' : ''}`}
+            className={`ds-choice-btn${isDemoCta ? ' ds-choice-btn--demo' : ''}${locked ? ' ds-choice-btn--locked' : ''}`}
+            disabled={locked}
             onClick={() => onSelect(choice)}
           >
             {choice.icon && <div className="ds-choice-icon">{choice.icon}</div>}
