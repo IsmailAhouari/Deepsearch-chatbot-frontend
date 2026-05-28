@@ -13,7 +13,7 @@ const FUNNEL_STEPS = [
 
 // ── Exploration navigation items ─────────────────────────────────────────────
 const EXPLORATION_NAV = [
-  { label: 'Piattaforma',        id: 'flowA',       icon: '◈' },
+  { label: 'Panoramica piattaforma', id: 'flowA',   icon: '◈' },
   { label: "Casi d'uso",         id: 'flowB',       icon: '◇' },
   { label: 'A chi si rivolge',   id: 'flowC',       icon: '❖' },
   { label: 'Contatta il Team',   id: 'flowF',       icon: '✉' },
