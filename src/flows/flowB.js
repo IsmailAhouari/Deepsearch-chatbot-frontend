@@ -12,14 +12,32 @@ export const flowBScreens = [
       ],
     },
     prompt: "Quale caso d'uso è più vicino al tuo interesse?",
+    choicesBySubjectType: {
+      Aziende: [
+        { label: 'Due diligence controparti',       target: 'flowB_dd' },
+        { label: 'Indagini aziendali',              target: 'flowB_other' },
+        { label: 'AML / KYC',                      target: 'flowB_aml' },
+        { label: 'Rischio fornitori / terze parti', target: 'flowB_supplier' },
+        { label: 'Litigation intelligence',         target: 'flowB_lit' },
+        { label: 'Analisi reputazionale',           target: 'flowB_rep' },
+        { label: 'Altro',                           target: 'flowG_intro' },
+      ],
+      Persone: [
+        { label: 'Litigation intelligence', target: 'flowB_lit' },
+        { label: 'Analisi reputazionale',   target: 'flowB_rep' },
+        { label: 'AML / KYC',              target: 'flowB_aml' },
+        { label: 'Altro',                  target: 'flowG_intro' },
+      ],
+    },
+    // Fallback when no subject type selected yet — show full Aziende list
     choices: [
-      { label: 'Due diligence controparti',    target: 'flowB_dd' },
-      { label: 'Indagini aziendali',           target: 'flowB_other' },
-      { label: 'Litigation intelligence',      target: 'flowB_lit' },
-      { label: 'Analisi reputazionale',        target: 'flowB_rep' },
-      { label: 'AML / KYC',                   target: 'flowB_aml' },
+      { label: 'Due diligence controparti',       target: 'flowB_dd' },
+      { label: 'Indagini aziendali',              target: 'flowB_other' },
+      { label: 'AML / KYC',                      target: 'flowB_aml' },
       { label: 'Rischio fornitori / terze parti', target: 'flowB_supplier' },
-      { label: 'Altro',                        target: 'flowG_intro' },
+      { label: 'Litigation intelligence',         target: 'flowB_lit' },
+      { label: 'Analisi reputazionale',           target: 'flowB_rep' },
+      { label: 'Altro',                           target: 'flowG_intro' },
     ],
   },
   {

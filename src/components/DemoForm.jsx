@@ -18,6 +18,11 @@ export default function DemoForm({ formType, onSubmit }) {
         ...(qualification.geoArea ? { paese: qualification.geoArea } : {}),
       };
     }
+    if (formType === 'contact' || formType === 'genericRequest') {
+      return {
+        ...(qualification.geoArea ? { paese: qualification.geoArea } : {}),
+      };
+    }
     return {};
   });
   const [errors, setErrors] = useState({});
@@ -58,11 +63,14 @@ export default function DemoForm({ formType, onSubmit }) {
         paese:    form.paese    || '',
       },
       qualification: {
-        subject_type: qualification.subjectType?.toLowerCase() || null,
-        motivation:   qualification.intent     || null,
-        country:      qualification.geoArea    || null,
-        user_role:    qualification.role       || null,
-        source_flow:  qualification.sourceFlow || null,
+        subject_type:      qualification.subjectType?.toLowerCase() || null,
+        motivation:        qualification.intent                      || null,
+        request_nature:    qualification.interest                    || null,
+        func_role:         qualification.funcRole                    || null,
+        country:           qualification.geoArea                    || null,
+        user_role:         qualification.role                        || null,
+        need_type:         qualification.needType                    || null,
+        source_flow:       qualification.sourceFlow                  || null,
       },
       metadata: {
         source:                    'deepsearch_chatbot_widget',
@@ -96,7 +104,8 @@ export default function DemoForm({ formType, onSubmit }) {
   const isSubmitting = submissionStatus === 'submitting';
 
   // ── Qualification summary helper ─────────────────────────────────────────
-  const hasQualification = qualification.subjectType || qualification.intent || qualification.geoArea || qualification.role;
+  const hasQualification = qualification.subjectType || qualification.intent || qualification.interest
+    || qualification.geoArea || qualification.role || qualification.funcRole || qualification.needType;
 
   const QualSummary = () => !hasQualification ? null : (
     <div className="ds-qual-summary">
@@ -114,6 +123,18 @@ export default function DemoForm({ formType, onSubmit }) {
             <span className="ds-qual-value">{qualification.intent}</span>
           </div>
         )}
+        {qualification.interest && (
+          <div className="ds-qual-row">
+            <span className="ds-qual-label">Natura della richiesta</span>
+            <span className="ds-qual-value">{qualification.interest}</span>
+          </div>
+        )}
+        {qualification.funcRole && (
+          <div className="ds-qual-row">
+            <span className="ds-qual-label">Funzione</span>
+            <span className="ds-qual-value">{qualification.funcRole}</span>
+          </div>
+        )}
         {qualification.geoArea && (
           <div className="ds-qual-row">
             <span className="ds-qual-label">Area geografica</span>
@@ -124,6 +145,12 @@ export default function DemoForm({ formType, onSubmit }) {
           <div className="ds-qual-row">
             <span className="ds-qual-label">Funzione</span>
             <span className="ds-qual-value">{qualification.role}</span>
+          </div>
+        )}
+        {qualification.needType && (
+          <div className="ds-qual-row">
+            <span className="ds-qual-label">Esigenza</span>
+            <span className="ds-qual-value">{qualification.needType}</span>
           </div>
         )}
       </div>
@@ -186,6 +213,8 @@ export default function DemoForm({ formType, onSubmit }) {
     const isGeneric = formType === 'genericRequest';
     return (
       <form className="ds-form ds-form--centered" onSubmit={handleSubmit}>
+        <QualSummary />
+
         <div className="ds-form-row">
           <div className="ds-form-field">
             <label>Nome *</label>
@@ -200,9 +229,15 @@ export default function DemoForm({ formType, onSubmit }) {
           <label>Email *</label>
           <input name="email" type="email" placeholder="Email" value={form.email || ''} onChange={handleChange} className={errors.email ? 'ds-field-error' : ''} disabled={isSubmitting} />
         </div>
-        <div className="ds-form-field">
-          <label>Telefono</label>
-          <input name="telefono" type="tel" placeholder="Telefono" value={form.telefono || ''} onChange={handleChange} disabled={isSubmitting} />
+        <div className="ds-form-row">
+          <div className="ds-form-field">
+            <label>Telefono</label>
+            <input name="telefono" type="tel" placeholder="Telefono" value={form.telefono || ''} onChange={handleChange} disabled={isSubmitting} />
+          </div>
+          <div className="ds-form-field">
+            <label>Paese</label>
+            <input name="paese" type="text" placeholder="Paese" value={form.paese || ''} onChange={handleChange} disabled={isSubmitting} />
+          </div>
         </div>
         {!isGeneric && (
           <div className="ds-form-field">

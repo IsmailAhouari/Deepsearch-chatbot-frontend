@@ -19,11 +19,11 @@ export const flowGScreens = [
     message: "Per indirizzare correttamente la richiesta:",
     prompt: "Funzione",
     choices: [
-      { label: 'Risk / Security', target: 'flowG_geo', capture: { key: 'function', value: 'Risk / Security' } },
-      { label: 'Legale',          target: 'flowG_geo', capture: { key: 'function', value: 'Legale' } },
-      { label: 'Compliance',      target: 'flowG_geo', capture: { key: 'function', value: 'Compliance' } },
-      { label: 'HR',              target: 'flowG_geo', capture: { key: 'function', value: 'HR' } },
-      { label: 'Direzione',       target: 'flowG_geo', capture: { key: 'function', value: 'Direzione' } },
+      { label: 'Risk / Security', target: 'flowG_geo', capture: { key: 'funcRole', value: 'Risk / Security' } },
+      { label: 'Legale',          target: 'flowG_geo', capture: { key: 'funcRole', value: 'Legale' } },
+      { label: 'Compliance',      target: 'flowG_geo', capture: { key: 'funcRole', value: 'Compliance' } },
+      { label: 'HR',              target: 'flowG_geo', capture: { key: 'funcRole', value: 'HR' } },
+      { label: 'Direzione',       target: 'flowG_geo', capture: { key: 'funcRole', value: 'Direzione' } },
     ],
   },
   {

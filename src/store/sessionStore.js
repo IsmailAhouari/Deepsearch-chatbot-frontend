@@ -50,7 +50,8 @@ export const useSession = create((set, get) => ({
     screen: 'welcome',
     history: [],
     qualification: {
-      subjectType: null, intent: null, geoArea: null, role: null,
+      subjectType: null, intent: null, interest: null, geoArea: null, role: null,
+      funcRole: null, needType: null,
       sourceFlow: null, entryScreen: null,
     },
     lead: { nome: '', azienda: '', email: '', telefono: '', ruolo: '', paese: '', note: '' },
@@ -82,8 +83,15 @@ export const useSession = create((set, get) => ({
       if (terms.some(t => to.toLowerCase().includes(t))) signals[key] += 1;
     }
 
-    // Navigating to the main menu resets all explicit qualification choices
-    // so the next demo request always starts from a clean state.
+    const EMPTY_QUAL = {
+      subjectType: null, intent: null, interest: null, geoArea: null, role: null,
+      funcRole: null, needType: null,
+      sourceFlow: null, entryScreen: null,
+    };
+
+    // Going home (welcome) always resets — anything else preserves qualification
+    // so that cross-flow CTAs (e.g. flowB → "Contatta il team") carry context forward.
+    // Explicit sidebar / menu switches use navigateReset() instead.
     const goingHome = to === 'welcome';
 
     return {
@@ -97,13 +105,46 @@ export const useSession = create((set, get) => ({
       intentSignals: signals,
       sidebarMode: to.startsWith('funnel_') ? 'qualification' : 'exploration',
       ...(goingHome ? {
-        qualification: {
-          subjectType: null, intent: null, geoArea: null, role: null,
-          sourceFlow: null, entryScreen: null,
-        },
+        qualification: EMPTY_QUAL,
         submissionStatus: 'idle',
         errorMessage: null,
       } : {}),
+    };
+  }),
+
+  // Explicit flow switch (sidebar / main-menu): resets all qualification first,
+  // then navigates — prevents stale data from a previous branch bleeding through.
+  navigateReset: (to) => set((s) => {
+    const SIGNAL_MAP = {
+      aml:            ['aml', 'kyc'],
+      dueDiligence:   ['_dd', 'due'],
+      riskManagement: ['risk', 'flowC_compliance'],
+      suppliers:      ['supplier'],
+    };
+    const signals = { ...s.intentSignals };
+    for (const [key, terms] of Object.entries(SIGNAL_MAP)) {
+      if (terms.some(t => to.toLowerCase().includes(t))) signals[key] += 1;
+    }
+
+    const EMPTY_QUAL = {
+      subjectType: null, intent: null, interest: null, geoArea: null, role: null,
+      funcRole: null, needType: null,
+      sourceFlow: null, entryScreen: null,
+    };
+
+    return {
+      history: [...s.history, s.screen],
+      screen: to,
+      mobileSidebarOpen: false,
+      engagementScore: s.engagementScore + 1,
+      visitedScreens: s.visitedScreens.includes(to)
+        ? s.visitedScreens
+        : [...s.visitedScreens, to],
+      intentSignals: signals,
+      sidebarMode: to.startsWith('funnel_') ? 'qualification' : 'exploration',
+      qualification: EMPTY_QUAL,
+      submissionStatus: 'idle',
+      errorMessage: null,
     };
   }),
 
@@ -111,18 +152,57 @@ export const useSession = create((set, get) => ({
     const h = [...s.history];
     const prev = h.pop() ?? 'welcome';
 
-    // When stepping back through the qualification funnel, clear the choice
-    // that was captured at the departing screen so the user re-enters it fresh.
-    const FUNNEL_QUAL_CLEAR = {
+    const EMPTY_QUAL = {
+      subjectType: null, intent: null, interest: null, geoArea: null, role: null,
+      funcRole: null, needType: null,
+      sourceFlow: null, entryScreen: null,
+    };
+
+    // Clears what each screen captured when the user backs out of it.
+    // Covers both funnel steps and all exploration screens.
+    const SCREEN_QUAL_CLEAR = {
+      // ── Funnel ──────────────────────────────────────────────────────────
       'funnel_subject':        { subjectType: null },
       'funnel_intent_company': { intent: null },
       'funnel_intent_person':  { intent: null },
       'funnel_geo':            { geoArea: null },
       'funnel_role_company':   { role: null },
       'funnel_role_person':    { role: null },
+      // ── flowA ────────────────────────────────────────────────────────────
+      'flowA':                 { subjectType: null, intent: null },
+      'flowA_geo':             { geoArea: null },
+      'flowA_role':            { role: null },
+      // ── flowB ────────────────────────────────────────────────────────────
+      'flowB':                 { subjectType: null },
+      'flowB_dd':              { intent: null },
+      'flowB_dd_sub':          { intent: null },
+      'flowB_lit':             { intent: null },
+      'flowB_lit_sub':         { intent: null },
+      'flowB_rep':             { intent: null },
+      'flowB_aml':             { intent: null },
+      'flowB_supplier':        { intent: null },
+      'flowB_other':           { intent: null },
+      // ── flowC ────────────────────────────────────────────────────────────
+      'flowC':                 { subjectType: null },
+      'flowC_risk':            { role: null },
+      'flowC_legal':           { role: null },
+      'flowC_compliance':      { role: null },
+      'flowC_hr':              { role: null },
+      'flowC_board':           { role: null },
+      'flowC_fund':            { role: null },
+      // ── flowF ────────────────────────────────────────────────────────────
+      'flowF':                 { interest: null },
+      'flowF_geo':             { geoArea: null },
+      // ── flowG ────────────────────────────────────────────────────────────
+      'flowG_intro':           { customRequestText: null },
+      'flowG_function':        { funcRole: null },
+      'flowG_geo':             { geoArea: null },
+      'flowG_need':            { needType: null },
     };
 
-    const qualUpdate = FUNNEL_QUAL_CLEAR[s.screen];
+    // Going back to welcome always wipes everything
+    const goingHome = prev === 'welcome';
+    const qualUpdate = goingHome ? EMPTY_QUAL : SCREEN_QUAL_CLEAR[s.screen];
 
     return {
       screen: prev,
@@ -181,7 +261,8 @@ export const useSession = create((set, get) => ({
     screen: 'welcome',
     history: [],
     qualification: {
-      subjectType: null, intent: null, geoArea: null, role: null,
+      subjectType: null, intent: null, interest: null, geoArea: null, role: null,
+      funcRole: null, needType: null,
       sourceFlow: null, entryScreen: null,
     },
     lead: { nome: '', azienda: '', email: '', telefono: '', ruolo: '', paese: '', note: '' },

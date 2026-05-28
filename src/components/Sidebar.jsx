@@ -13,17 +13,18 @@ const FUNNEL_STEPS = [
 
 // ── Exploration navigation items ─────────────────────────────────────────────
 const EXPLORATION_NAV = [
-  { label: 'Piattaforma',        id: 'flowA', icon: '◈' },
-  { label: "Casi d'uso",         id: 'flowB', icon: '◇' },
-  { label: 'A chi si rivolge',   id: 'flowC', icon: '❖' },
-  { label: 'Info Commerciali',   id: 'flowE', icon: '€' },
-  { label: 'Contatta il Team',   id: 'flowF', icon: '✉' },
-  { label: 'FAQ',                id: 'faq',   icon: '?' },
+  { label: 'Piattaforma',        id: 'flowA',       icon: '◈' },
+  { label: "Casi d'uso",         id: 'flowB',       icon: '◇' },
+  { label: 'A chi si rivolge',   id: 'flowC',       icon: '❖' },
+  { label: 'Contatta il Team',   id: 'flowF',       icon: '✉' },
+  { label: 'Altro',              id: 'flowG_intro', prefix: 'flowG', icon: '…' },
+  { label: 'FAQ',                id: 'faq',         icon: '?' },
 ];
 
 export default function Sidebar() {
   const screen           = useSession((s) => s.screen);
   const navigate         = useSession((s) => s.navigate);
+  const navigateReset    = useSession((s) => s.navigateReset);
   const qualification    = useSession((s) => s.qualification);
   const mobileSidebarOpen = useSession((s) => s.mobileSidebarOpen);
   const sidebarMode      = useSession((s) => s.sidebarMode);
@@ -38,24 +39,16 @@ export default function Sidebar() {
 
         {/* ── Exploration map — preserved as spatial context, dimmed ── */}
         <div className="ds-sidebar-nav">
-          <button
-            className="ds-sidebar-item"
-            onClick={() => navigate('welcome')}
-            style={{ marginBottom: '4px' }}
-          >
-            <span className="ds-step-indicator">⌂</span>
-            <span className="ds-step-label">Menu principale</span>
-          </button>
-
-          <div className="ds-sidebar-section-label" style={{ marginTop: '4px' }}>Esplora</div>
+          <div className="ds-sidebar-section-label">Esplora</div>
 
           {EXPLORATION_NAV.map((item) => {
-            const isVisited = visitedScreens.some(s => s.startsWith(item.id));
+            const matchPrefix = item.prefix || item.id;
+            const isVisited = visitedScreens.some(s => s.startsWith(matchPrefix));
             return (
               <button
                 key={item.id}
                 className={`ds-sidebar-item ds-sidebar-item--ctx ${isVisited ? 'visited' : ''}`}
-                onClick={() => navigate(item.id === 'faq' ? 'faq' : item.id)}
+                onClick={() => navigateReset(item.id === 'faq' ? 'faq' : item.id)}
               >
                 <span className="ds-step-indicator">{item.icon}</span>
                 <span className="ds-step-label">{item.label}</span>
@@ -114,27 +107,19 @@ export default function Sidebar() {
   return (
     <div className={`ds-sidebar ${mobileSidebarOpen ? 'mobile-open' : ''}`}>
       <div className="ds-sidebar-nav">
-        <button
-          className="ds-sidebar-item"
-          onClick={() => navigate('welcome')}
-          style={{ marginBottom: '8px' }}
-        >
-          <span className="ds-step-indicator">←</span>
-          <span className="ds-step-label">Menu principale</span>
-        </button>
-
-        <div className="ds-sidebar-section-label" style={{ marginTop: '4px' }}>Esplora</div>
+        <div className="ds-sidebar-section-label">Esplora</div>
 
         {EXPLORATION_NAV.map((item) => {
+          const matchPrefix = item.prefix || item.id;
           const faqMatch    = item.id === 'faq' && (screen === 'faq' || screen === 'fallback');
-          const isActive    = faqMatch || (!faqMatch && screen.startsWith(item.id));
-          const isVisited   = visitedScreens.some(s => s.startsWith(item.id));
+          const isActive    = faqMatch || (!faqMatch && screen.startsWith(matchPrefix));
+          const isVisited   = visitedScreens.some(s => s.startsWith(matchPrefix));
 
           return (
             <button
               key={item.id}
               className={`ds-sidebar-item ${isActive ? 'active' : ''} ${isVisited && !isActive ? 'visited' : ''}`}
-              onClick={() => navigate(item.id === 'faq' ? 'faq' : item.id)}
+              onClick={() => navigateReset(item.id === 'faq' ? 'faq' : item.id)}
             >
               <span className="ds-step-indicator">{item.icon}</span>
               <span className="ds-step-label">{item.label}</span>
@@ -148,11 +133,11 @@ export default function Sidebar() {
 
       <div className="ds-sidebar-footer" style={{ padding: '16px 16px 0 16px', marginTop: 'auto' }}>
         <button
-          className="ds-sidebar-item ds-sidebar-demo-cta"
-          onClick={() => useSession.getState().startDemoFlow()}
+          className="ds-sidebar-item"
+          onClick={() => navigateReset('welcome')}
         >
-          <span className="ds-step-indicator">→</span>
-          <span className="ds-step-label">Richiedi Demo</span>
+          <span className="ds-step-indicator">←</span>
+          <span className="ds-step-label">Menu principale</span>
         </button>
       </div>
     </div>

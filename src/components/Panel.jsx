@@ -275,7 +275,13 @@ export default function Panel() {
   }
 
   // ── Standard screen: message + prompt + choices ────────────────────────
-  const rawButtons = screenDef.choices || screenDef.ctas || [];
+  // If the screen declares per-subject-type choice sets, pick the matching one;
+  // fall back to the default choices list when no subjectType is selected yet.
+  const rawButtons = (
+    screenDef.choicesBySubjectType && qualification.subjectType
+      ? screenDef.choicesBySubjectType[qualification.subjectType]
+      : null
+  ) ?? screenDef.choices ?? screenDef.ctas ?? [];
 
   // Personalize: reorder by role/intent context
   const reordered = reorderChoices(rawButtons, qualification);
