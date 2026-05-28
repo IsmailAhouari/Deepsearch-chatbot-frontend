@@ -149,8 +149,18 @@ export const useSession = create((set, get) => ({
   }),
 
   back: () => set((s) => {
-    const h = [...s.history];
-    const prev = h.pop() ?? 'welcome';
+    // ── Helper: extract the flow family from a screen ID ──────────────────
+    const getFamily = (id) => {
+      if (!id) return null;
+      const m = id.match(/^(flowA|flowB|flowC|flowD|flowF|flowG|funnel)/);
+      return m ? m[1] : null;
+    };
+
+    // Entry screens for each exploration flow — back goes no further than these
+    const FLOW_ROOTS = {
+      flowA: 'flowA', flowB: 'flowB', flowC: 'flowC',
+      flowD: 'flowD', flowF: 'flowF', flowG: 'flowG_intro',
+    };
 
     const EMPTY_QUAL = {
       subjectType: null, intent: null, interest: null, geoArea: null, role: null,
@@ -159,7 +169,6 @@ export const useSession = create((set, get) => ({
     };
 
     // Clears what each screen captured when the user backs out of it.
-    // Covers both funnel steps and all exploration screens.
     const SCREEN_QUAL_CLEAR = {
       // ── Funnel ──────────────────────────────────────────────────────────
       'funnel_subject':        { subjectType: null },
@@ -199,6 +208,30 @@ export const useSession = create((set, get) => ({
       'flowG_geo':             { geoArea: null },
       'flowG_need':            { needType: null },
     };
+
+    const currentFamily = getFamily(s.screen);
+    const h = [...s.history];
+    let prev;
+
+    if (currentFamily && FLOW_ROOTS[currentFamily]) {
+      // ── Exploration flow: stay within the same flow ──────────────────────
+      // Find the most recent history entry that belongs to the same flow family.
+      let targetIdx = -1;
+      for (let i = h.length - 1; i >= 0; i--) {
+        if (getFamily(h[i]) === currentFamily) { targetIdx = i; break; }
+      }
+      if (targetIdx >= 0) {
+        prev = h[targetIdx];
+        h.length = targetIdx; // discard everything after the target
+      } else {
+        // Nothing in history for this flow — go to Menu principale
+        prev = 'welcome';
+        h.length = 0;
+      }
+    } else {
+      // ── Funnel or other: standard pop ────────────────────────────────────
+      prev = h.pop() ?? 'welcome';
+    }
 
     // Going back to welcome always wipes everything
     const goingHome = prev === 'welcome';

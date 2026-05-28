@@ -155,7 +155,8 @@ export default function Panel() {
     navigate(screenDef.formSuccessTarget || 'funnel_thanks');
   };
 
-  // Back button: never on welcome or any thanks screen (V1 pattern — show whenever history exists)
+  // Back button: hide only on welcome and thanks screens.
+  // At a flow entry screen the button still shows — pressing it goes to Menu principale.
   const showBack = history.length > 0
     && screen !== 'welcome'
     && !screen.endsWith('_thanks');
