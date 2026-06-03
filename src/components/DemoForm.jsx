@@ -5,8 +5,9 @@ import { captureLead } from '../services/api.js';
 export default function DemoForm({ formType, onSubmit }) {
   const qualification       = useSession((s) => s.qualification);
   const visitedScreens      = useSession((s) => s.visitedScreens);
-  const intentSignals       = useSession((s) => s.intentSignals);
-  const backendSessionId    = useSession((s) => s.backendSessionId);
+  const intentSignals          = useSession((s) => s.intentSignals);
+  const backendSessionId       = useSession((s) => s.backendSessionId);
+  const qualificationHistory   = useSession((s) => s.qualificationHistory);
   const submissionStatus    = useSession((s) => s.submissionStatus);
   const errorMessage        = useSession((s) => s.errorMessage);
   const setSubmissionStatus = useSession((s) => s.setSubmissionStatus);
@@ -64,23 +65,30 @@ export default function DemoForm({ formType, onSubmit }) {
         ruolo:    form.ruolo    || '',
         paese:    form.paese    || '',
       },
-      qualification: {
-        subject_type:   qualification.subjectType?.toLowerCase() || null,
-        motivation:     qualification.intent                      || null,
-        request_nature: qualification.interest                    || null,
-        func_role:      qualification.funcRole                    || null,
-        country:        qualification.geoArea                    || null,
-        user_role:      qualification.role                        || null,
-        need_type:      qualification.needType                    || null,
-        source_flow:    qualification.sourceFlow                  || null,
-      },
+      // Only send qualification fields that were actually captured during the journey.
+      // Null fields mean the user's flow didn't include that step — omitting them keeps
+      // the backend payload unambiguous (absent ≠ skipped).
+      qualification: Object.fromEntries(
+        Object.entries({
+          subject_type:   qualification.subjectType?.toLowerCase() || null,
+          motivation:     qualification.intent                      || null,
+          request_nature: qualification.interest                    || null,
+          func_role:      qualification.funcRole                    || null,
+          country:        qualification.geoArea                    || null,
+          user_role:      qualification.role                        || null,
+          need_type:      qualification.needType                    || null,
+          source_flow:    qualification.sourceFlow                  || null,
+          entry_screen:   qualification.entryScreen                 || null,
+        }).filter(([, v]) => v !== null)
+      ),
       metadata: {
         source:                   'deepsearch_chatbot_widget',
         session_duration_seconds: sessionDuration,
         engagement_depth:         visitedScreens?.length || 0,
-        visited_screens:          visitedScreens || [],
-        intent_signals:           intentSignals  || {},
+        visited_screens:          visitedScreens       || [],
+        intent_signals:           intentSignals        || {},
         source_flow:              qualification.sourceFlow || null,
+        qualification_steps:      qualificationHistory || [],
       },
       note: form.note || form.messaggio || '',
     };

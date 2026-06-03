@@ -26,7 +26,7 @@ export const flowCScreens = [
   {
     id: 'flowC_risk',
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowC', role: 'Security / Risk' },
+    autoCapture: { sourceFlow: 'flowC', role: 'Security / Risk', intent: 'Analisi del rischio' },
     message: "DeepSearch supporta le funzioni Security e Risk nella mappatura proattiva delle esposizioni: analisi delle controparti, monitoraggio delle reti relazionali e identificazione di segnali di rischio emergenti.",
     ctas: [
       { label: 'Richiedi demo', action: { type: 'startDemo', role: 'Security / Risk', selectedPersona: 'Security / Risk', selectedPersonaLabel: 'Security / Risk', sourceFlow: 'flowC', sourceScreen: 'flowC_risk' } },
@@ -36,7 +36,7 @@ export const flowCScreens = [
   {
     id: 'flowC_legal',
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowC', role: 'Legale / Contenzioso' },
+    autoCapture: { sourceFlow: 'flowC', role: 'Legale / Contenzioso', intent: 'Litigation intelligence' },
     message: "DeepSearch supporta le funzioni legali nella fase pre-contenziosa e durante i procedimenti: ricostruzione di reti relazionali, identificazione di asset e analisi delle connessioni tra soggetti.",
     ctas: [
       { label: 'Richiedi demo', action: { type: 'startDemo', role: 'Legale', selectedPersona: 'Legale / Contenzioso', selectedPersonaLabel: 'Professionisti legali', sourceFlow: 'flowC', sourceScreen: 'flowC_legal' } },
@@ -46,7 +46,7 @@ export const flowCScreens = [
   {
     id: 'flowC_compliance',
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowC', role: 'Compliance / AML' },
+    autoCapture: { sourceFlow: 'flowC', role: 'Compliance / AML', intent: 'Analisi AML' },
     message: "DeepSearch supporta i processi di compliance attraverso analisi relazionali avanzate, migliorando la visibilità su strutture complesse, controparti ed esposizioni indirette.",
     ctas: [
       { label: 'Richiedi demo', action: { type: 'startDemo', role: 'Compliance', selectedPersona: 'Compliance / AML', selectedPersonaLabel: 'Compliance / AML', sourceFlow: 'flowC', sourceScreen: 'flowC_compliance' } },
@@ -56,7 +56,7 @@ export const flowCScreens = [
   {
     id: 'flowC_hr',
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowC', role: 'HR' },
+    autoCapture: { sourceFlow: 'flowC', role: 'HR', intent: 'Analisi del rischio' },
     message: "DeepSearch supporta le funzioni HR nella verifica dei profili attraverso l'analisi di fonti aperte: esposizione mediatica, connessioni societarie e segnali reputazionali rilevanti.",
     ctas: [
       { label: 'Richiedi demo', action: { type: 'startDemo', role: 'HR', selectedPersona: 'HR', selectedPersonaLabel: 'HR', sourceFlow: 'flowC', sourceScreen: 'flowC_hr' } },
@@ -66,7 +66,7 @@ export const flowCScreens = [
   {
     id: 'flowC_board',
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowC', role: 'Direzione / Board' },
+    autoCapture: { sourceFlow: 'flowC', role: 'Direzione / Board', intent: 'Analisi del rischio' },
     message: "DeepSearch è progettato per supportare decisioni strategiche, fornendo intelligence strutturata su controparti, relazioni e rischi.",
     ctas: [
       { label: 'Demo executive', action: { type: 'startDemo', role: 'Direzione', selectedPersona: 'Direzione / Board', selectedPersonaLabel: 'Direzione / Board', sourceFlow: 'flowC', sourceScreen: 'flowC_board' } },
@@ -76,7 +76,7 @@ export const flowCScreens = [
   {
     id: 'flowC_fund',
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowC', role: 'Investitore / Fondo' },
+    autoCapture: { sourceFlow: 'flowC', role: 'Investitore / Fondo', intent: 'Due Diligence' },
     message: "DeepSearch supporta investitori e fondi nella fase di screening e due diligence: analisi dei target, mappatura delle reti di controllo, identificazione di esposizioni e segnali di rischio pre-investimento.",
     ctas: [
       { label: 'Richiedi demo', action: { type: 'startDemo', role: 'Altro', selectedPersona: 'Investitore / Fondo', selectedPersonaLabel: 'Investitore / Fondo', sourceFlow: 'flowC', sourceScreen: 'flowC_fund' } },

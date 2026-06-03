@@ -67,7 +67,7 @@ export const flowBScreens = [
   {
     id: 'flowB_lit',
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowB', intent: 'Litigation intelligence' },
+    autoCapture: { sourceFlow: 'flowB', intent: 'Litigation intelligence', role: 'Legale / Contenzioso' },
     message: "DeepSearch supporta studi legali e consulenti nella ricostruzione delle relazioni tra soggetti, nell'individuazione di controparti rilevanti e nel rafforzamento della strategia informativa.",
     prompt: 'Il contesto è:',
     choices: [
@@ -80,7 +80,7 @@ export const flowBScreens = [
   {
     id: 'flowB_lit_sub',
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowB', intent: 'Litigation intelligence' },
+    autoCapture: { sourceFlow: 'flowB', intent: 'Litigation intelligence', role: 'Legale / Contenzioso' },
     message: "DeepSearch ricostruisce reti relazionali e flussi di controllo utili a supportare la strategia legale: identificazione di asset, soggetti collegati e segnali di rischio documentati da fonti aperte.",
     ctas: [
       { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Litigation intelligence', sourceFlow: 'flowB', sourceScreen: 'flowB_lit_sub' } },
@@ -100,7 +100,7 @@ export const flowBScreens = [
   {
     id: 'flowB_aml',
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowB', intent: 'Analisi AML' },
+    autoCapture: { sourceFlow: 'flowB', intent: 'Analisi AML', role: 'Compliance / AML' },
     message: "DeepSearch supporta i processi AML e KYC attraverso l'analisi relazionale avanzata: identificazione di PEP, soggetti sanzionati, strutture societarie opache e reti di controllo non dichiarate.",
     ctas: [
       { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'AML / KYC', sourceFlow: 'flowB', sourceScreen: 'flowB_aml' } },

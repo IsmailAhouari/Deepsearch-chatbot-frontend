@@ -48,6 +48,10 @@ export const useSession = create((set) => ({
   // --- BACKEND SESSION ---
   backendSessionId: null, // UUID returned by POST /api/v1/sessions
 
+  // --- QUALIFICATION HISTORY ---
+  // Ordered record of every setQual call: [{screen, fields, step}]
+  qualificationHistory: [],
+
   // --- ACTIONS ---
   open_modal: () => {
     // Reset local state immediately so the UI opens without delay.
@@ -69,6 +73,7 @@ export const useSession = create((set) => ({
       sidebarMode: 'exploration',
       sessionStart: Date.now(),
       backendSessionId: null,
+      qualificationHistory: [],
     });
     // Fire-and-forget: create backend session; store the ID when it resolves.
     initSession({ locale: 'it' }).then((data) => {
@@ -236,6 +241,10 @@ export const useSession = create((set) => ({
 
   setQual: (data) => set((s) => ({
     qualification: { ...s.qualification, ...data },
+    qualificationHistory: [
+      ...s.qualificationHistory,
+      { screen: s.screen, fields: data, step: s.qualificationHistory.length },
+    ],
   })),
 
   setLead: (data) => set((s) => ({
@@ -295,5 +304,6 @@ export const useSession = create((set) => ({
     sidebarMode: 'exploration',
     sessionStart: Date.now(),
     backendSessionId: null,
+    qualificationHistory: [],
   }),
 }));
