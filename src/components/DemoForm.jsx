@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSession } from '../store/sessionStore.js';
 
-const API_URL = import.meta.env.VITE_LEADS_API_URL || 'https://api.deepsearch.com/leads/capture';
+const API_URL = import.meta.env.VITE_LEADS_API_URL || 'http://localhost:8000/api/v1/leads/capture';
 
 export default function DemoForm({ formType, onSubmit }) {
   const qualification      = useSession((s) => s.qualification);
