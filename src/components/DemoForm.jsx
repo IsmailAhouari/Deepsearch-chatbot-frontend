@@ -91,7 +91,30 @@ export default function DemoForm({ formType, onSubmit }) {
       onSubmit({ ...form, qualification: payload.qualification });
     } catch (err) {
       console.error('[DemoForm] Lead capture failed:', err);
-      setSubmissionStatus('error', 'Errore nell\'invio. Riprova o contattaci direttamente.');
+
+      // Map backend field errors back onto the form so the user sees exactly what's wrong.
+      const backendErrors = err.body?.errors ?? [];
+      const fieldErrors = {};
+      let genericMsg = null;
+
+      for (const { field, message } of backendErrors) {
+        if (field === 'contact.email' || field === 'body.contact.email') {
+          fieldErrors.email = 'Indirizzo email non valido — verifica il formato (es. nome@azienda.it)';
+        } else if (field === 'contact.nome' || field === 'body.contact.nome') {
+          fieldErrors.nome = true;
+        } else if (field === 'contact.azienda' || field === 'body.contact.azienda') {
+          fieldErrors.azienda = true;
+        } else {
+          genericMsg = message || 'Errore nell\'invio. Riprova o contattaci direttamente.';
+        }
+      }
+
+      if (Object.keys(fieldErrors).length > 0) {
+        setErrors((prev) => ({ ...prev, ...fieldErrors }));
+        setSubmissionStatus('idle'); // clear submitting state so the user can fix and retry
+      } else {
+        setSubmissionStatus('error', genericMsg ?? 'Errore nell\'invio. Riprova o contattaci direttamente.');
+      }
     }
   };
 
@@ -178,6 +201,7 @@ export default function DemoForm({ formType, onSubmit }) {
         <div className="ds-form-field">
           <label>Email *</label>
           <input name="email" type="email" placeholder="email@azienda.com" value={form.email || ''} onChange={handleChange} className={errors.email ? 'ds-field-error' : ''} disabled={isSubmitting} />
+          {typeof errors.email === 'string' && <span className="ds-field-error-msg">{errors.email}</span>}
         </div>
         <div className="ds-form-row">
           <div className="ds-form-field">
@@ -222,6 +246,7 @@ export default function DemoForm({ formType, onSubmit }) {
         <div className="ds-form-field">
           <label>Email *</label>
           <input name="email" type="email" placeholder="Email" value={form.email || ''} onChange={handleChange} className={errors.email ? 'ds-field-error' : ''} disabled={isSubmitting} />
+          {typeof errors.email === 'string' && <span className="ds-field-error-msg">{errors.email}</span>}
         </div>
         <div className="ds-form-row">
           <div className="ds-form-field">
@@ -263,6 +288,7 @@ export default function DemoForm({ formType, onSubmit }) {
       <div className="ds-form-field">
         <label>Email *</label>
         <input name="email" type="email" placeholder="Email" value={form.email || ''} onChange={handleChange} className={errors.email ? 'ds-field-error' : ''} disabled={isSubmitting} />
+        {typeof errors.email === 'string' && <span className="ds-field-error-msg">{errors.email}</span>}
       </div>
       <div className="ds-form-field">
         <label>Telefono</label>

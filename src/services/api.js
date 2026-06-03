@@ -36,7 +36,15 @@ export async function captureLead(payload) {
     headers,
     body: JSON.stringify(payload),
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) {
+    let body = null;
+    try { body = await res.json(); } catch (_) {}
+    const err = new Error(`HTTP ${res.status}`);
+    err.status = res.status;
+    err.body = body;
+    console.error('[api] captureLead failed', { status: res.status, body });
+    throw err;
+  }
   return await res.json();
 }
 
