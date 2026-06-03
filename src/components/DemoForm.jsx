@@ -66,19 +66,18 @@ export default function DemoForm({ formType, onSubmit }) {
         paese:    form.paese    || '',
       },
       // Only send qualification fields that were actually captured during the journey.
-      // Null fields mean the user's flow didn't include that step — omitting them keeps
-      // the backend payload unambiguous (absent ≠ skipped).
+      // Uses canonical backend field names directly — no shim remapping needed.
       qualification: Object.fromEntries(
         Object.entries({
-          subject_type:   qualification.subjectType?.toLowerCase() || null,
-          motivation:     qualification.intent                      || null,
-          request_nature: qualification.interest                    || null,
-          func_role:      qualification.funcRole                    || null,
-          country:        qualification.geoArea                    || null,
-          user_role:      qualification.role                        || null,
-          need_type:      qualification.needType                    || null,
-          source_flow:    qualification.sourceFlow                  || null,
-          entry_screen:   qualification.entryScreen                 || null,
+          target:         qualification.subjectType?.toLowerCase() || null,
+          obiettivo:      qualification.intent                     || null,
+          request_nature: qualification.interest                   || null,
+          func_role:      qualification.funcRole                   || null,
+          geografia:      qualification.geoArea                   || null,
+          role:           qualification.role                       || null,
+          need_type:      qualification.needType                   || null,
+          source_flow:    qualification.sourceFlow                 || null,
+          entry_screen:   qualification.entryScreen                || null,
         }).filter(([, v]) => v !== null)
       ),
       metadata: {
