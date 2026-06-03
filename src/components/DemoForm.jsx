@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { useSession } from '../store/sessionStore.js';
-
-const API_URL = import.meta.env.VITE_LEADS_API_URL || 'http://localhost:8000/api/v1/leads/capture';
+import { captureLead } from '../services/api.js';
 
 export default function DemoForm({ formType, onSubmit }) {
-  const qualification      = useSession((s) => s.qualification);
-  const visitedScreens     = useSession((s) => s.visitedScreens);
-  const submissionStatus   = useSession((s) => s.submissionStatus);
-  const errorMessage       = useSession((s) => s.errorMessage);
+  const qualification       = useSession((s) => s.qualification);
+  const visitedScreens      = useSession((s) => s.visitedScreens);
+  const intentSignals       = useSession((s) => s.intentSignals);
+  const backendSessionId    = useSession((s) => s.backendSessionId);
+  const submissionStatus    = useSession((s) => s.submissionStatus);
+  const errorMessage        = useSession((s) => s.errorMessage);
   const setSubmissionStatus = useSession((s) => s.setSubmissionStatus);
-  const sessionStart       = useSession((s) => s.sessionStart);
+  const sessionStart        = useSession((s) => s.sessionStart);
 
   const [form, setForm] = useState(() => {
     if (formType === 'demo') {
@@ -54,6 +55,7 @@ export default function DemoForm({ formType, onSubmit }) {
     const sessionDuration = Math.round((Date.now() - sessionStart) / 1000);
 
     const payload = {
+      ...(backendSessionId ? { session_id: backendSessionId } : {}),
       contact: {
         nome:     form.nome     || '',
         azienda:  form.azienda  || '',
@@ -63,38 +65,30 @@ export default function DemoForm({ formType, onSubmit }) {
         paese:    form.paese    || '',
       },
       qualification: {
-        subject_type:      qualification.subjectType?.toLowerCase() || null,
-        motivation:        qualification.intent                      || null,
-        request_nature:    qualification.interest                    || null,
-        func_role:         qualification.funcRole                    || null,
-        country:           qualification.geoArea                    || null,
-        user_role:         qualification.role                        || null,
-        need_type:         qualification.needType                    || null,
-        source_flow:       qualification.sourceFlow                  || null,
+        subject_type:   qualification.subjectType?.toLowerCase() || null,
+        motivation:     qualification.intent                      || null,
+        request_nature: qualification.interest                    || null,
+        func_role:      qualification.funcRole                    || null,
+        country:        qualification.geoArea                    || null,
+        user_role:      qualification.role                        || null,
+        need_type:      qualification.needType                    || null,
+        source_flow:    qualification.sourceFlow                  || null,
       },
       metadata: {
-        source:                    'deepsearch_chatbot_widget',
-        session_duration_seconds:  sessionDuration,
-        engagement_depth:          visitedScreens?.length || 0,
+        source:                   'deepsearch_chatbot_widget',
+        session_duration_seconds: sessionDuration,
+        engagement_depth:         visitedScreens?.length || 0,
+        visited_screens:          visitedScreens || [],
+        intent_signals:           intentSignals  || {},
+        source_flow:              qualification.sourceFlow || null,
       },
       note: form.note || form.messaggio || '',
     };
 
     try {
-      const res = await fetch(API_URL, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify(payload),
-      });
-
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
+      await captureLead(payload);
       setSubmissionStatus('submitted');
-      onSubmit({
-        ...form,
-        qualification: payload.qualification,
-      });
-
+      onSubmit({ ...form, qualification: payload.qualification });
     } catch (err) {
       console.error('[DemoForm] Lead capture failed:', err);
       setSubmissionStatus('error', 'Errore nell\'invio. Riprova o contattaci direttamente.');
@@ -277,7 +271,7 @@ export default function DemoForm({ formType, onSubmit }) {
       <button type="submit" className="ds-submit-btn" disabled={isSubmitting}>
         {isSubmitting ? 'Invio in corso...' : 'Invia Richiesta'}
       </button>
-      <ErrorMsg />
+      {errorMsgEl}
     </form>
   );
 }

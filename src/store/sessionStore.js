@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { initSession } from '../services/api.js';
 
 export const useSession = create((set) => ({
   // --- UI STATE ---
@@ -44,25 +45,38 @@ export const useSession = create((set) => ({
   errorMessage: null,
   sessionStart: Date.now(),
 
+  // --- BACKEND SESSION ---
+  backendSessionId: null, // UUID returned by POST /api/v1/sessions
+
   // --- ACTIONS ---
-  open_modal: () => set({
-    open: true,
-    screen: 'welcome',
-    history: [],
-    qualification: {
-      subjectType: null, intent: null, interest: null, geoArea: null, role: null,
-      funcRole: null, needType: null,
-      sourceFlow: null, entryScreen: null,
-    },
-    lead: { nome: '', azienda: '', email: '', telefono: '', ruolo: '', paese: '', note: '' },
-    engagementScore: 0,
-    visitedScreens: [],
-    intentSignals: { aml: 0, dueDiligence: 0, riskManagement: 0, suppliers: 0 },
-    submissionStatus: 'idle',
-    errorMessage: null,
-    sidebarMode: 'exploration',
-    sessionStart: Date.now(),
-  }),
+  open_modal: () => {
+    // Reset local state immediately so the UI opens without delay.
+    set({
+      open: true,
+      screen: 'welcome',
+      history: [],
+      qualification: {
+        subjectType: null, intent: null, interest: null, geoArea: null, role: null,
+        funcRole: null, needType: null,
+        sourceFlow: null, entryScreen: null,
+      },
+      lead: { nome: '', azienda: '', email: '', telefono: '', ruolo: '', paese: '', note: '' },
+      engagementScore: 0,
+      visitedScreens: [],
+      intentSignals: { aml: 0, dueDiligence: 0, riskManagement: 0, suppliers: 0 },
+      submissionStatus: 'idle',
+      errorMessage: null,
+      sidebarMode: 'exploration',
+      sessionStart: Date.now(),
+      backendSessionId: null,
+    });
+    // Fire-and-forget: create backend session; store the ID when it resolves.
+    initSession({ locale: 'it' }).then((data) => {
+      if (data?.session_id) {
+        set({ backendSessionId: data.session_id });
+      }
+    });
+  },
 
   close_modal: () => set({ open: false, mobileSidebarOpen: false }),
   setOpen: (isOpen = true) => set({ open: isOpen }),
@@ -280,5 +294,6 @@ export const useSession = create((set) => ({
     errorMessage: null,
     sidebarMode: 'exploration',
     sessionStart: Date.now(),
+    backendSessionId: null,
   }),
 }));
