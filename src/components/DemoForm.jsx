@@ -2,6 +2,17 @@ import { useState } from 'react';
 import { useSession } from '../store/sessionStore.js';
 import { captureLead } from '../services/api.js';
 
+const FLOW_LABELS = {
+  flowA:  'Panoramica piattaforma',
+  flowB:  "Casi d'uso",
+  flowC:  'A chi si rivolge',
+  flowD:  'Richiedi demo',
+  flowE:  'Informazioni commerciali',
+  flowF:  'Contatta il team',
+  flowG:  'Altro',
+  funnel: 'Qualificazione diretta',
+};
+
 export default function DemoForm({ formType, onSubmit }) {
   const qualification       = useSession((s) => s.qualification);
   const visitedScreens      = useSession((s) => s.visitedScreens);
@@ -76,7 +87,7 @@ export default function DemoForm({ formType, onSubmit }) {
           geografia:      qualification.geoArea                   || null,
           role:           qualification.role                       || null,
           need_type:      qualification.needType                   || null,
-          source_flow:    qualification.sourceFlow                 || null,
+          source_flow:    FLOW_LABELS[qualification.sourceFlow] || qualification.sourceFlow || null,
           entry_screen:   qualification.entryScreen                || null,
         }).filter(([, v]) => v !== null)
       ),
