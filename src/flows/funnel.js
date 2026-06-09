@@ -121,13 +121,11 @@ export const funnelScreens = [
     formSuccessTarget: 'funnel_thanks',
   },
 
-  // Confirmation + Calendly booking
   {
     id: 'funnel_thanks',
     showSidebar: true,
     component: 'thanks',
     message: "Grazie.\nLa richiesta è stata acquisita.\nUn referente DeepSearch ti contatterà entro 24 ore.",
-    showCalendly: true,
   },
 ];
 

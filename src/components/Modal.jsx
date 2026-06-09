@@ -16,12 +16,9 @@ export default function Modal() {
   const screenDef   = SCREENS[screen] || SCREENS['fallback'];
   const showSidebar = screenDef?.showSidebar ?? false;
 
-  // Expand modal height when Calendly iframe is shown
-  const showCalendly = screenDef?.showCalendly && !!lead.email;
-
   return (
     <div className="ds-overlay" onClick={(e) => { if (e.target === e.currentTarget) close_modal(); }}>
-      <div className={`ds-modal ${mobileSidebarOpen ? 'sidebar-open' : ''} ${showCalendly ? 'ds-modal--calendly' : ''}`}>
+      <div className={`ds-modal ${mobileSidebarOpen ? 'sidebar-open' : ''}`}>
         {/* Header */}
         <div className="ds-header">
           <div className="ds-header-brand">

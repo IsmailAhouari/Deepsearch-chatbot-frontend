@@ -163,13 +163,6 @@ export default function Panel() {
 
   // ── Thanks screen ──────────────────────────────────────────────────────
   if (screenDef.component === 'thanks') {
-    const calendlyUrl = screenDef.showCalendly && lead.email
-      ? `https://calendly.com/deepsearch-demo/30min` +
-        `?name=${encodeURIComponent(lead.nome || '')}` +
-        `&email=${encodeURIComponent(lead.email || '')}` +
-        `&a1=${encodeURIComponent(lead.azienda || '')}`
-      : null;
-
     return (
       <div className="ds-panel">
         <div className="ds-panel-content">
@@ -180,19 +173,6 @@ export default function Panel() {
                 {screenDef.message}
               </div>
             </div>
-            {calendlyUrl && (
-              <div className="ds-calendly-wrapper">
-                <div className="ds-calendly-label">Prenota subito la tua sessione:</div>
-                <iframe
-                  src={calendlyUrl}
-                  width="100%"
-                  height="450px"
-                  frameBorder="0"
-                  title="Prenota Demo DeepSearch"
-                  className="ds-calendly-frame"
-                />
-              </div>
-            )}
           </div>
         </div>
       </div>
