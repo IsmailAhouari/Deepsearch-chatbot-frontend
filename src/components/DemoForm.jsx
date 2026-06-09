@@ -68,6 +68,7 @@ export default function DemoForm({ formType, onSubmit }) {
 
     const payload = {
       ...(backendSessionId ? { session_id: backendSessionId } : {}),
+      request_type: formType === 'genericRequest' ? 'generic_request' : formType,
       contact: {
         nome:     form.nome     || '',
         azienda:  form.azienda  || '',
@@ -97,7 +98,7 @@ export default function DemoForm({ formType, onSubmit }) {
         engagement_depth:         visitedScreens?.length || 0,
         visited_screens:          visitedScreens       || [],
         intent_signals:           intentSignals        || {},
-        source_flow:              qualification.sourceFlow || null,
+        source_flow:              FLOW_LABELS[qualification.sourceFlow] || qualification.sourceFlow || null,
         qualification_steps:      qualificationHistory || [],
       },
       note: form.note || form.messaggio || '',
