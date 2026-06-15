@@ -1,0 +1,42 @@
+{
+  "subjectType": {
+    "aziende": "Companies",
+    "persone": "Individuals"
+  },
+  "intent": {
+    "due_diligence": "Due Diligence",
+    "partner_selection": "Business Partner Selection",
+    "aml": "AML Analysis",
+    "risk_analysis": "Risk Analysis",
+    "supplier_check": "Supplier Verification",
+    "litigation": "Litigation Intelligence",
+    "reputational_risk": "Reputational Risk",
+    "hiring": "Employee Hiring",
+    "other": "Other",
+    "counterparty_risk": "Counterparty Risk",
+    "corporate_investigations": "Corporate Investigations"
+  },
+  "role": {
+    "security_risk": "Security / Risk",
+    "legal": "Legal / Litigation",
+    "compliance_aml": "Compliance / AML",
+    "HR": "HR",
+    "management": "Management / Board",
+    "investor": "Investor / Fund",
+    "other": "Other",
+    "risk_management": "Risk Management",
+    "investigations": "Investigations"
+  },
+  "contactReason": {
+    "commercial": "Commercial",
+    "partnership": "Partnership",
+    "platform_demo": "Platform Demo",
+    "technical_request": "Technical Request"
+  },
+  "needType": {
+    "immediate_project": "Immediate Project",
+    "platform_evaluation": "Platform Evaluation",
+    "internal_analysis": "Internal Analysis",
+    "commercial_info": "Commercial Information"
+  }
+}

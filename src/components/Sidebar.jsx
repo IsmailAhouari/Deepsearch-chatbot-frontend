@@ -1,27 +1,29 @@
 
+import { useTranslation } from 'react-i18next';
 import { useSession } from '../store/sessionStore.js';
 import { getFunnelStep } from '../flows/index.js';
 
 // ── Qualification funnel steps ───────────────────────────────────────────────
 const FUNNEL_STEPS = [
-  { step: 1, label: 'Soggetto',        screen: 'funnel_subject', qualKey: 'subjectType' },
-  { step: 2, label: 'Motivazione',     screen: null,             qualKey: 'intent' },
-  { step: 3, label: 'Area Geografica', screen: 'funnel_geo',     qualKey: 'geoArea' },
-  { step: 4, label: 'Funzione',        screen: null,             qualKey: 'role' },
-  { step: 5, label: 'Contatto',        screen: 'funnel_form',    qualKey: null },
+  { step: 1, labelKey: 'subject',    screen: 'funnel_subject', qualKey: 'subjectType' },
+  { step: 2, labelKey: 'motivation', screen: null,             qualKey: 'intent' },
+  { step: 3, labelKey: 'geo',        screen: 'funnel_geo',     qualKey: 'geoArea' },
+  { step: 4, labelKey: 'role',       screen: null,             qualKey: 'role' },
+  { step: 5, labelKey: 'contact',    screen: 'funnel_form',    qualKey: null },
 ];
 
 // ── Exploration navigation items ─────────────────────────────────────────────
 const EXPLORATION_NAV = [
-  { label: 'Panoramica piattaforma', id: 'flowA',   icon: '◈' },
-  { label: "Casi d'uso",         id: 'flowB',       icon: '◇' },
-  { label: 'A chi si rivolge',   id: 'flowC',       icon: '❖' },
-  { label: 'Contatta il Team',   id: 'flowF',       icon: '✉' },
-  { label: 'Altro',              id: 'flowG_intro', prefix: 'flowG', icon: '…' },
-  { label: 'FAQ',                id: 'faq',         icon: '?' },
+  { id: 'flowA',   icon: '◈' },
+  { id: 'flowB',       icon: '◇' },
+  { id: 'flowC',   icon: '❖' },
+  { id: 'flowF',   icon: '✉' },
+  { id: 'flowG_intro', prefix: 'flowG', icon: '…' },
+  { id: 'faq',         icon: '?' },
 ];
 
 export default function Sidebar() {
+  const { t }            = useTranslation('ui');
   const screen           = useSession((s) => s.screen);
   const navigate         = useSession((s) => s.navigate);
   const navigateReset    = useSession((s) => s.navigateReset);
@@ -39,7 +41,7 @@ export default function Sidebar() {
 
         {/* ── Exploration map — preserved as spatial context, dimmed ── */}
         <div className="ds-sidebar-nav">
-          <div className="ds-sidebar-section-label">Esplora</div>
+          <div className="ds-sidebar-section-label">{t('sidebar.exploreLabel')}</div>
 
           {EXPLORATION_NAV.map((item) => {
             const matchPrefix = item.prefix || item.id;
@@ -51,8 +53,8 @@ export default function Sidebar() {
                 onClick={() => navigateReset(item.id === 'faq' ? 'faq' : item.id)}
               >
                 <span className="ds-step-indicator">{item.icon}</span>
-                <span className="ds-step-label">{item.label}</span>
-                {isVisited && <span className="ds-visited-dot" title="Visitato" />}
+                <span className="ds-step-label">{t(`sidebar.nav.${item.id}`)}</span>
+                {isVisited && <span className="ds-visited-dot" title={t('sidebar.visitedTooltip')} />}
               </button>
             );
           })}
@@ -60,7 +62,7 @@ export default function Sidebar() {
 
         {/* ── Qualification progress — compact secondary section ── */}
         <div className="ds-sidebar-qual-section">
-          <div className="ds-sidebar-section-label">Demo in configurazione</div>
+          <div className="ds-sidebar-section-label">{t('sidebar.configLabel')}</div>
           {FUNNEL_STEPS.map((item) => {
             const isActive    = item.step === currentStep;
             const isCompleted = item.qualKey ? !!qualification[item.qualKey] : item.step < currentStep;
@@ -90,7 +92,7 @@ export default function Sidebar() {
                 <span className="ds-step-indicator">
                   {isCompleted && !isActive ? '✓' : item.step}
                 </span>
-                <span className="ds-step-label">{item.label}</span>
+                <span className="ds-step-label">{t(`sidebar.steps.${item.labelKey}`)}</span>
                 {isCompleted && !isActive && qualification[item.qualKey] && (
                   <span className="ds-step-value">{qualification[item.qualKey]}</span>
                 )}
@@ -105,7 +107,7 @@ export default function Sidebar() {
             onClick={() => navigateReset('welcome')}
           >
             <span className="ds-step-indicator">←</span>
-            <span className="ds-step-label">Menu principale</span>
+            <span className="ds-step-label">{t('navigation.mainMenu')}</span>
           </button>
         </div>
 
@@ -117,7 +119,7 @@ export default function Sidebar() {
   return (
     <div className={`ds-sidebar ${mobileSidebarOpen ? 'mobile-open' : ''}`}>
       <div className="ds-sidebar-nav">
-        <div className="ds-sidebar-section-label">Esplora</div>
+        <div className="ds-sidebar-section-label">{t('sidebar.exploreLabel')}</div>
 
         {EXPLORATION_NAV.map((item) => {
           const matchPrefix = item.prefix || item.id;
@@ -132,9 +134,9 @@ export default function Sidebar() {
               onClick={() => navigateReset(item.id === 'faq' ? 'faq' : item.id)}
             >
               <span className="ds-step-indicator">{item.icon}</span>
-              <span className="ds-step-label">{item.label}</span>
+              <span className="ds-step-label">{t(`sidebar.nav.${item.id}`)}</span>
               {isVisited && !isActive && (
-                <span className="ds-visited-dot" title="Visitato" />
+                <span className="ds-visited-dot" title={t('sidebar.visitedTooltip')} />
               )}
             </button>
           );
@@ -147,7 +149,7 @@ export default function Sidebar() {
           onClick={() => navigateReset('welcome')}
         >
           <span className="ds-step-indicator">←</span>
-          <span className="ds-step-label">Menu principale</span>
+          <span className="ds-step-label">{t('navigation.mainMenu')}</span>
         </button>
       </div>
     </div>

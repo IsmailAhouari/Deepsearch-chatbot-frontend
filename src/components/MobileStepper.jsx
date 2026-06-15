@@ -1,6 +1,7 @@
+import { useTranslation } from 'react-i18next';
 import { useSession } from '../store/sessionStore.js';
 
-const STEPS = ['Soggetto', 'Motivazione', 'Geo', 'Funzione', 'Contatto'];
+const STEP_KEYS = ['subject', 'motivation', 'geo', 'role', 'contact'];
 
 function getStepIndex(screenId) {
   if (screenId === 'funnel_subject')                                           return 0;
@@ -13,6 +14,7 @@ function getStepIndex(screenId) {
 }
 
 export default function MobileStepper() {
+  const { t }        = useTranslation('ui');
   const screen      = useSession((s) => s.screen);
   const sidebarMode = useSession((s) => s.sidebarMode);
 
@@ -23,7 +25,7 @@ export default function MobileStepper() {
 
   return (
     <div className="ds-mobile-stepper">
-      {STEPS.map((label, i) => {
+      {STEP_KEYS.map((key, i) => {
         const isActive    = i === currentIndex;
         const isCompleted = i < currentIndex;
         return (
@@ -32,7 +34,7 @@ export default function MobileStepper() {
             className={`ds-mobile-step${isActive ? ' active' : ''}${isCompleted ? ' completed' : ''}`}
           >
             <div className="ds-mobile-step-dot" />
-            <span className="ds-mobile-step-label">{label}</span>
+            <span className="ds-mobile-step-label">{t(`sidebar.steps.${key}`)}</span>
           </div>
         );
       })}

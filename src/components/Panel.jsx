@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSession } from '../store/sessionStore.js';
 import { SCREENS } from '../flows/index.js';
 import { FAQ } from '../flows/faq.js';
+import { resolveCTALabel } from '../lib/resolveCTALabel.js';
 import MessageBubble from './MessageBubble.jsx';
 import ButtonGrid from './ButtonGrid.jsx';
 import DemoForm from './DemoForm.jsx';
@@ -20,8 +22,8 @@ function reorderChoices(choices, qualification) {
 
   return [...choices].sort((a, b) => {
     let sA = 0, sB = 0;
-    const la = a.label.toLowerCase();
-    const lb = b.label.toLowerCase();
+    const la = (a.label || '').toLowerCase();
+    const lb = (b.label || '').toLowerCase();
 
     // Role-based boosting
     if (role.includes('hr')         && la.includes('hr'))         sA += 10;
@@ -60,31 +62,10 @@ function sortFAQ(faqItems, qualification) {
   });
 }
 
-/**
- * Replaces generic "Richiedi Demo" labels with context-aware ones.
- */
-function resolveCTALabel(choice, qualification) {
-  if (choice.action?.type !== 'startDemo') return choice.label;
-  // Only personalise generic labels, preserve intentional ones (e.g. "Demo executive")
-  const genericLabels = ['richiedi demo', 'prenota demo', 'richiedi demo riservata'];
-  if (!genericLabels.includes(choice.label.toLowerCase())) return choice.label;
-
-  const intent = qualification.intent?.toLowerCase() || '';
-  const geo    = qualification.geoArea?.toLowerCase() || '';
-  const role   = qualification.role?.toLowerCase()   || '';
-
-  if (intent.includes('aml') || intent.includes('kyc'))             return 'Prenota Demo AML Compliance';
-  if (intent.includes('due diligence') || intent.includes('due'))   return 'Configura Demo Due Diligence';
-  if (intent.includes('litigation'))                                 return 'Prenota Demo Litigation';
-  if (geo.includes('svizzera') || geo.includes('swiss'))            return 'Demo per il Mercato Svizzero';
-  if (role.includes('hr'))                                           return 'Demo Background Check';
-  if (role.includes('direzione') || role.includes('board'))         return 'Demo Executive';
-  return choice.label;
-}
-
 // ── Panel component ──────────────────────────────────────────────────────────
 
 export default function Panel() {
+  const { t } = useTranslation('flows');
   const screen          = useSession((s) => s.screen);
   const navigate        = useSession((s) => s.navigate);
   const back            = useSession((s) => s.back);
@@ -170,7 +151,7 @@ export default function Panel() {
             <div className="ds-thanks-icon">✓</div>
             <div className="ds-message">
               <div className="ds-message-text" style={{ whiteSpace: 'pre-line' }}>
-                {screenDef.message}
+                {screenDef.messageKey ? t(screenDef.messageKey) : screenDef.message}
               </div>
             </div>
           </div>
@@ -185,16 +166,16 @@ export default function Panel() {
     return (
       <div className="ds-panel">
         {showBack && (
-          <button className="ds-back-btn" onClick={back}>← Indietro</button>
+          <button className="ds-back-btn" onClick={back}>{t('ui:navigation.back')}</button>
         )}
         <div className="ds-panel-content">
           <div className="ds-faq">
-            <div className="ds-faq-title">Domande Frequenti</div>
+            <div className="ds-faq-title">{t(screenDef.titleKey)}</div>
             {sortedFAQ.map((item, idx) => {
               const isClickable = item.target || item.action;
               return (
                 <div key={idx} className="ds-faq-group" style={{ marginBottom: '12px' }}>
-                  <div className="ds-faq-q" style={{ paddingLeft: '4px', marginBottom: '8px' }}>{item.question}</div>
+                  <div className="ds-faq-q" style={{ paddingLeft: '4px', marginBottom: '8px' }}>{t(item.questionKey)}</div>
                   <div
                     className={`ds-faq-item ${isClickable ? 'clickable' : ''}`}
                     onClick={() => {
@@ -205,7 +186,7 @@ export default function Panel() {
                       }
                     }}
                   >
-                    <div className="ds-faq-a">{item.answer}</div>
+                    <div className="ds-faq-a">{t(item.answerKey)}</div>
                     {isClickable && (
                       <span className="ds-faq-chevron" style={{ color: 'var(--ds-accent)', fontWeight: 'bold', fontSize: '14px', opacity: 0.6 }}>›</span>
                     )}
@@ -224,7 +205,7 @@ export default function Panel() {
     return (
       <div className="ds-panel">
         {showBack && (
-          <button className="ds-back-btn" onClick={back}>← Indietro</button>
+          <button className="ds-back-btn" onClick={back}>{t('ui:navigation.back')}</button>
         )}
         <div className="ds-panel-content">
           <DemoForm formType={screenDef.formType} onSubmit={handleFormSubmit} />
@@ -235,18 +216,26 @@ export default function Panel() {
 
   // ── FreeText screen ────────────────────────────────────────────────────
   if (screenDef.component === 'freetext') {
+    const translatedSuccessButtons = screenDef.successButtons?.map(btn => ({
+      ...btn,
+      label: btn.labelKey ? t(btn.labelKey) : btn.label,
+    })).map(btn => ({
+      ...btn,
+      label: resolveCTALabel(btn, qualification, t),
+    }));
+
     return (
       <div className="ds-panel">
         {showBack && (
-          <button className="ds-back-btn" onClick={back}>← Indietro</button>
+          <button className="ds-back-btn" onClick={back}>{t('ui:navigation.back')}</button>
         )}
         <div className="ds-panel-content">
           <FreeText
-            message={screenDef.message}
-            successMessage={screenDef.successMessage}
-            successButtons={screenDef.successButtons}
-            submitLabel={screenDef.submitLabel}
-            placeholder={screenDef.placeholder}
+            message={screenDef.messageKey ? t(screenDef.messageKey) : screenDef.message}
+            successMessage={screenDef.successMessageKey ? t(screenDef.successMessageKey) : screenDef.successMessage}
+            successButtons={translatedSuccessButtons}
+            submitLabel={screenDef.submitLabelKey ? t(screenDef.submitLabelKey) : (screenDef.submitLabel ?? t('ui:freetext.submit'))}
+            placeholder={screenDef.placeholderKey ? t(screenDef.placeholderKey) : screenDef.placeholder}
             onSubmit={handleFreeTextSubmit}
             onChoice={handleChoice}
           />
@@ -254,6 +243,10 @@ export default function Panel() {
       </div>
     );
   }
+
+  // ── Resolve translatable screen fields ────────────────────────────────
+  const screenMessage = screenDef.messageKey ? t(screenDef.messageKey) : screenDef.message;
+  const screenPrompt  = screenDef.promptKey  ? t(screenDef.promptKey)  : screenDef.prompt;
 
   // ── Standard screen: message + prompt + choices ────────────────────────
   // Lock main choices until every topChoices selector on this screen has been picked.
@@ -270,30 +263,39 @@ export default function Panel() {
       : null
   ) ?? screenDef.choices ?? screenDef.ctas ?? [];
 
+  // Resolve translation keys on each button, then personalize
+  const translatedButtons = rawButtons.map(btn => ({
+    ...btn,
+    label:    btn.labelKey    ? t(btn.labelKey)    : btn.label,
+    sublabel: btn.sublabelKey ? t(btn.sublabelKey) : btn.sublabel,
+  }));
+
   // Personalize: reorder by role/intent context
-  const reordered = reorderChoices(rawButtons, qualification);
+  const reordered = reorderChoices(translatedButtons, qualification);
 
   // Personalize: resolve CTA labels
   const buttons = reordered.map(btn => ({
     ...btn,
-    label: resolveCTALabel(btn, qualification),
+    label: resolveCTALabel(btn, qualification, t),
   }));
 
   return (
     <div className="ds-panel">
       {showBack && (
-        <button className="ds-back-btn" onClick={back}>← Indietro</button>
+        <button className="ds-back-btn" onClick={back}>{t('ui:navigation.back')}</button>
       )}
       <div className="ds-panel-content">
-        {screenDef.title && <div className="ds-panel-title">{screenDef.title}</div>}
-        <MessageBubble text={screenDef.message} />
+        {(screenDef.titleKey || screenDef.title) && (
+          <div className="ds-panel-title">{screenDef.titleKey ? t(screenDef.titleKey) : screenDef.title}</div>
+        )}
+        <MessageBubble text={screenMessage} />
 
         {/* Inline selector groups — captures without navigating; accepts single object or array */}
         {screenDef.topChoices && (
           (Array.isArray(screenDef.topChoices) ? screenDef.topChoices : [screenDef.topChoices])
             .map((group, gi) => (
               <div key={gi} className="ds-top-selector">
-                <div className="ds-prompt">{group.prompt}</div>
+                <div className="ds-prompt">{group.promptKey ? t(group.promptKey) : group.prompt}</div>
                 <div className="ds-top-selector-row">
                   {group.options.map((opt, i) => {
                     const isSelected = qualification[group.captureKey] === opt.value;
@@ -304,7 +306,7 @@ export default function Panel() {
                         onClick={() => setQual({ [group.captureKey]: opt.value })}
                       >
                         {opt.icon && <span className="ds-top-selector-icon">{opt.icon}</span>}
-                        <span>{opt.label}</span>
+                        <span>{opt.labelKey ? t(opt.labelKey) : opt.label}</span>
                       </button>
                     );
                   })}
@@ -313,7 +315,7 @@ export default function Panel() {
             ))
         )}
 
-        {screenDef.prompt && <div className="ds-prompt">{screenDef.prompt}</div>}
+        {screenPrompt && <div className="ds-prompt">{screenPrompt}</div>}
 
         {buttons.length > 0 && (
           <ButtonGrid

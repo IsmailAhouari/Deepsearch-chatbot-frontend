@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { initSession } from '../services/api.js';
+import { SCREENS } from '../flows/index.js';
 
 export const useSession = create((set) => ({
   // --- UI STATE ---
@@ -11,10 +12,12 @@ export const useSession = create((set) => ({
 
   // --- QUALIFICATION PROFILE ---
   qualification: {
-    subjectType: null,   // 'Aziende' | 'Persone'
-    intent: null,        // 'Due Diligence' | 'Analisi AML' | ...
+    subjectType: null,   // 'aziende' | 'persone'
+    intent: null,        // normalized qualification.intent.* ID
     geoArea: null,       // Free-text (e.g. "Svizzera e Nord Italia")
-    role: null,          // 'Security / Risk' | 'Legale / Contenzioso' | ...
+    role: null,          // normalized qualification.role.* ID
+    contactReason: null, // normalized qualification.contactReason.* ID (flowF)
+    needType: null,      // normalized qualification.needType.* ID (flowG)
     sourceFlow: null,    // Which exploratory flow they came from
     entryScreen: null,   // Exact screen they entered from
   },
@@ -60,8 +63,8 @@ export const useSession = create((set) => ({
       screen: 'welcome',
       history: [],
       qualification: {
-        subjectType: null, intent: null, interest: null, geoArea: null, role: null,
-        funcRole: null, needType: null,
+        subjectType: null, intent: null, geoArea: null, role: null,
+        contactReason: null, needType: null,
         sourceFlow: null, entryScreen: null,
       },
       lead: { nome: '', azienda: '', email: '', telefono: '', ruolo: '', paese: '', note: '' },
@@ -103,8 +106,8 @@ export const useSession = create((set) => ({
     }
 
     const EMPTY_QUAL = {
-      subjectType: null, intent: null, interest: null, geoArea: null, role: null,
-      funcRole: null, needType: null,
+      subjectType: null, intent: null, geoArea: null, role: null,
+      contactReason: null, needType: null,
       sourceFlow: null, entryScreen: null,
     };
 
@@ -148,8 +151,8 @@ export const useSession = create((set) => ({
     }
 
     const EMPTY_QUAL = {
-      subjectType: null, intent: null, interest: null, geoArea: null, role: null,
-      funcRole: null, needType: null,
+      subjectType: null, intent: null, geoArea: null, role: null,
+      contactReason: null, needType: null,
       sourceFlow: null, entryScreen: null,
     };
 
@@ -177,58 +180,18 @@ export const useSession = create((set) => ({
     // "Contatta il team" → flowF) uses navigate(), which appends to history,
     // so pressing back correctly returns to the originating screen.
     const EMPTY_QUAL = {
-      subjectType: null, intent: null, interest: null, geoArea: null, role: null,
-      funcRole: null, needType: null,
+      subjectType: null, intent: null, geoArea: null, role: null,
+      contactReason: null, needType: null,
       sourceFlow: null, entryScreen: null,
-    };
-
-    // Clears what each screen captured when the user backs out of it.
-    const SCREEN_QUAL_CLEAR = {
-      // ── Funnel ──────────────────────────────────────────────────────────
-      'funnel_subject':        { subjectType: null },
-      'funnel_intent_company': { intent: null },
-      'funnel_intent_person':  { intent: null },
-      'funnel_geo':            { geoArea: null },
-      'funnel_role_company':   { role: null },
-      'funnel_role_person':    { role: null },
-      // ── flowA ────────────────────────────────────────────────────────────
-      'flowA':                 { subjectType: null, intent: null },
-      'flowA_geo':             { geoArea: null },
-      'flowA_role':            { role: null },
-      // ── flowB ────────────────────────────────────────────────────────────
-      'flowB':                 { subjectType: null },
-      'flowB_dd':              { intent: null },
-      'flowB_dd_sub':          { intent: null },
-      'flowB_lit':             { intent: null },
-      'flowB_lit_sub':         { intent: null },
-      'flowB_rep':             { intent: null },
-      'flowB_aml':             { intent: null },
-      'flowB_supplier':        { intent: null },
-      'flowB_other':           { intent: null },
-      // ── flowC ────────────────────────────────────────────────────────────
-      'flowC':                 { subjectType: null },
-      'flowC_risk':            { role: null },
-      'flowC_legal':           { role: null },
-      'flowC_compliance':      { role: null },
-      'flowC_hr':              { role: null },
-      'flowC_board':           { role: null },
-      'flowC_fund':            { role: null },
-      // ── flowF ────────────────────────────────────────────────────────────
-      'flowF':                 { interest: null },
-      'flowF_geo':             { geoArea: null },
-      // ── flowG ────────────────────────────────────────────────────────────
-      'flowG_intro':           { customRequestText: null },
-      'flowG_function':        { funcRole: null },
-      'flowG_geo':             { geoArea: null },
-      'flowG_need':            { needType: null },
     };
 
     const h = [...s.history];
     const prev = h.pop() ?? 'welcome';
 
-    // Going back to welcome always wipes all qualification
+    // Going back to welcome always wipes all qualification.
+    // Otherwise read clearOnBack from the screen definition the user is leaving.
     const goingHome = prev === 'welcome';
-    const qualUpdate = goingHome ? EMPTY_QUAL : SCREEN_QUAL_CLEAR[s.screen];
+    const qualUpdate = goingHome ? EMPTY_QUAL : (SCREENS[s.screen]?.clearOnBack ?? null);
 
     return {
       screen: prev,
@@ -291,8 +254,8 @@ export const useSession = create((set) => ({
     screen: 'welcome',
     history: [],
     qualification: {
-      subjectType: null, intent: null, interest: null, geoArea: null, role: null,
-      funcRole: null, needType: null,
+      subjectType: null, intent: null, geoArea: null, role: null,
+      contactReason: null, needType: null,
       sourceFlow: null, entryScreen: null,
     },
     lead: { nome: '', azienda: '', email: '', telefono: '', ruolo: '', paese: '', note: '' },

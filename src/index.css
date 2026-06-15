@@ -294,6 +294,48 @@
   background: rgba(255, 255, 255, 0.05);
 }
 
+/* ── Language switcher ── */
+
+.ds-locale-switcher {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--ds-border);
+  border-radius: 6px;
+  padding: 2px;
+}
+
+.ds-locale-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 7px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ds-text-3);
+  font-family: var(--ds-font);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.15s;
+  line-height: 1;
+}
+
+.ds-locale-btn:hover:not(:disabled) {
+  color: var(--ds-text-1);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.ds-locale-btn--active {
+  background: var(--ds-bg-card);
+  color: var(--ds-text-1);
+  border: 1px solid var(--ds-border-hi);
+  cursor: default;
+}
+
 /* ── Body Layout ── */
 
 .ds-body {

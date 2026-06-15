@@ -1,0 +1,296 @@
+{
+  "welcome": {
+    "message": "Most tools search for data.\nDeepSearch identifies hidden relationships.\n\nI can guide you through features, use cases, or help you request a demo.",
+    "prompt": "Choose what you'd like to explore:",
+    "choices": {
+      "platform_overview": {
+        "label": "Platform Overview",
+        "sublabel": "Understand how DeepSearch turns data into intelligence"
+      },
+      "use_cases": {
+        "label": "Use Cases",
+        "sublabel": "Explore real-world applications"
+      },
+      "personas": {
+        "label": "Who It's For",
+        "sublabel": "Identify your profile"
+      },
+      "demo_request": {
+        "label": "Request a Demo",
+        "sublabel": "Book a guided session"
+      },
+      "contact_team": {
+        "label": "Contact the Team",
+        "sublabel": "Direct requests to the DeepSearch team"
+      },
+      "other": {
+        "label": "Other",
+        "sublabel": "Custom requests and in-depth enquiries"
+      },
+      "faq": {
+        "label": "FAQ",
+        "sublabel": "Answers to the most common questions"
+      }
+    }
+  },
+  "funnel": {
+    "subject": {
+      "message": "To show you DeepSearch in the most relevant way,\nI need to understand your main scenario.",
+      "prompt": "You're mainly looking at:",
+      "choices": {
+        "aziende": {
+          "sublabel": "Corporate verification, due diligence, counterparties"
+        },
+        "persone": {
+          "sublabel": "Background checks, profile verification, screening"
+        }
+      }
+    },
+    "intentCompany": {
+      "message": "To better understand your scenario,\nwhich area is closest to your needs?",
+      "prompt": "Main objective:"
+    },
+    "intentPerson": {
+      "message": "For individuals, DeepSearch supports background checks, reputational analysis, AML screening, and relationship network verification.\n\nIndicate the area closest to your needs.",
+      "prompt": "Main objective:"
+    },
+    "geo": {
+      "message": "What is the main geographic context of your interest?",
+      "submitLabel": "Continue",
+      "placeholder": "Enter the country"
+    },
+    "roleCompany": {
+      "message": "Every organisational function uses DeepSearch with distinct objectives and workflows.\nThis lets me structure the demo in the most relevant way.",
+      "prompt": "Which function represents you?"
+    },
+    "rolePerson": {
+      "message": "Every organisational function uses DeepSearch with distinct objectives and workflows.\nThis lets me structure the demo in the most relevant way.",
+      "prompt": "Which function represents you?"
+    },
+    "thanks": {
+      "message": "Thank you.\nYour request has been received.\nA DeepSearch representative will contact you within 24 hours."
+    }
+  },
+  "flowA": {
+    "message": "DeepSearch is an intelligence platform designed to uncover hidden relationships between people, companies, counterparties, and risk signals.\n\nIt lets you move past fragmented checks and turn data into structured intelligence.",
+    "topChoices": {
+      "prompt": "You are mainly analyzing:"
+    },
+    "prompt": "Would you like an explanation focused on:",
+    "choices": {
+      "risk_analysis": { "sublabel": "Exposure, relationship networks, indirect connections" },
+      "due_diligence": { "sublabel": "Corporate structures, UBO, counterparty screening" },
+      "counterparty_risk": { "sublabel": "Links, conflicts of interest, exposures" },
+      "reputational_risk": { "sublabel": "Media signals, sentiment, negative associations" },
+      "corporate_investigations": { "sublabel": "Opaque networks, asset tracing, control flows" }
+    }
+  },
+  "flowA_geo": {
+    "message": "What is the main geographic context of your interest?",
+    "placeholder": "E.g. Switzerland, Europe, GCC, Global…"
+  },
+  "flowA_role": {
+    "message": "Every function applies DeepSearch with specific operational goals and workflows.",
+    "prompt": "Which function best represents you?"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": {
+      "whatIsDeepSearch": {
+        "question": "What is DeepSearch?",
+        "answer": "An intelligence platform that identifies relationships between subjects, counterparties, and risk signals."
+      },
+      "isChatbot": {
+        "question": "Is it a chatbot?",
+        "answer": "No. The chatbot guides the user. DeepSearch is an analytics platform."
+      },
+      "requestDemo": {
+        "question": "Can I request a demo?",
+        "answer": "Yes, you can request a personalized demo."
+      },
+      "whoIsItFor": {
+        "question": "Who is it for?",
+        "answer": "Risk, legal, compliance, HR, and management functions."
+      }
+    },
+    "fallback": {
+      "message": "To avoid generic answers, select one of the following options:"
+    }
+  },
+  "flowE": {
+    "message": "Commercial conditions depend on:\n    • scope of use\n    • number of users\n    • operational context",
+    "prompt": "Would you prefer:",
+    "choices": {
+      "commercial": "Commercial Contact",
+      "information": "Request Information"
+    }
+  },
+  "cta": {
+    "contactTeam": "Contact the team",
+    "confidentialContact": "Confidential contact",
+    "commercialContact": "Commercial contact"
+  },
+  "flowC": {
+    "message": "DeepSearch is designed for complex, high-risk decision-making contexts.",
+    "prompt": "Which profile best represents you?"
+  },
+  "flowC_risk": {
+    "message": "DeepSearch supports Security and Risk functions in proactively mapping exposures: counterparty analysis, relationship network monitoring, and identification of emerging risk signals."
+  },
+  "flowC_legal": {
+    "message": "DeepSearch supports legal functions in the pre-litigation phase and during proceedings: reconstructing relationship networks, identifying assets, and analyzing connections between subjects."
+  },
+  "flowC_compliance": {
+    "message": "DeepSearch supports compliance processes through advanced relational analysis, improving visibility into complex structures, counterparties, and indirect exposures."
+  },
+  "flowC_hr": {
+    "message": "DeepSearch supports HR functions in profile verification through open-source analysis: media exposure, corporate connections, and relevant reputational signals."
+  },
+  "flowC_board": {
+    "message": "DeepSearch is designed to support strategic decisions, providing structured intelligence on counterparties, relationships, and risks."
+  },
+  "flowC_fund": {
+    "message": "DeepSearch supports investors and funds during screening and due diligence: target analysis, control network mapping, and identification of exposures and pre-investment risk signals."
+  },
+  "flowC_other": {
+    "message": "Tell us about your context: together we'll identify the most suitable usage profile."
+  },
+  "flowB": {
+    "prompt": "Which use case is closest to your interest?",
+    "choices": {
+      "dd": "Counterparty Due Diligence",
+      "other": "Corporate Investigations",
+      "aml": "AML / KYC",
+      "supplier": "Supplier / Third-Party Risk",
+      "lit": "Litigation Intelligence",
+      "rep": "Reputational Analysis",
+      "altro": "Other"
+    }
+  },
+  "flowB_dd": {
+    "message": "DeepSearch helps you understand who you're really dealing with, identifying indirect relationships, complex structures, and exposures that aren't immediately apparent.",
+    "prompt": "Your case concerns:",
+    "choices": {
+      "supplier": "Supplier",
+      "client": "Client",
+      "partner": "Partner",
+      "target": "Investment Target",
+      "other": "Other"
+    }
+  },
+  "flowB_dd_sub": {
+    "message": "DeepSearch provides a structured framework for counterparty analysis: corporate structure, UBO, media exposure, and relevant precedents — all in a single intelligence report."
+  },
+  "flowB_lit": {
+    "message": "DeepSearch supports law firms and consultants in reconstructing relationships between subjects, identifying relevant counterparties, and strengthening their information strategy.",
+    "prompt": "The context is:",
+    "choices": {
+      "civil": "Civil Litigation",
+      "commercial": "Commercial Dispute",
+      "assetTracing": "Asset Tracing",
+      "preLitigation": "Pre-Litigation"
+    }
+  },
+  "flowB_lit_sub": {
+    "message": "DeepSearch reconstructs relationship networks and control flows to support legal strategy: identifying assets, related parties, and risk signals documented from open sources."
+  },
+  "flowB_rep": {
+    "message": "DeepSearch monitors and analyzes the reputational exposure of individuals and organizations: media signals, negative associations, and sentiment dynamics in high-risk contexts."
+  },
+  "flowB_aml": {
+    "message": "DeepSearch supports AML and KYC processes through advanced relational analysis: identification of PEPs, sanctioned individuals, opaque corporate structures, and undisclosed control networks."
+  },
+  "flowB_supplier": {
+    "message": "DeepSearch analyzes the supply chain and third parties to identify hidden risks: reputational exposures, corporate connections to critical subjects, and signals of operational instability."
+  },
+  "flowB_other": {
+    "message": "DeepSearch supports corporate investigations by reconstructing corporate structures, control flows, and connections between subjects in complex contexts."
+  },
+  "flowD_interest": {
+    "title": "Request a Demo",
+    "message": "I can help direct your demo request correctly.",
+    "prompt": "What is your main area of interest?",
+    "choices": {
+      "dd": "Due Diligence",
+      "counterparty": "Counterparty Risk",
+      "reputational": "Reputational Risk",
+      "litigation": "Litigation Intelligence",
+      "corporate": "Corporate Investigations",
+      "aml": "AML / KYC",
+      "general": "General Demo"
+    }
+  },
+  "flowD_role": {
+    "message": "Every function uses DeepSearch with different objectives and operational workflows.\nThis lets me correctly direct the session.",
+    "prompt": "What is your role?",
+    "choices": {
+      "security_risk": "Security / Risk",
+      "legal": "Legal",
+      "compliance": "Compliance",
+      "hr": "HR",
+      "management": "Management",
+      "other": "Other"
+    }
+  },
+  "flowD_org": {
+    "message": "The type of organization determines the dataset, integrations, and operating model best suited to your business.",
+    "prompt": "Organization type:",
+    "choices": {
+      "azienda": "Company",
+      "studioLegale": "Law Firm",
+      "istitutoFinanziario": "Financial Institution",
+      "consulenza": "Consulting",
+      "fondo": "Fund",
+      "pubblico": "Public Sector",
+      "other": "Other"
+    }
+  },
+  "flowD_timing": {
+    "message": "To best coordinate the session with the DeepSearch team:",
+    "prompt": "Timing:",
+    "choices": {
+      "immediate": "Immediate",
+      "within7days": "Within 7 days",
+      "withinMonth": "Within the month",
+      "preliminary": "Preliminary evaluation"
+    }
+  },
+  "flowF": {
+    "prompt": "Please indicate the nature of your request:"
+  },
+  "flowF_geo": {
+    "message": "This helps us direct you to the most suitable sales contact.",
+    "placeholder": "E.g. Italy, Switzerland, France…"
+  },
+  "flowG_intro": {
+    "message": "Briefly describe what you need.",
+    "successMessage": "Thank you.\n\nThis request requires direct follow-up.\n\nYou can leave your details to be contacted.",
+    "successButtons": {
+      "sendRequest": "Send Request"
+    }
+  },
+  "flowG_function": {
+    "message": "To correctly direct your request:",
+    "prompt": "Function",
+    "choices": {
+      "security_risk": "Risk / Security",
+      "legal": "Legal",
+      "compliance": "Compliance",
+      "hr": "HR",
+      "management": "Management"
+    }
+  },
+  "flowG_geo": {
+    "prompt": "Geographic Area",
+    "choices": {
+      "switzerland": "Switzerland",
+      "italy": "Italy",
+      "europe": "Europe",
+      "middleEast": "Middle East",
+      "global": "Global"
+    }
+  },
+  "flowG_need": {
+    "prompt": "Need"
+  }
+}

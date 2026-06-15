@@ -1,130 +1,131 @@
+// Shared "use case" choices for the flowB entry screen, reused across the
+// Aziende/Persone branches and the no-subjectType-yet fallback list.
+const ddChoice       = { labelKey: 'flowB.choices.dd',       target: 'flowB_dd' };
+const otherChoice    = { labelKey: 'flowB.choices.other',    target: 'flowB_other' };
+const amlChoice      = { labelKey: 'flowB.choices.aml',       target: 'flowB_aml' };
+const supplierChoice = { labelKey: 'flowB.choices.supplier', target: 'flowB_supplier' };
+const litChoice      = { labelKey: 'flowB.choices.lit',       target: 'flowB_lit' };
+const repChoice      = { labelKey: 'flowB.choices.rep',       target: 'flowB_rep' };
+const altroChoice    = { labelKey: 'flowB.choices.altro',     target: 'flowG_intro' };
+
+const aziendeChoices = [ddChoice, otherChoice, amlChoice, supplierChoice, litChoice, repChoice, altroChoice];
+const personeChoices = [litChoice, repChoice, amlChoice, altroChoice];
+
 export const flowBScreens = [
   {
     id: 'flowB',
+    clearOnBack: { subjectType: null },
     showSidebar: true,
     autoCapture: { sourceFlow: 'flowB' },
     topChoices: {
-      prompt: 'Stai analizzando principalmente:',
+      promptKey: 'flowA.topChoices.prompt',
       captureKey: 'subjectType',
       options: [
-        { label: 'Aziende',         value: 'Aziende',  icon: '◈' },
-        { label: 'Persone fisiche', value: 'Persone',  icon: '❖' },
+        { labelKey: 'qualification:subjectType.aziende', value: 'Aziende', icon: '◈' },
+        { labelKey: 'qualification:subjectType.persone', value: 'Persone', icon: '❖' },
       ],
     },
-    prompt: "Quale caso d'uso è più vicino al tuo interesse?",
+    promptKey: 'flowB.prompt',
     choicesBySubjectType: {
-      Aziende: [
-        { label: 'Due diligence controparti',       target: 'flowB_dd' },
-        { label: 'Indagini aziendali',              target: 'flowB_other' },
-        { label: 'AML / KYC',                      target: 'flowB_aml' },
-        { label: 'Rischio fornitori / terze parti', target: 'flowB_supplier' },
-        { label: 'Litigation intelligence',         target: 'flowB_lit' },
-        { label: 'Analisi reputazionale',           target: 'flowB_rep' },
-        { label: 'Altro',                           target: 'flowG_intro' },
-      ],
-      Persone: [
-        { label: 'Litigation intelligence', target: 'flowB_lit' },
-        { label: 'Analisi reputazionale',   target: 'flowB_rep' },
-        { label: 'AML / KYC',              target: 'flowB_aml' },
-        { label: 'Altro',                  target: 'flowG_intro' },
-      ],
+      Aziende: aziendeChoices,
+      Persone: personeChoices,
     },
     // Fallback when no subject type selected yet — show full Aziende list
-    choices: [
-      { label: 'Due diligence controparti',       target: 'flowB_dd' },
-      { label: 'Indagini aziendali',              target: 'flowB_other' },
-      { label: 'AML / KYC',                      target: 'flowB_aml' },
-      { label: 'Rischio fornitori / terze parti', target: 'flowB_supplier' },
-      { label: 'Litigation intelligence',         target: 'flowB_lit' },
-      { label: 'Analisi reputazionale',           target: 'flowB_rep' },
-      { label: 'Altro',                           target: 'flowG_intro' },
-    ],
+    choices: aziendeChoices,
   },
   {
     id: 'flowB_dd',
+    clearOnBack: { intent: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowB', intent: 'Due Diligence' },
-    message: "DeepSearch consente di comprendere con chi si sta realmente operando, individuando relazioni indirette, strutture complesse ed esposizioni non evidenti.",
-    prompt: 'Il tuo caso riguarda:',
+    autoCapture: { sourceFlow: 'flowB', intent: 'due_diligence' },
+    messageKey: 'flowB_dd.message',
+    promptKey: 'flowB_dd.prompt',
     choices: [
-      { label: 'Fornitore',            target: 'flowB_dd_sub', capture: { key: 'intent', value: 'Due Diligence' } },
-      { label: 'Cliente',              target: 'flowB_dd_sub', capture: { key: 'intent', value: 'Due Diligence' } },
-      { label: 'Partner',              target: 'flowB_dd_sub', capture: { key: 'intent', value: 'Due Diligence' } },
-      { label: 'Target di investimento',target: 'flowB_dd_sub', capture: { key: 'intent', value: 'Due Diligence' } },
-      { label: 'Altro',                target: 'flowB_dd_sub', capture: { key: 'intent', value: 'Due Diligence' } },
+      { labelKey: 'flowB_dd.choices.supplier', target: 'flowB_dd_sub', capture: { key: 'intent', value: 'due_diligence' } },
+      { labelKey: 'flowB_dd.choices.client',   target: 'flowB_dd_sub', capture: { key: 'intent', value: 'due_diligence' } },
+      { labelKey: 'flowB_dd.choices.partner',  target: 'flowB_dd_sub', capture: { key: 'intent', value: 'due_diligence' } },
+      { labelKey: 'flowB_dd.choices.target',   target: 'flowB_dd_sub', capture: { key: 'intent', value: 'due_diligence' } },
+      { labelKey: 'flowB_dd.choices.other',    target: 'flowB_dd_sub', capture: { key: 'intent', value: 'due_diligence' } },
     ],
   },
   {
     id: 'flowB_dd_sub',
+    clearOnBack: { intent: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowB', intent: 'Due Diligence' },
-    message: "DeepSearch fornisce un framework strutturato per l'analisi della controparte: struttura societaria, UBO, esposizione mediatica e precedenti rilevanti — in un unico report di intelligence.",
+    autoCapture: { sourceFlow: 'flowB', intent: 'due_diligence' },
+    messageKey: 'flowB_dd_sub.message',
     ctas: [
-      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Due diligence', sourceFlow: 'flowB', sourceScreen: 'flowB_dd_sub' } },
-      { label: 'Contatta il team', target: 'flowF' },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', interest: 'due_diligence', sourceFlow: 'flowB', sourceScreen: 'flowB_dd_sub' } },
+      { labelKey: 'cta.contactTeam', target: 'flowF' },
     ],
   },
   {
     id: 'flowB_lit',
+    clearOnBack: { intent: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowB', intent: 'Litigation intelligence', role: 'Legale / Contenzioso' },
-    message: "DeepSearch supporta studi legali e consulenti nella ricostruzione delle relazioni tra soggetti, nell'individuazione di controparti rilevanti e nel rafforzamento della strategia informativa.",
-    prompt: 'Il contesto è:',
+    autoCapture: { sourceFlow: 'flowB', intent: 'litigation', role: 'legal' },
+    messageKey: 'flowB_lit.message',
+    promptKey: 'flowB_lit.prompt',
     choices: [
-      { label: 'Contenzioso civile',  target: 'flowB_lit_sub', capture: { key: 'intent', value: 'Litigation intelligence' } },
-      { label: 'Disputa commerciale', target: 'flowB_lit_sub', capture: { key: 'intent', value: 'Litigation intelligence' } },
-      { label: 'Asset tracing',       target: 'flowB_lit_sub', capture: { key: 'intent', value: 'Litigation intelligence' } },
-      { label: 'Pre-contenzioso',     target: 'flowB_lit_sub', capture: { key: 'intent', value: 'Litigation intelligence' } },
+      { labelKey: 'flowB_lit.choices.civil',         target: 'flowB_lit_sub', capture: { key: 'intent', value: 'litigation' } },
+      { labelKey: 'flowB_lit.choices.commercial',    target: 'flowB_lit_sub', capture: { key: 'intent', value: 'litigation' } },
+      { labelKey: 'flowB_lit.choices.assetTracing',  target: 'flowB_lit_sub', capture: { key: 'intent', value: 'litigation' } },
+      { labelKey: 'flowB_lit.choices.preLitigation', target: 'flowB_lit_sub', capture: { key: 'intent', value: 'litigation' } },
     ],
   },
   {
     id: 'flowB_lit_sub',
+    clearOnBack: { intent: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowB', intent: 'Litigation intelligence', role: 'Legale / Contenzioso' },
-    message: "DeepSearch ricostruisce reti relazionali e flussi di controllo utili a supportare la strategia legale: identificazione di asset, soggetti collegati e segnali di rischio documentati da fonti aperte.",
+    autoCapture: { sourceFlow: 'flowB', intent: 'litigation', role: 'legal' },
+    messageKey: 'flowB_lit_sub.message',
     ctas: [
-      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Litigation intelligence', sourceFlow: 'flowB', sourceScreen: 'flowB_lit_sub' } },
-      { label: 'Contatto riservato', target: 'flowF' },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', interest: 'litigation', sourceFlow: 'flowB', sourceScreen: 'flowB_lit_sub' } },
+      { labelKey: 'cta.confidentialContact', target: 'flowF' },
     ],
   },
   {
     id: 'flowB_rep',
+    clearOnBack: { intent: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowB', intent: 'Rischio reputazionale' },
-    message: "DeepSearch monitora e analizza l'esposizione reputazionale di soggetti e organizzazioni: segnali mediatici, associazioni negative e dinamiche di sentiment in contesti ad alto rischio.",
+    autoCapture: { sourceFlow: 'flowB', intent: 'reputational_risk' },
+    messageKey: 'flowB_rep.message',
     ctas: [
-      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Rischio reputazionale', sourceFlow: 'flowB', sourceScreen: 'flowB_rep' } },
-      { label: 'Contatta il team', target: 'flowF' },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', interest: 'reputational_risk', sourceFlow: 'flowB', sourceScreen: 'flowB_rep' } },
+      { labelKey: 'cta.contactTeam', target: 'flowF' },
     ],
   },
   {
     id: 'flowB_aml',
+    clearOnBack: { intent: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowB', intent: 'Analisi AML', role: 'Compliance / AML' },
-    message: "DeepSearch supporta i processi AML e KYC attraverso l'analisi relazionale avanzata: identificazione di PEP, soggetti sanzionati, strutture societarie opache e reti di controllo non dichiarate.",
+    autoCapture: { sourceFlow: 'flowB', intent: 'aml', role: 'compliance_aml' },
+    messageKey: 'flowB_aml.message',
     ctas: [
-      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'AML / KYC', sourceFlow: 'flowB', sourceScreen: 'flowB_aml' } },
-      { label: 'Contatta il team', target: 'flowF' },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', interest: 'aml', sourceFlow: 'flowB', sourceScreen: 'flowB_aml' } },
+      { labelKey: 'cta.contactTeam', target: 'flowF' },
     ],
   },
   {
     id: 'flowB_supplier',
+    clearOnBack: { intent: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowB', intent: 'Verifica fornitori' },
-    message: "DeepSearch analizza la catena di fornitura e le terze parti identificando rischi nascosti: esposizioni reputazionali, connessioni societarie a soggetti critici e segnali di instabilità operativa.",
+    autoCapture: { sourceFlow: 'flowB', intent: 'supplier_check' },
+    messageKey: 'flowB_supplier.message',
     ctas: [
-      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Rischio controparti', sourceFlow: 'flowB', sourceScreen: 'flowB_supplier' } },
-      { label: 'Contatta il team', target: 'flowF' },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', interest: 'counterparty_risk', sourceFlow: 'flowB', sourceScreen: 'flowB_supplier' } },
+      { labelKey: 'cta.contactTeam', target: 'flowF' },
     ],
   },
   {
     id: 'flowB_other',
+    clearOnBack: { intent: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowB', intent: 'Indagini aziendali' },
-    message: "DeepSearch supporta indagini aziendali attraverso la ricostruzione di strutture societarie, flussi di controllo e connessioni tra soggetti in contesti complessi.",
+    autoCapture: { sourceFlow: 'flowB', intent: 'corporate_investigations' },
+    messageKey: 'flowB_other.message',
     ctas: [
-      { label: 'Richiedi demo', action: { type: 'startDemo', interest: 'Indagini aziendali', sourceFlow: 'flowB', sourceScreen: 'flowB_other' } },
-      { label: 'Contatta il team', target: 'flowF' },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', interest: 'corporate_investigations', sourceFlow: 'flowB', sourceScreen: 'flowB_other' } },
+      { labelKey: 'cta.contactTeam', target: 'flowF' },
     ],
   },
 ];

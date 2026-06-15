@@ -1,12 +1,15 @@
 
+import { useTranslation } from 'react-i18next';
 import { useSession } from '../store/sessionStore.js';
 import Sidebar from './Sidebar.jsx';
 import Panel from './Panel.jsx';
 import MobileStepper from './MobileStepper.jsx';
+import LocaleSwitcher from './LocaleSwitcher.jsx';
 import { SCREENS } from '../flows/index.js';
 import dsLogo from '../assets/icon.png';
 
 export default function Modal() {
+  const { t }               = useTranslation('ui');
   const close_modal         = useSession((s) => s.close_modal);
   const screen              = useSession((s) => s.screen);
   const toggleMobileSidebar = useSession((s) => s.toggleMobileSidebar);
@@ -32,10 +35,11 @@ export default function Modal() {
             </div>
             <div>
               <div className="ds-header-title">DeepSearch ● AI Assistant</div>
-              <div className="ds-header-sub">Interfaccia di Intelligence per Analisi del Rischio</div>
+              <div className="ds-header-sub">{t('header.brandSub')}</div>
             </div>
           </div>
           <div className="ds-header-actions">
+            <LocaleSwitcher />
             <button className="ds-header-close" onClick={close_modal} aria-label="Chiudi sessione">✕</button>
           </div>
         </div>

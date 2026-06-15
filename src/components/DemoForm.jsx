@@ -1,19 +1,24 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSession } from '../store/sessionStore.js';
 import { captureLead } from '../services/api.js';
+import { buildLeadPayload } from '../lib/buildLeadPayload.js';
+import { resolveQualValue } from '../lib/resolveQualValue.js';
 
-const FLOW_LABELS = {
-  flowA:  'Panoramica piattaforma',
-  flowB:  "Casi d'uso",
-  flowC:  'A chi si rivolge',
-  flowD:  'Richiedi demo',
-  flowE:  'Informazioni commerciali',
-  flowF:  'Contatta il team',
-  flowG:  'Altro',
-  funnel: 'Qualificazione diretta',
-};
+// Qualification summary rows, in display order. `group` is the
+// `qualification.*` catalog group used to resolve the display value;
+// `null` means the value is free text (rendered as-is).
+const QUAL_SUMMARY_ROWS = [
+  { key: 'subjectType',   group: 'subjectType' },
+  { key: 'intent',        group: 'intent' },
+  { key: 'role',          group: 'role' },
+  { key: 'geoArea',       group: null },
+  { key: 'contactReason', group: 'contactReason' },
+  { key: 'needType',      group: 'needType' },
+];
 
 export default function DemoForm({ formType, onSubmit }) {
+  const { t, i18n } = useTranslation('ui');
   const qualification       = useSession((s) => s.qualification);
   const visitedScreens      = useSession((s) => s.visitedScreens);
   const intentSignals          = useSession((s) => s.intentSignals);
@@ -27,7 +32,7 @@ export default function DemoForm({ formType, onSubmit }) {
   const [form, setForm] = useState(() => {
     if (formType === 'demo') {
       return {
-        ...(qualification.role    ? { ruolo: qualification.role }    : {}),
+        ...(qualification.role    ? { ruolo: resolveQualValue(t, i18n, 'role', qualification.role) } : {}),
         ...(qualification.geoArea ? { paese: qualification.geoArea } : {}),
       };
     }
@@ -64,45 +69,13 @@ export default function DemoForm({ formType, onSubmit }) {
 
     setSubmissionStatus('submitting');
 
-    const sessionDuration = Math.round((Date.now() - sessionStart) / 1000);
-
-    const payload = {
-      ...(backendSessionId ? { session_id: backendSessionId } : {}),
-      request_type: formType === 'genericRequest' ? 'generic_request' : formType,
-      contact: {
-        nome:     form.nome     || '',
-        azienda:  form.azienda  || '',
-        email:    form.email    || '',
-        telefono: form.telefono || '',
-        ruolo:    form.ruolo    || '',
-        paese:    form.paese    || '',
-      },
-      // Only send qualification fields that were actually captured during the journey.
-      // Uses canonical backend field names directly — no shim remapping needed.
-      qualification: Object.fromEntries(
-        Object.entries({
-          target:         qualification.subjectType?.toLowerCase() || null,
-          obiettivo:      qualification.intent                     || null,
-          request_nature: qualification.interest                   || null,
-          func_role:      qualification.funcRole                   || null,
-          geografia:      qualification.geoArea                   || null,
-          role:           qualification.role                       || null,
-          need_type:      qualification.needType                   || null,
-          source_flow:    FLOW_LABELS[qualification.sourceFlow] || qualification.sourceFlow || null,
-          entry_screen:   qualification.entryScreen                || null,
-        }).filter(([, v]) => v !== null)
-      ),
-      metadata: {
-        source:                   'deepsearch_chatbot_widget',
-        session_duration_seconds: sessionDuration,
-        engagement_depth:         visitedScreens?.length || 0,
-        visited_screens:          visitedScreens       || [],
-        intent_signals:           intentSignals        || {},
-        source_flow:              FLOW_LABELS[qualification.sourceFlow] || qualification.sourceFlow || null,
-        qualification_steps:      qualificationHistory || [],
-      },
-      note: form.note || form.messaggio || '',
-    };
+    const payload = buildLeadPayload(form, qualification, {
+      sessionStart,
+      visitedScreens,
+      intentSignals,
+      backendSessionId,
+      qualificationHistory,
+    }, formType);
 
     try {
       await captureLead(payload);
@@ -118,13 +91,13 @@ export default function DemoForm({ formType, onSubmit }) {
 
       for (const { field, message } of backendErrors) {
         if (field === 'contact.email' || field === 'body.contact.email') {
-          fieldErrors.email = 'Indirizzo email non valido — verifica il formato (es. nome@azienda.it)';
+          fieldErrors.email = t('errors.email.invalid');
         } else if (field === 'contact.nome' || field === 'body.contact.nome') {
           fieldErrors.nome = true;
         } else if (field === 'contact.azienda' || field === 'body.contact.azienda') {
           fieldErrors.azienda = true;
         } else {
-          genericMsg = message || 'Errore nell\'invio. Riprova o contattaci direttamente.';
+          genericMsg = message || t('errors.submit.generic');
         }
       }
 
@@ -132,7 +105,7 @@ export default function DemoForm({ formType, onSubmit }) {
         setErrors((prev) => ({ ...prev, ...fieldErrors }));
         setSubmissionStatus('idle'); // clear submitting state so the user can fix and retry
       } else {
-        setSubmissionStatus('error', genericMsg ?? 'Errore nell\'invio. Riprova o contattaci direttamente.');
+        setSubmissionStatus('error', genericMsg ?? t('errors.submit.generic'));
       }
     }
   };
@@ -140,55 +113,20 @@ export default function DemoForm({ formType, onSubmit }) {
   const isSubmitting = submissionStatus === 'submitting';
 
   // ── Qualification summary helper ─────────────────────────────────────────
-  const hasQualification = qualification.subjectType || qualification.intent || qualification.interest
-    || qualification.geoArea || qualification.role || qualification.funcRole || qualification.needType;
+  const hasQualification = QUAL_SUMMARY_ROWS.some(({ key }) => qualification[key]);
 
   const qualSummaryEl = !hasQualification ? null : (
     <div className="ds-qual-summary">
-      <div className="ds-qual-summary-title">Riepilogo qualificazione</div>
+      <div className="ds-qual-summary-title">{t('demoForm.qualSummary.title')}</div>
       <div className="ds-qual-summary-grid">
-        {qualification.subjectType && (
-          <div className="ds-qual-row">
-            <span className="ds-qual-label">Soggetto</span>
-            <span className="ds-qual-value">{qualification.subjectType}</span>
+        {QUAL_SUMMARY_ROWS.map(({ key, group }) => qualification[key] && (
+          <div className="ds-qual-row" key={key}>
+            <span className="ds-qual-label">{t(`demoForm.qualSummary.${key}`)}</span>
+            <span className="ds-qual-value">
+              {group ? resolveQualValue(t, i18n, group, qualification[key]) : qualification[key]}
+            </span>
           </div>
-        )}
-        {qualification.intent && (
-          <div className="ds-qual-row">
-            <span className="ds-qual-label">Motivazione</span>
-            <span className="ds-qual-value">{qualification.intent}</span>
-          </div>
-        )}
-        {qualification.interest && (
-          <div className="ds-qual-row">
-            <span className="ds-qual-label">Natura della richiesta</span>
-            <span className="ds-qual-value">{qualification.interest}</span>
-          </div>
-        )}
-        {qualification.funcRole && (
-          <div className="ds-qual-row">
-            <span className="ds-qual-label">Funzione</span>
-            <span className="ds-qual-value">{qualification.funcRole}</span>
-          </div>
-        )}
-        {qualification.geoArea && (
-          <div className="ds-qual-row">
-            <span className="ds-qual-label">Area geografica</span>
-            <span className="ds-qual-value">{qualification.geoArea}</span>
-          </div>
-        )}
-        {qualification.role && (
-          <div className="ds-qual-row">
-            <span className="ds-qual-label">Funzione</span>
-            <span className="ds-qual-value">{qualification.role}</span>
-          </div>
-        )}
-        {qualification.needType && (
-          <div className="ds-qual-row">
-            <span className="ds-qual-label">Esigenza</span>
-            <span className="ds-qual-value">{qualification.needType}</span>
-          </div>
-        )}
+        ))}
       </div>
     </div>
   );
@@ -205,40 +143,40 @@ export default function DemoForm({ formType, onSubmit }) {
 
         <div className="ds-form-row">
           <div className="ds-form-field">
-            <label>Nome *</label>
-            <input name="nome" type="text" placeholder="Nome" value={form.nome || ''} onChange={handleChange} className={errors.nome ? 'ds-field-error' : ''} disabled={isSubmitting} />
+            <label>{t('demoForm.fields.nome.label')}</label>
+            <input name="nome" type="text" placeholder={t('demoForm.fields.nome.placeholder')} value={form.nome || ''} onChange={handleChange} className={errors.nome ? 'ds-field-error' : ''} disabled={isSubmitting} />
           </div>
           <div className="ds-form-field">
-            <label>Azienda *</label>
-            <input name="azienda" type="text" placeholder="Azienda" value={form.azienda || ''} onChange={handleChange} className={errors.azienda ? 'ds-field-error' : ''} disabled={isSubmitting} />
+            <label>{t('demoForm.fields.azienda.label')}</label>
+            <input name="azienda" type="text" placeholder={t('demoForm.fields.azienda.placeholder')} value={form.azienda || ''} onChange={handleChange} className={errors.azienda ? 'ds-field-error' : ''} disabled={isSubmitting} />
           </div>
         </div>
         <div className="ds-form-field">
-          <label>Ruolo *</label>
-          <input name="ruolo" type="text" placeholder="Ruolo" value={form.ruolo || ''} onChange={handleChange} className={errors.ruolo ? 'ds-field-error' : ''} disabled={isSubmitting} />
+          <label>{t('demoForm.fields.ruolo.label')}</label>
+          <input name="ruolo" type="text" placeholder={t('demoForm.fields.ruolo.placeholder')} value={form.ruolo || ''} onChange={handleChange} className={errors.ruolo ? 'ds-field-error' : ''} disabled={isSubmitting} />
         </div>
         <div className="ds-form-field">
-          <label>Email *</label>
-          <input name="email" type="email" placeholder="email@azienda.com" value={form.email || ''} onChange={handleChange} className={errors.email ? 'ds-field-error' : ''} disabled={isSubmitting} />
+          <label>{t('demoForm.fields.email.label')}</label>
+          <input name="email" type="email" placeholder={t('demoForm.fields.email.placeholder')} value={form.email || ''} onChange={handleChange} className={errors.email ? 'ds-field-error' : ''} disabled={isSubmitting} />
           {typeof errors.email === 'string' && <span className="ds-field-error-msg">{errors.email}</span>}
         </div>
         <div className="ds-form-row">
           <div className="ds-form-field">
-            <label>Telefono</label>
-            <input name="telefono" type="tel" placeholder="Telefono" value={form.telefono || ''} onChange={handleChange} disabled={isSubmitting} />
+            <label>{t('demoForm.fields.telefono.label')}</label>
+            <input name="telefono" type="tel" placeholder={t('demoForm.fields.telefono.placeholder')} value={form.telefono || ''} onChange={handleChange} disabled={isSubmitting} />
           </div>
           <div className="ds-form-field">
-            <label>Paese</label>
-            <input name="paese" type="text" placeholder="Paese" value={form.paese || ''} onChange={handleChange} disabled={isSubmitting} />
+            <label>{t('demoForm.fields.paese.label')}</label>
+            <input name="paese" type="text" placeholder={t('demoForm.fields.paese.placeholder')} value={form.paese || ''} onChange={handleChange} disabled={isSubmitting} />
           </div>
         </div>
         <div className="ds-form-field">
-          <label>Note</label>
-          <textarea name="note" rows="2" placeholder="Informazioni aggiuntive (opzionale)" value={form.note || ''} onChange={handleChange} disabled={isSubmitting} />
+          <label>{t('demoForm.fields.note.label')}</label>
+          <textarea name="note" rows="2" placeholder={t('demoForm.fields.note.placeholder')} value={form.note || ''} onChange={handleChange} disabled={isSubmitting} />
         </div>
 
         <button type="submit" className="ds-submit-btn" disabled={isSubmitting}>
-          {isSubmitting ? 'Invio in corso...' : 'Richiedi Demo Riservata'}
+          {isSubmitting ? t('demoForm.submit.loading') : t('demoForm.submit.demo')}
         </button>
         {errorMsgEl}
       </form>
@@ -254,37 +192,37 @@ export default function DemoForm({ formType, onSubmit }) {
 
         <div className="ds-form-row">
           <div className="ds-form-field">
-            <label>Nome *</label>
-            <input name="nome" type="text" placeholder="Nome" value={form.nome || ''} onChange={handleChange} className={errors.nome ? 'ds-field-error' : ''} disabled={isSubmitting} />
+            <label>{t('demoForm.fields.nome.label')}</label>
+            <input name="nome" type="text" placeholder={t('demoForm.fields.nome.placeholder')} value={form.nome || ''} onChange={handleChange} className={errors.nome ? 'ds-field-error' : ''} disabled={isSubmitting} />
           </div>
           <div className="ds-form-field">
-            <label>Azienda *</label>
-            <input name="azienda" type="text" placeholder="Azienda" value={form.azienda || ''} onChange={handleChange} className={errors.azienda ? 'ds-field-error' : ''} disabled={isSubmitting} />
+            <label>{t('demoForm.fields.azienda.label')}</label>
+            <input name="azienda" type="text" placeholder={t('demoForm.fields.azienda.placeholder')} value={form.azienda || ''} onChange={handleChange} className={errors.azienda ? 'ds-field-error' : ''} disabled={isSubmitting} />
           </div>
         </div>
         <div className="ds-form-field">
-          <label>Email *</label>
-          <input name="email" type="email" placeholder="Email" value={form.email || ''} onChange={handleChange} className={errors.email ? 'ds-field-error' : ''} disabled={isSubmitting} />
+          <label>{t('demoForm.fields.email.label')}</label>
+          <input name="email" type="email" placeholder={t('demoForm.fields.email.placeholderShort')} value={form.email || ''} onChange={handleChange} className={errors.email ? 'ds-field-error' : ''} disabled={isSubmitting} />
           {typeof errors.email === 'string' && <span className="ds-field-error-msg">{errors.email}</span>}
         </div>
         <div className="ds-form-row">
           <div className="ds-form-field">
-            <label>Telefono</label>
-            <input name="telefono" type="tel" placeholder="Telefono" value={form.telefono || ''} onChange={handleChange} disabled={isSubmitting} />
+            <label>{t('demoForm.fields.telefono.label')}</label>
+            <input name="telefono" type="tel" placeholder={t('demoForm.fields.telefono.placeholder')} value={form.telefono || ''} onChange={handleChange} disabled={isSubmitting} />
           </div>
           <div className="ds-form-field">
-            <label>Paese</label>
-            <input name="paese" type="text" placeholder="Paese" value={form.paese || ''} onChange={handleChange} disabled={isSubmitting} />
+            <label>{t('demoForm.fields.paese.label')}</label>
+            <input name="paese" type="text" placeholder={t('demoForm.fields.paese.placeholder')} value={form.paese || ''} onChange={handleChange} disabled={isSubmitting} />
           </div>
         </div>
         {!isGeneric && (
           <div className="ds-form-field">
-            <label>Messaggio</label>
-            <textarea name="messaggio" rows="3" placeholder="Descrivi la tua richiesta..." value={form.messaggio || ''} onChange={handleChange} disabled={isSubmitting} />
+            <label>{t('demoForm.fields.messaggio.label')}</label>
+            <textarea name="messaggio" rows="3" placeholder={t('demoForm.fields.messaggio.placeholder')} value={form.messaggio || ''} onChange={handleChange} disabled={isSubmitting} />
           </div>
         )}
         <button type="submit" className="ds-submit-btn" disabled={isSubmitting}>
-          {isSubmitting ? 'Invio in corso...' : (isGeneric ? 'Invia Richiesta' : 'Invia Messaggio')}
+          {isSubmitting ? t('demoForm.submit.loading') : (isGeneric ? t('demoForm.submit.generic') : t('demoForm.submit.contact'))}
         </button>
         {errorMsgEl}
       </form>
@@ -296,25 +234,25 @@ export default function DemoForm({ formType, onSubmit }) {
     <form className="ds-form ds-form--centered" onSubmit={handleSubmit}>
       <div className="ds-form-row">
         <div className="ds-form-field">
-          <label>Nome *</label>
-          <input name="nome" type="text" placeholder="Nome" value={form.nome || ''} onChange={handleChange} className={errors.nome ? 'ds-field-error' : ''} disabled={isSubmitting} />
+          <label>{t('demoForm.fields.nome.label')}</label>
+          <input name="nome" type="text" placeholder={t('demoForm.fields.nome.placeholder')} value={form.nome || ''} onChange={handleChange} className={errors.nome ? 'ds-field-error' : ''} disabled={isSubmitting} />
         </div>
         <div className="ds-form-field">
-          <label>Azienda *</label>
-          <input name="azienda" type="text" placeholder="Azienda" value={form.azienda || ''} onChange={handleChange} className={errors.azienda ? 'ds-field-error' : ''} disabled={isSubmitting} />
+          <label>{t('demoForm.fields.azienda.label')}</label>
+          <input name="azienda" type="text" placeholder={t('demoForm.fields.azienda.placeholder')} value={form.azienda || ''} onChange={handleChange} className={errors.azienda ? 'ds-field-error' : ''} disabled={isSubmitting} />
         </div>
       </div>
       <div className="ds-form-field">
-        <label>Email *</label>
-        <input name="email" type="email" placeholder="Email" value={form.email || ''} onChange={handleChange} className={errors.email ? 'ds-field-error' : ''} disabled={isSubmitting} />
+        <label>{t('demoForm.fields.email.label')}</label>
+        <input name="email" type="email" placeholder={t('demoForm.fields.email.placeholderShort')} value={form.email || ''} onChange={handleChange} className={errors.email ? 'ds-field-error' : ''} disabled={isSubmitting} />
         {typeof errors.email === 'string' && <span className="ds-field-error-msg">{errors.email}</span>}
       </div>
       <div className="ds-form-field">
-        <label>Telefono</label>
-        <input name="telefono" type="tel" placeholder="Telefono" value={form.telefono || ''} onChange={handleChange} disabled={isSubmitting} />
+        <label>{t('demoForm.fields.telefono.label')}</label>
+        <input name="telefono" type="tel" placeholder={t('demoForm.fields.telefono.placeholder')} value={form.telefono || ''} onChange={handleChange} disabled={isSubmitting} />
       </div>
       <button type="submit" className="ds-submit-btn" disabled={isSubmitting}>
-        {isSubmitting ? 'Invio in corso...' : 'Invia Richiesta'}
+        {isSubmitting ? t('demoForm.submit.loading') : t('demoForm.submit.generic')}
       </button>
       {errorMsgEl}
     </form>

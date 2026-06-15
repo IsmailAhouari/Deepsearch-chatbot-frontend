@@ -29,3 +29,6 @@ PRODUCT_GUIDE.md
 .env.example
 DeepsSearch_Chatbot_Report.md   
 DeepsSearch_Chatbot_Report copy.md
+
+CONTEXT.md
+src/__tests__/

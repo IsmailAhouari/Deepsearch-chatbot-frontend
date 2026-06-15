@@ -1,0 +1,76 @@
+{
+  "navigation": {
+    "back": "← Back",
+    "mainMenu": "Main Menu"
+  },
+  "freetext": {
+    "submit": "Send"
+  },
+  "sidebar": {
+    "exploreLabel": "Explore",
+    "configLabel": "Demo in progress",
+    "visitedTooltip": "Visited",
+    "nav": {
+      "flowA": "Platform Overview",
+      "flowB": "Use Cases",
+      "flowC": "Who It's For",
+      "flowF": "Contact the Team",
+      "flowG_intro": "Other",
+      "faq": "FAQ"
+    },
+    "steps": {
+      "subject": "Subject",
+      "motivation": "Motivation",
+      "geo": "Geographic Area",
+      "role": "Role",
+      "contact": "Contact"
+    }
+  },
+  "header": {
+    "brandSub": "Intelligence Interface for Risk Analysis"
+  },
+  "cta": {
+    "aml": "Book AML Compliance Demo",
+    "due_diligence": "Configure Due Diligence Demo",
+    "litigation": "Book Litigation Demo",
+    "switzerland": "Demo for the Swiss Market",
+    "background_check": "Background Check Demo",
+    "executive": "Demo Executive",
+    "requestDemo": "Request Demo"
+  },
+  "errors": {
+    "email": {
+      "invalid": "Invalid email address — check the format (e.g. name@company.com)"
+    },
+    "submit": {
+      "generic": "Submission failed. Please try again or contact us directly."
+    }
+  },
+  "demoForm": {
+    "submit": {
+      "demo": "Request Private Demo",
+      "contact": "Send Message",
+      "generic": "Submit Request",
+      "loading": "Sending..."
+    },
+    "qualSummary": {
+      "title": "Qualification summary",
+      "subjectType": "Subject",
+      "intent": "Motivation",
+      "role": "Function",
+      "geoArea": "Geographic Area",
+      "contactReason": "Contact Reason",
+      "needType": "Need"
+    },
+    "fields": {
+      "nome": { "label": "Name *", "placeholder": "Name" },
+      "azienda": { "label": "Company *", "placeholder": "Company" },
+      "ruolo": { "label": "Role *", "placeholder": "Role" },
+      "email": { "label": "Email *", "placeholder": "email@company.com", "placeholderShort": "Email" },
+      "telefono": { "label": "Phone", "placeholder": "Phone" },
+      "paese": { "label": "Country", "placeholder": "Country" },
+      "note": { "label": "Notes", "placeholder": "Additional information (optional)" },
+      "messaggio": { "label": "Message", "placeholder": "Describe your request..." }
+    }
+  }
+}

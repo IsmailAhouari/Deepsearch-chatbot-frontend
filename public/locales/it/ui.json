@@ -1,0 +1,76 @@
+{
+  "navigation": {
+    "back": "← Indietro",
+    "mainMenu": "Menu principale"
+  },
+  "freetext": {
+    "submit": "Invia"
+  },
+  "sidebar": {
+    "exploreLabel": "Esplora",
+    "configLabel": "Demo in configurazione",
+    "visitedTooltip": "Visitato",
+    "nav": {
+      "flowA": "Panoramica piattaforma",
+      "flowB": "Casi d'uso",
+      "flowC": "A chi si rivolge",
+      "flowF": "Contatta il Team",
+      "flowG_intro": "Altro",
+      "faq": "FAQ"
+    },
+    "steps": {
+      "subject": "Soggetto",
+      "motivation": "Motivazione",
+      "geo": "Area Geografica",
+      "role": "Funzione",
+      "contact": "Contatto"
+    }
+  },
+  "header": {
+    "brandSub": "Interfaccia di Intelligence per Analisi del Rischio"
+  },
+  "cta": {
+    "aml": "Prenota Demo AML Compliance",
+    "due_diligence": "Configura Demo Due Diligence",
+    "litigation": "Prenota Demo Litigation",
+    "switzerland": "Demo per il Mercato Svizzero",
+    "background_check": "Demo Background Check",
+    "executive": "Demo Executive",
+    "requestDemo": "Richiedi Demo"
+  },
+  "errors": {
+    "email": {
+      "invalid": "Indirizzo email non valido — verifica il formato (es. nome@azienda.it)"
+    },
+    "submit": {
+      "generic": "Errore nell'invio. Riprova o contattaci direttamente."
+    }
+  },
+  "demoForm": {
+    "submit": {
+      "demo": "Richiedi Demo Riservata",
+      "contact": "Invia Messaggio",
+      "generic": "Invia Richiesta",
+      "loading": "Invio in corso..."
+    },
+    "qualSummary": {
+      "title": "Riepilogo qualificazione",
+      "subjectType": "Soggetto",
+      "intent": "Motivazione",
+      "role": "Funzione",
+      "geoArea": "Area Geografica",
+      "contactReason": "Motivo del contatto",
+      "needType": "Esigenza"
+    },
+    "fields": {
+      "nome": { "label": "Nome *", "placeholder": "Nome" },
+      "azienda": { "label": "Azienda *", "placeholder": "Azienda" },
+      "ruolo": { "label": "Ruolo *", "placeholder": "Ruolo" },
+      "email": { "label": "Email *", "placeholder": "email@azienda.com", "placeholderShort": "Email" },
+      "telefono": { "label": "Telefono", "placeholder": "Telefono" },
+      "paese": { "label": "Paese", "placeholder": "Paese" },
+      "note": { "label": "Note", "placeholder": "Informazioni aggiuntive (opzionale)" },
+      "messaggio": { "label": "Messaggio", "placeholder": "Descrivi la tua richiesta..." }
+    }
+  }
+}
