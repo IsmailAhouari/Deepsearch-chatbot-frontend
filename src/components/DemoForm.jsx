@@ -75,7 +75,7 @@ export default function DemoForm({ formType, onSubmit }) {
       intentSignals,
       backendSessionId,
       qualificationHistory,
-    }, formType);
+    }, formType, i18n.language);
 
     try {
       await captureLead(payload);

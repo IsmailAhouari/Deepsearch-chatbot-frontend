@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { initSession } from '../services/api.js';
 import { SCREENS } from '../flows/index.js';
+import i18n from '../i18n.js';
 
 export const useSession = create((set) => ({
   // --- UI STATE ---
@@ -79,7 +80,7 @@ export const useSession = create((set) => ({
       qualificationHistory: [],
     });
     // Fire-and-forget: create backend session; store the ID when it resolves.
-    initSession({ locale: 'it' }).then((data) => {
+    initSession({ locale: i18n.language || 'it' }).then((data) => {
       if (data?.session_id) {
         set({ backendSessionId: data.session_id });
       }

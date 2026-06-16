@@ -19,7 +19,7 @@ const FLOW_IDS = {
  * @param {string} [formType]    - 'demo' | 'contact' | 'genericRequest'
  * @returns {object} payload ready for POST /api/v1/leads/capture
  */
-export function buildLeadPayload(form, qualification, sessionMeta, formType = 'demo') {
+export function buildLeadPayload(form, qualification, sessionMeta, formType = 'demo', locale = 'it') {
   const {
     sessionStart,
     visitedScreens = [],
@@ -43,6 +43,7 @@ export function buildLeadPayload(form, qualification, sessionMeta, formType = 'd
 
   return {
     ...(backendSessionId ? { session_id: backendSessionId } : {}),
+    locale,
     request_type: formType === 'genericRequest' ? 'generic_request' : formType,
     contact: {
       nome:     form.nome     || '',
