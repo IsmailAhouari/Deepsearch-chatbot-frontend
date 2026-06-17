@@ -28,7 +28,7 @@ export const flowCScreens = [
     id: 'flowC_risk',
     clearOnBack: { role: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowC', role: 'security_risk', intent: 'risk_analysis' },
+    autoCapture: { sourceFlow: 'flowC', role: 'security_risk' },
     messageKey: 'flowC_risk.message',
     ctas: [
       { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', role: 'security_risk', selectedPersona: 'Security / Risk', selectedPersonaLabel: 'Security / Risk', sourceFlow: 'flowC', sourceScreen: 'flowC_risk' } },
@@ -39,7 +39,7 @@ export const flowCScreens = [
     id: 'flowC_legal',
     clearOnBack: { role: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowC', role: 'legal', intent: 'litigation' },
+    autoCapture: { sourceFlow: 'flowC', role: 'legal' },
     messageKey: 'flowC_legal.message',
     ctas: [
       { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', role: 'legal', selectedPersona: 'Legale / Contenzioso', selectedPersonaLabel: 'Professionisti legali', sourceFlow: 'flowC', sourceScreen: 'flowC_legal' } },
@@ -50,7 +50,7 @@ export const flowCScreens = [
     id: 'flowC_compliance',
     clearOnBack: { role: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowC', role: 'compliance_aml', intent: 'aml' },
+    autoCapture: { sourceFlow: 'flowC', role: 'compliance_aml' },
     messageKey: 'flowC_compliance.message',
     ctas: [
       { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', role: 'compliance_aml', selectedPersona: 'Compliance / AML', selectedPersonaLabel: 'Compliance / AML', sourceFlow: 'flowC', sourceScreen: 'flowC_compliance' } },
@@ -61,7 +61,7 @@ export const flowCScreens = [
     id: 'flowC_hr',
     clearOnBack: { role: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowC', role: 'HR', intent: 'risk_analysis' },
+    autoCapture: { sourceFlow: 'flowC', role: 'HR' },
     messageKey: 'flowC_hr.message',
     ctas: [
       { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', role: 'HR', selectedPersona: 'HR', selectedPersonaLabel: 'HR', sourceFlow: 'flowC', sourceScreen: 'flowC_hr' } },
@@ -72,7 +72,7 @@ export const flowCScreens = [
     id: 'flowC_board',
     clearOnBack: { role: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowC', role: 'management', intent: 'risk_analysis' },
+    autoCapture: { sourceFlow: 'flowC', role: 'management' },
     messageKey: 'flowC_board.message',
     ctas: [
       { labelKey: 'ui:cta.executive', personalizable: true, action: { type: 'startDemo', role: 'management', selectedPersona: 'Direzione / Board', selectedPersonaLabel: 'Direzione / Board', sourceFlow: 'flowC', sourceScreen: 'flowC_board' } },
@@ -83,7 +83,7 @@ export const flowCScreens = [
     id: 'flowC_fund',
     clearOnBack: { role: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowC', role: 'investor', intent: 'due_diligence' },
+    autoCapture: { sourceFlow: 'flowC', role: 'investor' },
     messageKey: 'flowC_fund.message',
     ctas: [
       { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', role: 'investor', selectedPersona: 'Investitore / Fondo', selectedPersonaLabel: 'Investitore / Fondo', sourceFlow: 'flowC', sourceScreen: 'flowC_fund' } },

@@ -21,6 +21,11 @@ export function resolveCTALabel(choice, qualification, t) {
   if (geo.includes('svizzera') || geo.includes('swiss')) return t('ui:cta.switzerland');
   if (role === 'HR')              return t('ui:cta.background_check');
   if (role === 'management')      return t('ui:cta.executive');
+  // Role-based fallbacks: used when intent has not yet been selected (flowC path).
+  // Intent checks above take priority when both are set.
+  if (role === 'legal')           return t('ui:cta.litigation');
+  if (role === 'compliance_aml')  return t('ui:cta.aml');
+  if (role === 'investor')        return t('ui:cta.due_diligence');
 
   return t('ui:cta.requestDemo');
 }
