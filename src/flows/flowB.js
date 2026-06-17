@@ -63,7 +63,7 @@ export const flowBScreens = [
     id: 'flowB_lit',
     clearOnBack: { intent: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowB', intent: 'litigation', role: 'legal' },
+    autoCapture: { sourceFlow: 'flowB', intent: 'litigation' },
     messageKey: 'flowB_lit.message',
     promptKey: 'flowB_lit.prompt',
     choices: [
@@ -77,7 +77,7 @@ export const flowBScreens = [
     id: 'flowB_lit_sub',
     clearOnBack: { intent: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowB', intent: 'litigation', role: 'legal' },
+    autoCapture: { sourceFlow: 'flowB', intent: 'litigation' },
     messageKey: 'flowB_lit_sub.message',
     ctas: [
       { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', interest: 'litigation', sourceFlow: 'flowB', sourceScreen: 'flowB_lit_sub' } },
@@ -99,7 +99,7 @@ export const flowBScreens = [
     id: 'flowB_aml',
     clearOnBack: { intent: null },
     showSidebar: true,
-    autoCapture: { sourceFlow: 'flowB', intent: 'aml', role: 'compliance_aml' },
+    autoCapture: { sourceFlow: 'flowB', intent: 'aml' },
     messageKey: 'flowB_aml.message',
     ctas: [
       { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', interest: 'aml', sourceFlow: 'flowB', sourceScreen: 'flowB_aml' } },
