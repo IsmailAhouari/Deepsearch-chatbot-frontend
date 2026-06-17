@@ -38,5 +38,16 @@
     "platform_evaluation": "Platform Evaluation",
     "internal_analysis": "Internal Analysis",
     "commercial_info": "Commercial Information"
+  },
+  "subContext": {
+    "supplier": "Supplier",
+    "client": "Client",
+    "partner": "Partner",
+    "investment_target": "Investment Target",
+    "civil_litigation": "Civil Litigation",
+    "commercial_dispute": "Commercial Dispute",
+    "asset_tracing": "Asset Tracing",
+    "pre_litigation": "Pre-Litigation",
+    "other": "Other"
   }
 }

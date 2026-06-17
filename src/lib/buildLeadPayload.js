@@ -37,6 +37,7 @@ export function buildLeadPayload(form, qualification, sessionMeta, formType = 'd
     geografia:      qualification.geoArea      || null,
     role:           qualification.role        || null,
     need_type:      qualification.needType    || null,
+    sub_context:    qualification.subContext  || null,
     source_flow:    FLOW_IDS[qualification.sourceFlow] ?? qualification.sourceFlow ?? null,
     entry_screen:   qualification.entryScreen || null,
   };

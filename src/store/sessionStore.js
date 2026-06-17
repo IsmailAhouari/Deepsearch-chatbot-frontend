@@ -19,6 +19,7 @@ export const useSession = create((set) => ({
     role: null,          // normalized qualification.role.* ID
     contactReason: null, // normalized qualification.contactReason.* ID (flowF)
     needType: null,      // normalized qualification.needType.* ID (flowG)
+    subContext: null,    // secondary sub-selection within a use-case screen (flowB DD/Lit)
     sourceFlow: null,    // Which exploratory flow they came from
     entryScreen: null,   // Exact screen they entered from
   },
@@ -65,7 +66,7 @@ export const useSession = create((set) => ({
       history: [],
       qualification: {
         subjectType: null, intent: null, geoArea: null, role: null,
-        contactReason: null, needType: null,
+        contactReason: null, needType: null, subContext: null,
         sourceFlow: null, entryScreen: null,
       },
       lead: { nome: '', azienda: '', email: '', telefono: '', ruolo: '', paese: '', note: '' },
@@ -108,7 +109,7 @@ export const useSession = create((set) => ({
 
     const EMPTY_QUAL = {
       subjectType: null, intent: null, geoArea: null, role: null,
-      contactReason: null, needType: null,
+      contactReason: null, needType: null, subContext: null,
       sourceFlow: null, entryScreen: null,
     };
 
@@ -153,7 +154,7 @@ export const useSession = create((set) => ({
 
     const EMPTY_QUAL = {
       subjectType: null, intent: null, geoArea: null, role: null,
-      contactReason: null, needType: null,
+      contactReason: null, needType: null, subContext: null,
       sourceFlow: null, entryScreen: null,
     };
 
@@ -182,7 +183,7 @@ export const useSession = create((set) => ({
     // so pressing back correctly returns to the originating screen.
     const EMPTY_QUAL = {
       subjectType: null, intent: null, geoArea: null, role: null,
-      contactReason: null, needType: null,
+      contactReason: null, needType: null, subContext: null,
       sourceFlow: null, entryScreen: null,
     };
 
@@ -256,7 +257,7 @@ export const useSession = create((set) => ({
     history: [],
     qualification: {
       subjectType: null, intent: null, geoArea: null, role: null,
-      contactReason: null, needType: null,
+      contactReason: null, needType: null, subContext: null,
       sourceFlow: null, entryScreen: null,
     },
     lead: { nome: '', azienda: '', email: '', telefono: '', ruolo: '', paese: '', note: '' },

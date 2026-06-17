@@ -60,7 +60,8 @@
       "role": "Funzione",
       "geoArea": "Area Geografica",
       "contactReason": "Motivo del contatto",
-      "needType": "Esigenza"
+      "needType": "Esigenza",
+      "subContext": "Contesto specifico"
     },
     "fields": {
       "nome": { "label": "Nome *", "placeholder": "Nome" },

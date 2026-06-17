@@ -5,12 +5,18 @@ import { captureLead } from '../services/api.js';
 import { buildLeadPayload } from '../lib/buildLeadPayload.js';
 import { resolveQualValue } from '../lib/resolveQualValue.js';
 
+// Intents that have a secondary sub-selection step (flowB DD / Lit).
+// `subContext` is only captured and meaningful for these paths.
+const SUB_CONTEXT_INTENTS = new Set(['due_diligence', 'litigation']);
+
 // Qualification summary rows, in display order. `group` is the
 // `qualification.*` catalog group used to resolve the display value;
 // `null` means the value is free text (rendered as-is).
+// `when` is an optional predicate — the row is excluded when it returns false.
 const QUAL_SUMMARY_ROWS = [
   { key: 'subjectType',   group: 'subjectType' },
   { key: 'intent',        group: 'intent' },
+  { key: 'subContext',    group: 'subContext', when: (q) => SUB_CONTEXT_INTENTS.has(q.intent) },
   { key: 'role',          group: 'role' },
   { key: 'geoArea',       group: null },
   { key: 'contactReason', group: 'contactReason' },
@@ -113,13 +119,14 @@ export default function DemoForm({ formType, onSubmit }) {
   const isSubmitting = submissionStatus === 'submitting';
 
   // ── Qualification summary helper ─────────────────────────────────────────
-  const hasQualification = QUAL_SUMMARY_ROWS.some(({ key }) => qualification[key]);
+  const activeQualRows = QUAL_SUMMARY_ROWS.filter(({ when }) => !when || when(qualification));
+  const hasQualification = activeQualRows.some(({ key }) => qualification[key]);
 
   const qualSummaryEl = !hasQualification ? null : (
     <div className="ds-qual-summary">
       <div className="ds-qual-summary-title">{t('demoForm.qualSummary.title')}</div>
       <div className="ds-qual-summary-grid">
-        {QUAL_SUMMARY_ROWS.map(({ key, group }) => qualification[key] && (
+        {activeQualRows.map(({ key, group }) => qualification[key] && (
           <div className="ds-qual-row" key={key}>
             <span className="ds-qual-label">{t(`demoForm.qualSummary.${key}`)}</span>
             <span className="ds-qual-value">
