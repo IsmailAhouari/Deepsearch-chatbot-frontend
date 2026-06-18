@@ -94,85 +94,111 @@ export const useSession = create((set) => ({
   toggleMobileSidebar: () => set((s) => ({ mobileSidebarOpen: !s.mobileSidebarOpen })),
   closeMobileSidebar: () => set({ mobileSidebarOpen: false }),
 
-  navigate: (to) => set((s) => {
-    // Intent signal tracking based on screen ID keywords
-    const SIGNAL_MAP = {
-      aml:            ['aml', 'kyc'],
-      dueDiligence:   ['_dd', 'due'],
-      riskManagement: ['risk', 'flowC_compliance'],
-      suppliers:      ['supplier'],
-    };
-    const signals = { ...s.intentSignals };
-    for (const [key, terms] of Object.entries(SIGNAL_MAP)) {
-      if (terms.some(t => to.toLowerCase().includes(t))) signals[key] += 1;
+  navigate: (to) => {
+    const needsNewSession = to === 'welcome' && useSession.getState().submissionStatus === 'submitted';
+
+    set((s) => {
+      // Intent signal tracking based on screen ID keywords
+      const SIGNAL_MAP = {
+        aml:            ['aml', 'kyc'],
+        dueDiligence:   ['_dd', 'due'],
+        riskManagement: ['risk', 'flowC_compliance'],
+        suppliers:      ['supplier'],
+      };
+      const signals = { ...s.intentSignals };
+      for (const [key, terms] of Object.entries(SIGNAL_MAP)) {
+        if (terms.some(t => to.toLowerCase().includes(t))) signals[key] += 1;
+      }
+
+      const EMPTY_QUAL = {
+        subjectType: null, intent: null, geoArea: null, role: null,
+        contactReason: null, needType: null, subContext: null,
+        sourceFlow: null, entryScreen: null,
+      };
+
+      // Going home (welcome) always resets — anything else preserves qualification
+      // so that cross-flow CTAs (e.g. flowB → "Contatta il team") carry context forward.
+      // Explicit sidebar / menu switches use navigateReset() instead.
+      const goingHome = to === 'welcome';
+
+      return {
+        history: [...s.history, s.screen],
+        screen: to,
+        mobileSidebarOpen: false,
+        engagementScore: s.engagementScore + 1,
+        visitedScreens: s.visitedScreens.includes(to)
+          ? s.visitedScreens
+          : [...s.visitedScreens, to],
+        intentSignals: signals,
+        sidebarMode: to.startsWith('funnel_') ? 'qualification' : 'exploration',
+        ...(goingHome ? {
+          qualification: EMPTY_QUAL,
+          submissionStatus: 'idle',
+          errorMessage: null,
+          ...(needsNewSession ? { backendSessionId: null, qualificationHistory: [] } : {}),
+        } : {}),
+      };
+    });
+
+    if (needsNewSession) {
+      initSession({ locale: i18n.language || 'it' }).then((data) => {
+        if (data?.session_id) {
+          set({ backendSessionId: data.session_id });
+        }
+      });
     }
-
-    const EMPTY_QUAL = {
-      subjectType: null, intent: null, geoArea: null, role: null,
-      contactReason: null, needType: null, subContext: null,
-      sourceFlow: null, entryScreen: null,
-    };
-
-    // Going home (welcome) always resets — anything else preserves qualification
-    // so that cross-flow CTAs (e.g. flowB → "Contatta il team") carry context forward.
-    // Explicit sidebar / menu switches use navigateReset() instead.
-    const goingHome = to === 'welcome';
-
-    return {
-      history: [...s.history, s.screen],
-      screen: to,
-      mobileSidebarOpen: false,
-      engagementScore: s.engagementScore + 1,
-      visitedScreens: s.visitedScreens.includes(to)
-        ? s.visitedScreens
-        : [...s.visitedScreens, to],
-      intentSignals: signals,
-      sidebarMode: to.startsWith('funnel_') ? 'qualification' : 'exploration',
-      ...(goingHome ? {
-        qualification: EMPTY_QUAL,
-        submissionStatus: 'idle',
-        errorMessage: null,
-      } : {}),
-    };
-  }),
+  },
 
   // Explicit flow switch (sidebar / main-menu): resets all qualification AND
   // clears the navigation history — the previous flow trail is no longer relevant.
   // back() will then behave as a pure stack pop, so pressing Indietro from the
   // new flow's entry goes straight to welcome (not back into the old flow).
-  navigateReset: (to) => set((s) => {
-    const SIGNAL_MAP = {
-      aml:            ['aml', 'kyc'],
-      dueDiligence:   ['_dd', 'due'],
-      riskManagement: ['risk', 'flowC_compliance'],
-      suppliers:      ['supplier'],
-    };
-    const signals = { ...s.intentSignals };
-    for (const [key, terms] of Object.entries(SIGNAL_MAP)) {
-      if (terms.some(t => to.toLowerCase().includes(t))) signals[key] += 1;
+  navigateReset: (to) => {
+    const needsNewSession = useSession.getState().submissionStatus === 'submitted';
+
+    set((s) => {
+      const SIGNAL_MAP = {
+        aml:            ['aml', 'kyc'],
+        dueDiligence:   ['_dd', 'due'],
+        riskManagement: ['risk', 'flowC_compliance'],
+        suppliers:      ['supplier'],
+      };
+      const signals = { ...s.intentSignals };
+      for (const [key, terms] of Object.entries(SIGNAL_MAP)) {
+        if (terms.some(t => to.toLowerCase().includes(t))) signals[key] += 1;
+      }
+
+      const EMPTY_QUAL = {
+        subjectType: null, intent: null, geoArea: null, role: null,
+        contactReason: null, needType: null, subContext: null,
+        sourceFlow: null, entryScreen: null,
+      };
+
+      return {
+        history: [],          // ← clears the old flow trail; back() uses pure-pop
+        screen: to,
+        mobileSidebarOpen: false,
+        engagementScore: s.engagementScore + 1,
+        visitedScreens: s.visitedScreens.includes(to)
+          ? s.visitedScreens
+          : [...s.visitedScreens, to],
+        intentSignals: signals,
+        sidebarMode: to.startsWith('funnel_') ? 'qualification' : 'exploration',
+        qualification: EMPTY_QUAL,
+        submissionStatus: 'idle',
+        errorMessage: null,
+        ...(needsNewSession ? { backendSessionId: null, qualificationHistory: [] } : {}),
+      };
+    });
+
+    if (needsNewSession) {
+      initSession({ locale: i18n.language || 'it' }).then((data) => {
+        if (data?.session_id) {
+          set({ backendSessionId: data.session_id });
+        }
+      });
     }
-
-    const EMPTY_QUAL = {
-      subjectType: null, intent: null, geoArea: null, role: null,
-      contactReason: null, needType: null, subContext: null,
-      sourceFlow: null, entryScreen: null,
-    };
-
-    return {
-      history: [],          // ← clears the old flow trail; back() uses pure-pop
-      screen: to,
-      mobileSidebarOpen: false,
-      engagementScore: s.engagementScore + 1,
-      visitedScreens: s.visitedScreens.includes(to)
-        ? s.visitedScreens
-        : [...s.visitedScreens, to],
-      intentSignals: signals,
-      sidebarMode: to.startsWith('funnel_') ? 'qualification' : 'exploration',
-      qualification: EMPTY_QUAL,
-      submissionStatus: 'idle',
-      errorMessage: null,
-    };
-  }),
+  },
 
   back: () => set((s) => {
     // ── Pure history-stack pop ────────────────────────────────────────────
