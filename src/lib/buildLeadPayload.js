@@ -66,6 +66,6 @@ export function buildLeadPayload(form, qualification, sessionMeta, formType = 'd
       source_flow:              FLOW_IDS[qualification.sourceFlow] ?? qualification.sourceFlow ?? null,
       qualification_steps:      qualificationHistory,
     },
-    note: form.note || form.messaggio || '',
+    note: form.note || form.messaggio || qualification.customRequest || qualification.customRequestText || '',
   };
 }
