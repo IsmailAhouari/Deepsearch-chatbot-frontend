@@ -177,11 +177,6 @@ export default function DemoForm({ formType, onSubmit }) {
             <input name="paese" type="text" placeholder={t('demoForm.fields.paese.placeholder')} value={form.paese || ''} onChange={handleChange} disabled={isSubmitting} />
           </div>
         </div>
-        <div className="ds-form-field">
-          <label>{t('demoForm.fields.note.label')}</label>
-          <textarea name="note" rows="2" placeholder={t('demoForm.fields.note.placeholder')} value={form.note || ''} onChange={handleChange} disabled={isSubmitting} />
-        </div>
-
         <button type="submit" className="ds-submit-btn" disabled={isSubmitting}>
           {isSubmitting ? t('demoForm.submit.loading') : t('demoForm.submit.demo')}
         </button>
