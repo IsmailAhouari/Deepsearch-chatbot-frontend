@@ -1,17 +1,16 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { useSession } from './store/sessionStore.js';
-import Trigger from './components/Trigger.jsx';
 import Modal from './components/Modal.jsx';
 
 function App() {
+  const open_modal = useSession((s) => s.open_modal);
   const open = useSession((s) => s.open);
 
-  return (
-    <>
-      <Trigger />
-      {open && <Modal />}
-    </>
-  );
+  useEffect(() => {
+    if (!open) open_modal();
+  }, []);
+
+  return open ? <Modal /> : null;
 }
 
 export default App;
