@@ -29,6 +29,10 @@ PRODUCT_GUIDE.md
 .env.example
 DeepsSearch_Chatbot_Report.md   
 DeepsSearch_Chatbot_Report copy.md
-
+*.md
 CONTEXT.md
 src/__tests__/
+audit_report_session_persistence.md
+deepsearch_architectural_audit.md
+documentation_report.md
+session_persistence_flow.md 
