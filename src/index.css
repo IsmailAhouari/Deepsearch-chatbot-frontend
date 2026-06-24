@@ -173,7 +173,7 @@
 .ds-overlay {
   position: fixed;
   inset: 0;
-  background: #ffffff;
+  background: transparent;
   z-index: 1000;
   display: flex;
   padding: 0;
@@ -269,6 +269,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-right: 48px;
 }
 
 .ds-header-close {

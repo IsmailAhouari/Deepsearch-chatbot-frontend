@@ -38,7 +38,7 @@ html, body, #root {
 
 body {
   font-family: var(--ds-font);
-  background: var(--ds-bg);
+  background: transparent;
   color: var(--ds-text-1);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
