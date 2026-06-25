@@ -301,6 +301,18 @@
   user-select: none;
 }
 
+.ds-desktop-close-frame {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #ffffff;
+  z-index: 5; /* behind deepsearch.ch's real close button, which stays clickable */
+  pointer-events: none;
+}
+
 /* ── Language switcher ── */
 
 .ds-locale-switcher {

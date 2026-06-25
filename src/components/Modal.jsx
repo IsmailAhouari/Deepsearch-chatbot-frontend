@@ -52,6 +52,13 @@ export default function Modal() {
           <span className="ds-mobile-close-decoy" aria-hidden="true">✕</span>
         )}
 
+        {/* Desktop-only decoy frame — a white rounded square drawn behind
+            deepsearch.ch's own close button. Non-interactive so the real
+            close button on top stays clickable. */}
+        {!IS_MOBILE && (
+          <span className="ds-desktop-close-frame" aria-hidden="true" />
+        )}
+
         {/* Mobile qualification progress stepper (hidden on desktop via CSS) */}
         <MobileStepper />
 
