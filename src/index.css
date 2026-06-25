@@ -289,9 +289,16 @@
   background: rgba(255, 255, 255, 0.05);
 }
 
-.ds-mobile .ds-header-close {
+.ds-mobile-close-decoy {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  z-index: 10;
   color: #ffffff;
   font-size: 18px;
+  line-height: 1;
+  pointer-events: none; /* taps pass through to deepsearch.ch's real close button */
+  user-select: none;
 }
 
 /* ── Language switcher ── */

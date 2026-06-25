@@ -13,7 +13,6 @@ const IS_MOBILE = isMobileDevice();
 
 export default function Modal() {
   const { t }               = useTranslation('ui');
-  const close_modal         = useSession((s) => s.close_modal);
   const screen              = useSession((s) => s.screen);
   const toggleMobileSidebar = useSession((s) => s.toggleMobileSidebar);
   const mobileSidebarOpen   = useSession((s) => s.mobileSidebarOpen);
@@ -23,7 +22,7 @@ export default function Modal() {
   const showSidebar = screenDef?.showSidebar ?? false;
 
   return (
-    <div className="ds-overlay" onClick={(e) => { if (e.target === e.currentTarget) close_modal(); }}>
+    <div className="ds-overlay">
       <div className={`ds-modal ${mobileSidebarOpen ? 'sidebar-open' : ''} ${IS_MOBILE ? 'ds-mobile' : 'ds-desktop'}`}>
         {/* Header */}
         <div className="ds-header">
@@ -43,11 +42,15 @@ export default function Modal() {
           </div>
           <div className="ds-header-actions">
             <LocaleSwitcher />
-            {IS_MOBILE && (
-              <button className="ds-header-close" onClick={close_modal} aria-label="Chiudi sessione">✕</button>
-            )}
           </div>
         </div>
+
+        {/* Mobile-only decoy ✕ — sits over deepsearch.ch's own close button.
+            Non-interactive (pointer-events: none) so the tap passes through to
+            the parent page's real close control underneath. */}
+        {IS_MOBILE && (
+          <span className="ds-mobile-close-decoy" aria-hidden="true">✕</span>
+        )}
 
         {/* Mobile qualification progress stepper (hidden on desktop via CSS) */}
         <MobileStepper />
