@@ -297,19 +297,21 @@
   color: #ffffff;
   font-size: 18px;
   line-height: 1;
-  pointer-events: none; /* taps pass through to deepsearch.ch's real close button */
+  pointer-events: none;
+  /* taps pass through to deepsearch.ch's real close button */
   user-select: none;
 }
 
 .ds-desktop-close-frame {
   position: fixed;
-  top: 24px;
+  top: 19px;
   right: 10px;
   width: 24px;
   height: 24px;
   border-radius: 6px;
   background: #ffffff;
-  z-index: 5; /* behind deepsearch.ch's real close button, which stays clickable */
+  z-index: 5;
+  /* behind deepsearch.ch's real close button, which stays clickable */
   pointer-events: none;
 }
 
@@ -1045,6 +1047,7 @@
   from {
     transform: translateX(-100%);
   }
+
   to {
     transform: translateX(0);
   }
@@ -1069,7 +1072,7 @@
   width: 240px;
   z-index: 1000;
   background: var(--ds-bg-surface);
-  box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
   border-right: 1px solid var(--ds-border-hi);
   animation: ds-slide-in-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -1261,6 +1264,7 @@
 .ds-faq-popup-content::-webkit-scrollbar {
   width: 4px;
 }
+
 .ds-faq-popup-content::-webkit-scrollbar-thumb {
   background: var(--ds-border-hi);
   border-radius: 2px;
