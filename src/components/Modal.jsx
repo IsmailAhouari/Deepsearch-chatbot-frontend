@@ -6,7 +6,10 @@ import Panel from './Panel.jsx';
 import MobileStepper from './MobileStepper.jsx';
 import LocaleSwitcher from './LocaleSwitcher.jsx';
 import { SCREENS } from '../flows/index.js';
+import { isMobileDevice } from '../lib/detectDevice.js';
 import dsLogo from '../assets/icon.png';
+
+const IS_MOBILE = isMobileDevice();
 
 export default function Modal() {
   const { t }               = useTranslation('ui');
@@ -21,7 +24,7 @@ export default function Modal() {
 
   return (
     <div className="ds-overlay" onClick={(e) => { if (e.target === e.currentTarget) close_modal(); }}>
-      <div className={`ds-modal ${mobileSidebarOpen ? 'sidebar-open' : ''}`}>
+      <div className={`ds-modal ${mobileSidebarOpen ? 'sidebar-open' : ''} ${IS_MOBILE ? 'ds-mobile' : 'ds-desktop'}`}>
         {/* Header */}
         <div className="ds-header">
           <div className="ds-header-brand">
