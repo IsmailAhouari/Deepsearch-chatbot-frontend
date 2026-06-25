@@ -291,7 +291,7 @@
 
 .ds-mobile-close-decoy {
   position: fixed;
-  top: 12px;
+  top: 20px;
   right: 16px;
   z-index: 10;
   color: #ffffff;
