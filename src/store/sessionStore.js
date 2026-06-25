@@ -88,7 +88,10 @@ export const useSession = create((set) => ({
     });
   },
 
-  close_modal: () => set({ open: false, mobileSidebarOpen: false }),
+  close_modal: () => {
+    set({ open: false, mobileSidebarOpen: false });
+    window.parent.postMessage({ type: 'deepsearch:close' }, '*');
+  },
   setOpen: (isOpen = true) => set({ open: isOpen }),
 
   toggleMobileSidebar: () => set((s) => ({ mobileSidebarOpen: !s.mobileSidebarOpen })),
