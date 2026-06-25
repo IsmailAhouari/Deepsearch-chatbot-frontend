@@ -43,6 +43,9 @@ export default function Modal() {
           </div>
           <div className="ds-header-actions">
             <LocaleSwitcher />
+            {IS_MOBILE && (
+              <button className="ds-header-close" onClick={close_modal} aria-label="Chiudi sessione">✕</button>
+            )}
           </div>
         </div>
 

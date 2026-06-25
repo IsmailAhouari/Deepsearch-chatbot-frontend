@@ -289,6 +289,11 @@
   background: rgba(255, 255, 255, 0.05);
 }
 
+.ds-mobile .ds-header-close {
+  color: #ffffff;
+  font-size: 18px;
+}
+
 /* ── Language switcher ── */
 
 .ds-locale-switcher {
