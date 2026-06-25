@@ -303,11 +303,11 @@
 
 .ds-desktop-close-frame {
   position: fixed;
-  top: 9px;
-  right: 9px;
-  width: 28px;
-  height: 28px;
-  border-radius: 7px;
+  top: 15px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
   background: #ffffff;
   z-index: 5; /* behind deepsearch.ch's real close button, which stays clickable */
   pointer-events: none;
