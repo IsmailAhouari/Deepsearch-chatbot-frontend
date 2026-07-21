@@ -87,7 +87,7 @@
   },
   "flowA_geo": {
     "message": "What is the main geographic context of your interest?",
-    "placeholder": "E.g. Switzerland, Europe, GCC, Global…"
+    "placeholder": "E.g. GCC, Global…"
   },
   "flowA_role": {
     "message": "Every function applies DeepSearch with specific operational goals and workflows.",
@@ -260,7 +260,7 @@
   },
   "flowF_geo": {
     "message": "This helps us direct you to the most suitable sales contact.",
-    "placeholder": "E.g. Italy, Switzerland, France…"
+    "placeholder": "E.g. GCC, Global…"
   },
   "flowG_intro": {
     "message": "Briefly describe what you need.",
@@ -283,10 +283,7 @@
   "flowG_geo": {
     "prompt": "Geographic Area",
     "choices": {
-      "switzerland": "Switzerland",
-      "italy": "Italy",
-      "europe": "Europe",
-      "middleEast": "Middle East",
+      "gcc": "GCC",
       "global": "Global"
     }
   },

@@ -1,5 +1,5 @@
 /* DeepSearch Design Tokens */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
 
 :root {
   --ds-bg:           #0A0C10;
@@ -18,10 +18,31 @@
   --ds-radius-sm:    6px;
   --ds-radius-md:    10px;
   --ds-radius-lg:    16px;
-  --ds-font:         'Inter', system-ui, -apple-system, sans-serif;
+  /* Latin is the base script; Arabic is layered in and activated under
+     [dir="rtl"] below. --ds-font is what every component actually
+     references, so switching it here propagates everywhere with no
+     per-component changes. Inter stays in the Arabic stack's fallback
+     chain so embedded Latin brand terms (e.g. "DeepSearch", "AML") inside
+     Arabic copy still render consistently. */
+  --ds-font-latin:       'Inter', system-ui, -apple-system, sans-serif;
+  --ds-font-arabic:      'IBM Plex Sans Arabic', 'Inter', system-ui, -apple-system, sans-serif;
+  --ds-font:             var(--ds-font-latin);
+  --ds-line-height-base: 1.5;
   --ds-sidebar-w:    220px;
   --ds-modal-w:      1128px;
   --ds-modal-h:      816px;
+  /* Multiplier for direction-sensitive transforms/offsets (hover slides,
+     slide-in animations). 1 in LTR, flipped to -1 under RTL below, so a
+     single declaration like `translateX(calc(3px * var(--ds-dir-sign)))`
+     mirrors correctly in both directions without a duplicate rule. */
+  --ds-dir-sign:     1;
+}
+
+/* Arabic ascenders/descenders need more vertical room than Latin text. */
+[dir='rtl'] {
+  --ds-font: var(--ds-font-arabic);
+  --ds-line-height-base: 1.7;
+  --ds-dir-sign: -1;
 }
 
 /* Reset */
@@ -43,5 +64,5 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: 1.5;
+  line-height: var(--ds-line-height-base);
 }

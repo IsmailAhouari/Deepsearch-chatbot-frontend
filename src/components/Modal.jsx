@@ -7,12 +7,14 @@ import MobileStepper from './MobileStepper.jsx';
 import LocaleSwitcher from './LocaleSwitcher.jsx';
 import { SCREENS } from '../flows/index.js';
 import { isMobileDevice } from '../lib/detectDevice.js';
+import { useDirection } from '../hooks/useDirection.js';
 import dsLogo from '../assets/icon.png';
 
 const IS_MOBILE = isMobileDevice();
 
 export default function Modal() {
   const { t }               = useTranslation('ui');
+  const dir                 = useDirection();
   const screen              = useSession((s) => s.screen);
   const toggleMobileSidebar = useSession((s) => s.toggleMobileSidebar);
   const mobileSidebarOpen   = useSession((s) => s.mobileSidebarOpen);
@@ -22,7 +24,7 @@ export default function Modal() {
   const showSidebar = screenDef?.showSidebar ?? false;
 
   return (
-    <div className="ds-overlay">
+    <div className="ds-overlay" dir={dir}>
       <div className={`ds-modal ${mobileSidebarOpen ? 'sidebar-open' : ''} ${IS_MOBILE ? 'ds-mobile' : 'ds-desktop'}`}>
         {/* Header */}
         <div className="ds-header">

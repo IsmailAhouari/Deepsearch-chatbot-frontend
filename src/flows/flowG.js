@@ -10,7 +10,7 @@ export const flowGScreens = [
     successMessageKey: 'flowG_intro.successMessage',
     successButtons: [
       { labelKey: 'flowG_intro.successButtons.sendRequest', target: 'flowG_function' },
-      { personalizable: true, action: { type: 'startDemo', sourceFlow: 'flowG', sourceScreen: 'flowG_intro' } },
+      { personalizable: true, demoCta: true, action: { type: 'startDemo', sourceFlow: 'flowG', sourceScreen: 'flowG_intro' } },
     ],
   },
   {
@@ -34,11 +34,8 @@ export const flowGScreens = [
     showSidebar: true,
     promptKey: 'flowG_geo.prompt',
     choices: [
-      { labelKey: 'flowG_geo.choices.switzerland',  target: 'flowG_need', capture: { key: 'geoArea', value: 'Svizzera' } },
-      { labelKey: 'flowG_geo.choices.italy',        target: 'flowG_need', capture: { key: 'geoArea', value: 'Italia' } },
-      { labelKey: 'flowG_geo.choices.europe',       target: 'flowG_need', capture: { key: 'geoArea', value: 'Europa' } },
-      { labelKey: 'flowG_geo.choices.middleEast',   target: 'flowG_need', capture: { key: 'geoArea', value: 'Medio Oriente' } },
-      { labelKey: 'flowG_geo.choices.global',       target: 'flowG_need', capture: { key: 'geoArea', value: 'Globale' } },
+      { labelKey: 'flowG_geo.choices.gcc',    target: 'flowG_need', capture: { key: 'geoArea', value: 'GCC' } },
+      { labelKey: 'flowG_geo.choices.global', target: 'flowG_need', capture: { key: 'geoArea', value: 'Global' } },
     ],
   },
   {

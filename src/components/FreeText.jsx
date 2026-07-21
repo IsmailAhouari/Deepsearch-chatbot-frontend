@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ButtonGrid from './ButtonGrid.jsx';
 
-export default function FreeText({ message, successMessage, successButtons, submitLabel = 'Invia', placeholder = 'Scrivi la tua richiesta...', onSubmit, onChoice }) {
+export default function FreeText({ message, successMessage, successButtons, submitLabel, placeholder, onSubmit, onChoice }) {
   const [text, setText] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 

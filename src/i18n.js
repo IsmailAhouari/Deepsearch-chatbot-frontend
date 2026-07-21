@@ -2,8 +2,8 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import HttpBackend from 'i18next-http-backend';
 
-const SUPPORTED_LOCALES = ['it', 'en'];
-const DEFAULT_LOCALE = 'it';
+const SUPPORTED_LOCALES = ['en', 'ar'];
+const DEFAULT_LOCALE = 'en';
 
 export function detectLocale() {
   const param = new URLSearchParams(window.location.search).get('lang');

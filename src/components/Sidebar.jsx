@@ -2,14 +2,17 @@
 import { useTranslation } from 'react-i18next';
 import { useSession } from '../store/sessionStore.js';
 import { getFunnelStep } from '../flows/index.js';
+import { resolveQualValue } from '../lib/resolveQualValue.js';
 
 // ── Qualification funnel steps ───────────────────────────────────────────────
+// `group` names the `qualification.*` catalog group used to resolve the
+// display value; `null` means the value is free text (rendered as-is).
 const FUNNEL_STEPS = [
-  { step: 1, labelKey: 'subject',    screen: 'funnel_subject', qualKey: 'subjectType' },
-  { step: 2, labelKey: 'motivation', screen: null,             qualKey: 'intent' },
-  { step: 3, labelKey: 'geo',        screen: 'funnel_geo',     qualKey: 'geoArea' },
-  { step: 4, labelKey: 'role',       screen: null,             qualKey: 'role' },
-  { step: 5, labelKey: 'contact',    screen: 'funnel_form',    qualKey: null },
+  { step: 1, labelKey: 'subject',    screen: 'funnel_subject', qualKey: 'subjectType', group: 'subjectType' },
+  { step: 2, labelKey: 'motivation', screen: null,             qualKey: 'intent',      group: 'intent' },
+  { step: 3, labelKey: 'geo',        screen: 'funnel_geo',     qualKey: 'geoArea',     group: null },
+  { step: 4, labelKey: 'role',       screen: null,             qualKey: 'role',        group: 'role' },
+  { step: 5, labelKey: 'contact',    screen: 'funnel_form',    qualKey: null,          group: null },
 ];
 
 // ── Exploration navigation items ─────────────────────────────────────────────
@@ -23,7 +26,7 @@ const EXPLORATION_NAV = [
 ];
 
 export default function Sidebar() {
-  const { t }            = useTranslation('ui');
+  const { t, i18n }      = useTranslation('ui');
   const screen           = useSession((s) => s.screen);
   const navigate         = useSession((s) => s.navigate);
   const navigateReset    = useSession((s) => s.navigateReset);
@@ -70,12 +73,12 @@ export default function Sidebar() {
 
             let targetScreen = item.screen;
             if (item.step === 2) {
-              targetScreen = qualification.subjectType === 'Persone'
+              targetScreen = qualification.subjectType === 'persone'
                 ? 'funnel_intent_person'
                 : 'funnel_intent_company';
             }
             if (item.step === 4) {
-              targetScreen = qualification.subjectType === 'Persone'
+              targetScreen = qualification.subjectType === 'persone'
                 ? 'funnel_role_person'
                 : 'funnel_role_company';
             }
@@ -94,7 +97,11 @@ export default function Sidebar() {
                 </span>
                 <span className="ds-step-label">{t(`sidebar.steps.${item.labelKey}`)}</span>
                 {isCompleted && !isActive && qualification[item.qualKey] && (
-                  <span className="ds-step-value">{qualification[item.qualKey]}</span>
+                  <span className="ds-step-value">
+                    {item.group
+                      ? resolveQualValue(t, i18n, item.group, qualification[item.qualKey])
+                      : qualification[item.qualKey]}
+                  </span>
                 )}
               </button>
             );
@@ -106,7 +113,7 @@ export default function Sidebar() {
             className="ds-sidebar-item"
             onClick={() => navigateReset('welcome')}
           >
-            <span className="ds-step-indicator">←</span>
+            <span className="ds-step-indicator ds-step-indicator--back" aria-hidden="true" />
             <span className="ds-step-label">{t('navigation.mainMenu')}</span>
           </button>
         </div>
@@ -148,7 +155,7 @@ export default function Sidebar() {
           className="ds-sidebar-item"
           onClick={() => navigateReset('welcome')}
         >
-          <span className="ds-step-indicator">←</span>
+          <span className="ds-step-indicator ds-step-indicator--back" aria-hidden="true" />
           <span className="ds-step-label">{t('navigation.mainMenu')}</span>
         </button>
       </div>

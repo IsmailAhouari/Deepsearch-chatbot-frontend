@@ -12,41 +12,71 @@ import FreeText from './FreeText.jsx';
 // ── Personalization helpers ─────────────────────────────────────────────────
 
 /**
+ * Affinity tables mapping a known qualification signal (role or intent ID)
+ * to the choice(s) it should boost, identified by normalized ID rather than
+ * translated label text — so reordering behaves identically in every
+ * language. Cross-axis entries (e.g. role 'legal' boosting the 'litigation'
+ * intent choice) mirror the correlations the previous substring-matching
+ * implementation produced, characterized before this rewrite.
+ */
+const ROLE_AFFINITY = {
+  HR:             [{ axis: 'role',   id: 'HR',               weight: 10 }],
+  compliance_aml: [{ axis: 'role',   id: 'compliance_aml',    weight: 10 }],
+  legal:          [{ axis: 'role',   id: 'legal',             weight: 8 },
+                    { axis: 'intent', id: 'litigation',        weight: 8 }],
+  security_risk:  [{ axis: 'role',   id: 'security_risk',     weight: 6 },
+                    { axis: 'intent', id: 'risk_analysis',     weight: 6 },
+                    { axis: 'intent', id: 'reputational_risk', weight: 6 },
+                    { axis: 'intent', id: 'counterparty_risk', weight: 6 }],
+};
+
+const INTENT_AFFINITY = {
+  aml:           [{ axis: 'intent', id: 'aml',           weight: 10 },
+                   { axis: 'role',   id: 'compliance_aml', weight: 10 }],
+  due_diligence: [{ axis: 'intent', id: 'due_diligence', weight: 8 }],
+  litigation:    [{ axis: 'intent', id: 'litigation',    weight: 8 },
+                   { axis: 'role',   id: 'legal',         weight: 8 }],
+};
+
+function choiceRoleId(choice) {
+  if (choice.capture?.key === 'role') return choice.capture.value;
+  return choice.action?.role ?? null;
+}
+
+function choiceIntentId(choice) {
+  if (choice.capture?.key === 'intent') return choice.capture.value;
+  return choice.action?.interest ?? null;
+}
+
+function choiceAffinityScore(choice, boosts) {
+  const roleId   = choiceRoleId(choice);
+  const intentId = choiceIntentId(choice);
+  let score = 0;
+  for (const { axis, id, weight } of boosts) {
+    if (axis === 'role' && roleId === id) score += weight;
+    if (axis === 'intent' && intentId === id) score += weight;
+  }
+  return score;
+}
+
+/**
  * Reorders choices to bubble up the most contextually relevant options
- * based on accumulated qualification state.
+ * based on accumulated qualification state. Operates on raw (untranslated)
+ * choice objects — call this before resolving labelKey → t(), so ordering
+ * depends only on normalized IDs and is identical across languages.
  */
 function reorderChoices(choices, qualification) {
   if (!choices?.length) return choices;
-  const role   = qualification.role?.toLowerCase()   || '';
-  const intent = qualification.intent?.toLowerCase() || '';
+  const boosts = [
+    ...(ROLE_AFFINITY[qualification.role] ?? []),
+    ...(INTENT_AFFINITY[qualification.intent] ?? []),
+  ];
+  if (boosts.length === 0) return choices;
 
-  return [...choices].sort((a, b) => {
-    let sA = 0, sB = 0;
-    const la = (a.label || '').toLowerCase();
-    const lb = (b.label || '').toLowerCase();
-
-    // Role-based boosting
-    if (role.includes('hr')         && la.includes('hr'))         sA += 10;
-    if (role.includes('hr')         && lb.includes('hr'))         sB += 10;
-    if (role.includes('compliance') && la.includes('compliance')) sA += 10;
-    if (role.includes('compliance') && lb.includes('compliance')) sB += 10;
-    if ((role.includes('legal') || role.includes('legale')) && (la.includes('lit') || la.includes('legal') || la.includes('legale'))) sA += 8;
-    if ((role.includes('legal') || role.includes('legale')) && (lb.includes('lit') || lb.includes('legal') || lb.includes('legale'))) sB += 8;
-    if (role.includes('security') && la.includes('risk')) sA += 6;
-    if (role.includes('security') && lb.includes('risk')) sB += 6;
-
-    // Intent-based boosting
-    if ((intent.includes('aml') || intent.includes('kyc')) && la.includes('aml')) sA += 10;
-    if ((intent.includes('aml') || intent.includes('kyc')) && lb.includes('aml')) sB += 10;
-    if ((intent.includes('due') || intent.includes('diligence')) && (la.includes('due') || la.includes('dd'))) sA += 8;
-    if ((intent.includes('due') || intent.includes('diligence')) && (lb.includes('due') || lb.includes('dd'))) sB += 8;
-    if (intent.includes('litigation') && la.includes('lit')) sA += 8;
-    if (intent.includes('litigation') && lb.includes('lit')) sB += 8;
-    if (intent.includes('fornitor') && la.includes('fornitor')) sA += 6;
-    if (intent.includes('fornitor') && lb.includes('fornitor')) sB += 6;
-
-    return sB - sA;
-  });
+  return choices
+    .map((choice, index) => ({ choice, index, score: choiceAffinityScore(choice, boosts) }))
+    .sort((a, b) => b.score - a.score || a.index - b.index)
+    .map(({ choice }) => choice);
 }
 
 /**
@@ -119,7 +149,7 @@ export default function Panel() {
       if (q.role) {
         navigate('funnel_form');
       } else {
-        navigate(q.subjectType === 'Persone' ? 'funnel_role_person' : 'funnel_role_company');
+        navigate(q.subjectType === 'persone' ? 'funnel_role_person' : 'funnel_role_company');
       }
       return;
     }
@@ -188,7 +218,7 @@ export default function Panel() {
                   >
                     <div className="ds-faq-a">{t(item.answerKey)}</div>
                     {isClickable && (
-                      <span className="ds-faq-chevron" style={{ color: 'var(--ds-accent)', fontWeight: 'bold', fontSize: '14px', opacity: 0.6 }}>›</span>
+                      <span className="ds-faq-chevron" style={{ color: 'var(--ds-accent)', fontWeight: 'bold', fontSize: '14px', opacity: 0.6 }} aria-hidden="true" />
                     )}
                   </div>
                 </div>
@@ -235,7 +265,7 @@ export default function Panel() {
             successMessage={screenDef.successMessageKey ? t(screenDef.successMessageKey) : screenDef.successMessage}
             successButtons={translatedSuccessButtons}
             submitLabel={screenDef.submitLabelKey ? t(screenDef.submitLabelKey) : (screenDef.submitLabel ?? t('ui:freetext.submit'))}
-            placeholder={screenDef.placeholderKey ? t(screenDef.placeholderKey) : screenDef.placeholder}
+            placeholder={screenDef.placeholderKey ? t(screenDef.placeholderKey) : (screenDef.placeholder ?? t('ui:freetext.placeholder'))}
             onSubmit={handleFreeTextSubmit}
             onChoice={handleChoice}
           />
@@ -263,18 +293,19 @@ export default function Panel() {
       : null
   ) ?? screenDef.choices ?? screenDef.ctas ?? [];
 
-  // Resolve translation keys on each button, then personalize
-  const translatedButtons = rawButtons.map(btn => ({
+  // Personalize: reorder by role/intent context — on the raw choices, before
+  // translation, so ordering depends on normalized IDs, not translated text.
+  const reordered = reorderChoices(rawButtons, qualification);
+
+  // Resolve translation keys on each button
+  const translatedButtons = reordered.map(btn => ({
     ...btn,
     label:    btn.labelKey    ? t(btn.labelKey)    : btn.label,
     sublabel: btn.sublabelKey ? t(btn.sublabelKey) : btn.sublabel,
   }));
 
-  // Personalize: reorder by role/intent context
-  const reordered = reorderChoices(translatedButtons, qualification);
-
   // Personalize: resolve CTA labels
-  const buttons = reordered.map(btn => ({
+  const buttons = translatedButtons.map(btn => ({
     ...btn,
     label: resolveCTALabel(btn, qualification, t),
   }));

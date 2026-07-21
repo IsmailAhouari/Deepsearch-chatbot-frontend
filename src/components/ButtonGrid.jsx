@@ -3,8 +3,7 @@ export default function ButtonGrid({ choices, onSelect, columns = 1, showSublabe
   return (
     <div className={`ds-button-grid ${columns === 2 ? 'ds-button-grid--2col' : ''}`}>
       {choices.map((choice, i) => {
-        const isDemoCta = choice.action?.type === 'startDemo'
-          && !!choice.label?.toLowerCase().includes('demo');
+        const isDemoCta = choice.demoCta === true;
         return (
           <button
             key={i}
@@ -19,7 +18,7 @@ export default function ButtonGrid({ choices, onSelect, columns = 1, showSublabe
                 <span className="ds-choice-sublabel">{choice.sublabel}</span>
               )}
             </div>
-            {isDemoCta && <span className="ds-choice-demo-arrow">→</span>}
+            {isDemoCta && <span className="ds-choice-demo-arrow" aria-hidden="true" />}
           </button>
         );
       })}

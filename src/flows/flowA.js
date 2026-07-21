@@ -11,8 +11,8 @@ export const flowAScreens = [
       promptKey: 'flowA.topChoices.prompt',
       captureKey: 'subjectType',
       options: [
-        { labelKey: 'qualification:subjectType.aziende', value: 'Aziende', icon: '◈' },
-        { labelKey: 'qualification:subjectType.persone', value: 'Persone', icon: '❖' },
+        { labelKey: 'qualification:subjectType.aziende', value: 'aziende', icon: '◈' },
+        { labelKey: 'qualification:subjectType.persone', value: 'persone', icon: '❖' },
       ],
     },
     promptKey: 'flowA.prompt',

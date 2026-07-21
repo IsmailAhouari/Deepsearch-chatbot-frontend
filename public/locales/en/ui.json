@@ -1,10 +1,16 @@
 {
   "navigation": {
-    "back": "← Back",
+    "back": "Back",
     "mainMenu": "Main Menu"
   },
+  "localeSwitcher": {
+    "ariaLabel": "Language switcher",
+    "switchToEnglish": "Switch to English",
+    "switchToArabic": "Switch to Arabic"
+  },
   "freetext": {
-    "submit": "Send"
+    "submit": "Send",
+    "placeholder": "Type your message..."
   },
   "sidebar": {
     "exploreLabel": "Explore",
@@ -33,7 +39,7 @@
     "aml": "Book AML Compliance Demo",
     "due_diligence": "Configure Due Diligence Demo",
     "litigation": "Book Litigation Demo",
-    "switzerland": "Demo for the Swiss Market",
+    "gcc": "Demo for the GCC Market",
     "background_check": "Background Check Demo",
     "executive": "Demo Executive",
     "requestDemo": "Request Demo"

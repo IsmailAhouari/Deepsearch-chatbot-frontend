@@ -21,14 +21,14 @@ export const flowBScreens = [
       promptKey: 'flowA.topChoices.prompt',
       captureKey: 'subjectType',
       options: [
-        { labelKey: 'qualification:subjectType.aziende', value: 'Aziende', icon: '◈' },
-        { labelKey: 'qualification:subjectType.persone', value: 'Persone', icon: '❖' },
+        { labelKey: 'qualification:subjectType.aziende', value: 'aziende', icon: '◈' },
+        { labelKey: 'qualification:subjectType.persone', value: 'persone', icon: '❖' },
       ],
     },
     promptKey: 'flowB.prompt',
     choicesBySubjectType: {
-      Aziende: aziendeChoices,
-      Persone: personeChoices,
+      aziende: aziendeChoices,
+      persone: personeChoices,
     },
     // Fallback when no subject type selected yet — show full Aziende list
     choices: aziendeChoices,
@@ -55,7 +55,7 @@ export const flowBScreens = [
     autoCapture: { sourceFlow: 'flowB', intent: 'due_diligence' },
     messageKey: 'flowB_dd_sub.message',
     ctas: [
-      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', interest: 'due_diligence', sourceFlow: 'flowB', sourceScreen: 'flowB_dd_sub' } },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, demoCta: true, action: { type: 'startDemo', interest: 'due_diligence', sourceFlow: 'flowB', sourceScreen: 'flowB_dd_sub' } },
       { labelKey: 'cta.contactTeam', target: 'flowF' },
     ],
   },
@@ -80,7 +80,7 @@ export const flowBScreens = [
     autoCapture: { sourceFlow: 'flowB', intent: 'litigation' },
     messageKey: 'flowB_lit_sub.message',
     ctas: [
-      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', interest: 'litigation', sourceFlow: 'flowB', sourceScreen: 'flowB_lit_sub' } },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, demoCta: true, action: { type: 'startDemo', interest: 'litigation', sourceFlow: 'flowB', sourceScreen: 'flowB_lit_sub' } },
       { labelKey: 'cta.confidentialContact', target: 'flowF' },
     ],
   },
@@ -91,7 +91,7 @@ export const flowBScreens = [
     autoCapture: { sourceFlow: 'flowB', intent: 'reputational_risk' },
     messageKey: 'flowB_rep.message',
     ctas: [
-      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', interest: 'reputational_risk', sourceFlow: 'flowB', sourceScreen: 'flowB_rep' } },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, demoCta: true, action: { type: 'startDemo', interest: 'reputational_risk', sourceFlow: 'flowB', sourceScreen: 'flowB_rep' } },
       { labelKey: 'cta.contactTeam', target: 'flowF' },
     ],
   },
@@ -102,7 +102,7 @@ export const flowBScreens = [
     autoCapture: { sourceFlow: 'flowB', intent: 'aml' },
     messageKey: 'flowB_aml.message',
     ctas: [
-      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', interest: 'aml', sourceFlow: 'flowB', sourceScreen: 'flowB_aml' } },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, demoCta: true, action: { type: 'startDemo', interest: 'aml', sourceFlow: 'flowB', sourceScreen: 'flowB_aml' } },
       { labelKey: 'cta.contactTeam', target: 'flowF' },
     ],
   },
@@ -113,7 +113,7 @@ export const flowBScreens = [
     autoCapture: { sourceFlow: 'flowB', intent: 'supplier_check' },
     messageKey: 'flowB_supplier.message',
     ctas: [
-      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', interest: 'counterparty_risk', sourceFlow: 'flowB', sourceScreen: 'flowB_supplier' } },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, demoCta: true, action: { type: 'startDemo', interest: 'counterparty_risk', sourceFlow: 'flowB', sourceScreen: 'flowB_supplier' } },
       { labelKey: 'cta.contactTeam', target: 'flowF' },
     ],
   },
@@ -124,7 +124,7 @@ export const flowBScreens = [
     autoCapture: { sourceFlow: 'flowB', intent: 'corporate_investigations' },
     messageKey: 'flowB_other.message',
     ctas: [
-      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', interest: 'corporate_investigations', sourceFlow: 'flowB', sourceScreen: 'flowB_other' } },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, demoCta: true, action: { type: 'startDemo', interest: 'corporate_investigations', sourceFlow: 'flowB', sourceScreen: 'flowB_other' } },
       { labelKey: 'cta.contactTeam', target: 'flowF' },
     ],
   },

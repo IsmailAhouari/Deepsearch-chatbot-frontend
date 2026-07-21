@@ -81,7 +81,7 @@ export const useSession = create((set) => ({
       qualificationHistory: [],
     });
     // Fire-and-forget: create backend session; store the ID when it resolves.
-    initSession({ locale: i18n.language || 'it' }).then((data) => {
+    initSession({ locale: i18n.language || 'en' }).then((data) => {
       if (data?.session_id) {
         set({ backendSessionId: data.session_id });
       }
@@ -144,7 +144,7 @@ export const useSession = create((set) => ({
     });
 
     if (needsNewSession) {
-      initSession({ locale: i18n.language || 'it' }).then((data) => {
+      initSession({ locale: i18n.language || 'en' }).then((data) => {
         if (data?.session_id) {
           set({ backendSessionId: data.session_id });
         }
@@ -195,7 +195,7 @@ export const useSession = create((set) => ({
     });
 
     if (needsNewSession) {
-      initSession({ locale: i18n.language || 'it' }).then((data) => {
+      initSession({ locale: i18n.language || 'en' }).then((data) => {
         if (data?.session_id) {
           set({ backendSessionId: data.session_id });
         }
@@ -266,9 +266,9 @@ export const useSession = create((set) => ({
     // Contextual bypass: skip steps already answered
     let target;
     if (!q.subjectType)       target = 'funnel_subject';
-    else if (!q.intent)       target = q.subjectType === 'Persone' ? 'funnel_intent_person' : 'funnel_intent_company';
+    else if (!q.intent)       target = q.subjectType === 'persone' ? 'funnel_intent_person' : 'funnel_intent_company';
     else if (!q.geoArea)      target = 'funnel_geo';
-    else if (!q.role)         target = q.subjectType === 'Persone' ? 'funnel_role_person' : 'funnel_role_company';
+    else if (!q.role)         target = q.subjectType === 'persone' ? 'funnel_role_person' : 'funnel_role_company';
     else                      target = 'funnel_form';
 
     return {

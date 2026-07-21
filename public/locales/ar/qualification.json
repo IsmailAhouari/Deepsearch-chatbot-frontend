@@ -1,0 +1,53 @@
+{
+  "subjectType": {
+    "aziende": "الشركات",
+    "persone": "الأفراد"
+  },
+  "intent": {
+    "due_diligence": "العناية الواجبة",
+    "partner_selection": "اختيار الشريك التجاري",
+    "aml": "تحليل مكافحة غسل الأموال",
+    "risk_analysis": "تحليل المخاطر",
+    "supplier_check": "التحقق من الموردين",
+    "litigation": "استخبارات التقاضي",
+    "reputational_risk": "المخاطر السمعية",
+    "hiring": "توظيف الموظفين",
+    "other": "أخرى",
+    "counterparty_risk": "مخاطر الطرف المقابل",
+    "corporate_investigations": "تحقيقات الشركات"
+  },
+  "role": {
+    "security_risk": "الأمن / المخاطر",
+    "legal": "الشؤون القانونية / التقاضي",
+    "compliance_aml": "الامتثال / مكافحة غسل الأموال",
+    "HR": "الموارد البشرية",
+    "management": "الإدارة / مجلس الإدارة",
+    "investor": "المستثمر / الصندوق",
+    "other": "أخرى",
+    "risk_management": "إدارة المخاطر",
+    "investigations": "التحقيقات"
+  },
+  "contactReason": {
+    "commercial": "تجاري",
+    "partnership": "شراكة",
+    "platform_demo": "عرض توضيحي للمنصة",
+    "technical_request": "طلب فني"
+  },
+  "needType": {
+    "immediate_project": "مشروع فوري",
+    "platform_evaluation": "تقييم المنصة",
+    "internal_analysis": "تحليل داخلي",
+    "commercial_info": "معلومات تجارية"
+  },
+  "subContext": {
+    "supplier": "المورّد",
+    "client": "العميل",
+    "partner": "الشريك",
+    "investment_target": "الهدف الاستثماري",
+    "civil_litigation": "التقاضي المدني",
+    "commercial_dispute": "نزاع تجاري",
+    "asset_tracing": "تتبع الأصول",
+    "pre_litigation": "ما قبل التقاضي",
+    "other": "أخرى"
+  }
+}

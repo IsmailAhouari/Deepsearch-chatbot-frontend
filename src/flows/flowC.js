@@ -9,8 +9,8 @@ export const flowCScreens = [
       promptKey: 'flowA.topChoices.prompt',
       captureKey: 'subjectType',
       options: [
-        { labelKey: 'qualification:subjectType.aziende', value: 'Aziende', icon: '◈' },
-        { labelKey: 'qualification:subjectType.persone', value: 'Persone', icon: '❖' },
+        { labelKey: 'qualification:subjectType.aziende', value: 'aziende', icon: '◈' },
+        { labelKey: 'qualification:subjectType.persone', value: 'persone', icon: '❖' },
       ],
     },
     promptKey: 'flowC.prompt',
@@ -31,7 +31,7 @@ export const flowCScreens = [
     autoCapture: { sourceFlow: 'flowC', role: 'security_risk' },
     messageKey: 'flowC_risk.message',
     ctas: [
-      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', role: 'security_risk', selectedPersona: 'Security / Risk', selectedPersonaLabel: 'Security / Risk', sourceFlow: 'flowC', sourceScreen: 'flowC_risk' } },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, demoCta: true, action: { type: 'startDemo', role: 'security_risk', selectedPersona: 'Security / Risk', selectedPersonaLabel: 'Security / Risk', sourceFlow: 'flowC', sourceScreen: 'flowC_risk' } },
       { labelKey: 'cta.contactTeam', target: 'flowF' },
     ],
   },
@@ -42,7 +42,7 @@ export const flowCScreens = [
     autoCapture: { sourceFlow: 'flowC', role: 'legal' },
     messageKey: 'flowC_legal.message',
     ctas: [
-      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', role: 'legal', selectedPersona: 'Legale / Contenzioso', selectedPersonaLabel: 'Professionisti legali', sourceFlow: 'flowC', sourceScreen: 'flowC_legal' } },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, demoCta: true, action: { type: 'startDemo', role: 'legal', selectedPersona: 'Legale / Contenzioso', selectedPersonaLabel: 'Professionisti legali', sourceFlow: 'flowC', sourceScreen: 'flowC_legal' } },
       { labelKey: 'cta.contactTeam', target: 'flowF' },
     ],
   },
@@ -53,7 +53,7 @@ export const flowCScreens = [
     autoCapture: { sourceFlow: 'flowC', role: 'compliance_aml' },
     messageKey: 'flowC_compliance.message',
     ctas: [
-      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', role: 'compliance_aml', selectedPersona: 'Compliance / AML', selectedPersonaLabel: 'Compliance / AML', sourceFlow: 'flowC', sourceScreen: 'flowC_compliance' } },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, demoCta: true, action: { type: 'startDemo', role: 'compliance_aml', selectedPersona: 'Compliance / AML', selectedPersonaLabel: 'Compliance / AML', sourceFlow: 'flowC', sourceScreen: 'flowC_compliance' } },
       { labelKey: 'cta.commercialContact', target: 'flowF' },
     ],
   },
@@ -64,7 +64,7 @@ export const flowCScreens = [
     autoCapture: { sourceFlow: 'flowC', role: 'HR' },
     messageKey: 'flowC_hr.message',
     ctas: [
-      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', role: 'HR', selectedPersona: 'HR', selectedPersonaLabel: 'HR', sourceFlow: 'flowC', sourceScreen: 'flowC_hr' } },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, demoCta: true, action: { type: 'startDemo', role: 'HR', selectedPersona: 'HR', selectedPersonaLabel: 'HR', sourceFlow: 'flowC', sourceScreen: 'flowC_hr' } },
       { labelKey: 'cta.contactTeam', target: 'flowF' },
     ],
   },
@@ -75,7 +75,7 @@ export const flowCScreens = [
     autoCapture: { sourceFlow: 'flowC', role: 'management' },
     messageKey: 'flowC_board.message',
     ctas: [
-      { labelKey: 'ui:cta.executive', personalizable: true, action: { type: 'startDemo', role: 'management', selectedPersona: 'Direzione / Board', selectedPersonaLabel: 'Direzione / Board', sourceFlow: 'flowC', sourceScreen: 'flowC_board' } },
+      { labelKey: 'ui:cta.executive', personalizable: true, demoCta: true, action: { type: 'startDemo', role: 'management', selectedPersona: 'Direzione / Board', selectedPersonaLabel: 'Direzione / Board', sourceFlow: 'flowC', sourceScreen: 'flowC_board' } },
       { labelKey: 'cta.contactTeam', target: 'flowF' },
     ],
   },
@@ -86,7 +86,7 @@ export const flowCScreens = [
     autoCapture: { sourceFlow: 'flowC', role: 'investor' },
     messageKey: 'flowC_fund.message',
     ctas: [
-      { labelKey: 'ui:cta.requestDemo', personalizable: true, action: { type: 'startDemo', role: 'investor', selectedPersona: 'Investitore / Fondo', selectedPersonaLabel: 'Investitore / Fondo', sourceFlow: 'flowC', sourceScreen: 'flowC_fund' } },
+      { labelKey: 'ui:cta.requestDemo', personalizable: true, demoCta: true, action: { type: 'startDemo', role: 'investor', selectedPersona: 'Investitore / Fondo', selectedPersonaLabel: 'Investitore / Fondo', sourceFlow: 'flowC', sourceScreen: 'flowC_fund' } },
       { labelKey: 'cta.contactTeam', target: 'flowF' },
     ],
   },

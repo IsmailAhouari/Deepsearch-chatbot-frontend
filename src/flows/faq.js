@@ -38,7 +38,7 @@ export const faqScreens = [
     choices: [
       { labelKey: 'welcome.choices.platform_overview.label', target: 'flowA' },
       { labelKey: 'welcome.choices.use_cases.label', target: 'flowB' },
-      { personalizable: true, action: { type: 'startDemo' } },
+      { personalizable: true, demoCta: true, action: { type: 'startDemo' } },
       { labelKey: 'ui:sidebar.nav.flowF', target: 'flowF' },
     ],
   },

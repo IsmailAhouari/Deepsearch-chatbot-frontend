@@ -1,0 +1,83 @@
+{
+  "navigation": {
+    "back": "رجوع",
+    "mainMenu": "القائمة الرئيسية"
+  },
+  "localeSwitcher": {
+    "ariaLabel": "مبدّل اللغة",
+    "switchToEnglish": "التبديل إلى الإنجليزية",
+    "switchToArabic": "التبديل إلى العربية"
+  },
+  "freetext": {
+    "submit": "إرسال",
+    "placeholder": "اكتب رسالتك..."
+  },
+  "sidebar": {
+    "exploreLabel": "استكشاف",
+    "configLabel": "العرض التوضيحي قيد الإعداد",
+    "visitedTooltip": "تمت الزيارة",
+    "nav": {
+      "flowA": "نظرة عامة على المنصة",
+      "flowB": "حالات الاستخدام",
+      "flowC": "لمن هذا الحل",
+      "flowF": "تواصل مع الفريق",
+      "flowG_intro": "أخرى",
+      "faq": "الأسئلة الشائعة"
+    },
+    "steps": {
+      "subject": "الموضوع",
+      "motivation": "الدافع",
+      "geo": "المنطقة الجغرافية",
+      "role": "الدور",
+      "contact": "التواصل"
+    }
+  },
+  "header": {
+    "brandSub": "واجهة استخبارات لتحليل المخاطر"
+  },
+  "cta": {
+    "aml": "احجز عرضاً توضيحياً لامتثال مكافحة غسل الأموال",
+    "due_diligence": "تخصيص عرض توضيحي للعناية الواجبة",
+    "litigation": "احجز عرضاً توضيحياً للتقاضي",
+    "gcc": "عرض توضيحي لسوق دول الخليج",
+    "background_check": "عرض توضيحي للتحقق من الخلفية",
+    "executive": "عرض توضيحي تنفيذي",
+    "requestDemo": "طلب عرض توضيحي"
+  },
+  "errors": {
+    "email": {
+      "invalid": "عنوان بريد إلكتروني غير صالح — تحقق من الصيغة (مثال: name@company.com)"
+    },
+    "submit": {
+      "generic": "فشل الإرسال. يرجى المحاولة مرة أخرى أو التواصل معنا مباشرة."
+    }
+  },
+  "demoForm": {
+    "submit": {
+      "demo": "طلب عرض توضيحي خاص",
+      "contact": "إرسال الرسالة",
+      "generic": "إرسال الطلب",
+      "loading": "جارٍ الإرسال..."
+    },
+    "qualSummary": {
+      "title": "ملخص التأهيل",
+      "subjectType": "الموضوع",
+      "intent": "الدافع",
+      "role": "الوظيفة",
+      "geoArea": "المنطقة الجغرافية",
+      "contactReason": "سبب التواصل",
+      "needType": "الاحتياج",
+      "subContext": "سياق محدد"
+    },
+    "fields": {
+      "nome": { "label": "الاسم *", "placeholder": "الاسم" },
+      "azienda": { "label": "الشركة *", "placeholder": "الشركة" },
+      "ruolo": { "label": "الوظيفة *", "placeholder": "الوظيفة" },
+      "email": { "label": "البريد الإلكتروني *", "placeholder": "email@company.com", "placeholderShort": "البريد الإلكتروني" },
+      "telefono": { "label": "الهاتف", "placeholder": "الهاتف" },
+      "paese": { "label": "الدولة", "placeholder": "الدولة" },
+      "note": { "label": "ملاحظات", "placeholder": "معلومات إضافية (اختياري)" },
+      "messaggio": { "label": "الرسالة", "placeholder": "صف طلبك..." }
+    }
+  }
+}

@@ -26,6 +26,7 @@ export const welcomeScreen = {
     {
       labelKey:    'welcome.choices.demo_request.label',
       sublabelKey: 'welcome.choices.demo_request.sublabel',
+      demoCta: true,
       action: { type: 'startDemo' },
       icon: '◆',
     },

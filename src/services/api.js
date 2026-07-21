@@ -11,7 +11,7 @@ const headers = { 'Content-Type': 'application/json' };
  * Initialize a backend session when the chatbot widget opens.
  * Returns { session_id, created_at } or null on network failure.
  */
-export async function initSession({ locale = 'it', sourceFlow = null } = {}) {
+export async function initSession({ locale = 'en', sourceFlow = null } = {}) {
   try {
     const res = await fetch(`${BASE}/api/v1/sessions`, {
       method: 'POST',

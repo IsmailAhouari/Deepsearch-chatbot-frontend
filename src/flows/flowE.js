@@ -8,7 +8,7 @@ export const flowEScreens = [
     choices: [
       { labelKey: 'flowE.choices.commercial', target: 'flowF' },
       { labelKey: 'flowE.choices.information', target: 'flowF' },
-      { personalizable: true, action: { type: 'startDemo' } },
+      { personalizable: true, demoCta: true, action: { type: 'startDemo' } },
     ],
   },
 ];
