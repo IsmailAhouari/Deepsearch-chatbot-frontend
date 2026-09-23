@@ -65,6 +65,7 @@ export default function DemoForm({ formType, onSubmit }) {
     if (!form.azienda?.trim()) newErrors.azienda = true;
     if (!form.email?.trim())   newErrors.email   = true;
     if (formType === 'demo' && !form.ruolo?.trim()) newErrors.ruolo = true;
+    if (formType === 'contact' && !form.telefono?.trim()) newErrors.telefono = true;
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -210,7 +211,7 @@ export default function DemoForm({ formType, onSubmit }) {
         <div className="ds-form-row">
           <div className="ds-form-field">
             <label>{t('demoForm.fields.telefono.label')}</label>
-            <input name="telefono" type="tel" placeholder={t('demoForm.fields.telefono.placeholder')} value={form.telefono || ''} onChange={handleChange} disabled={isSubmitting} />
+            <input name="telefono" type="tel" placeholder={t('demoForm.fields.telefono.placeholder')} value={form.telefono || ''} onChange={handleChange} className={errors.telefono ? 'ds-field-error' : ''} disabled={isSubmitting} />
           </div>
           <div className="ds-form-field">
             <label>{t('demoForm.fields.paese.label')}</label>
