@@ -68,7 +68,7 @@
       "azienda": { "label": "Company *", "placeholder": "Company" },
       "ruolo": { "label": "Role *", "placeholder": "Role" },
       "email": { "label": "Email *", "placeholder": "email@company.com", "placeholderShort": "Email" },
-      "telefono": { "label": "Phone", "placeholder": "Phone" },
+      "telefono": { "label": "Phone *", "placeholder": "Phone" },
       "paese": { "label": "Country", "placeholder": "Country" },
       "note": { "label": "Notes", "placeholder": "Additional information (optional)" },
       "messaggio": { "label": "Message", "placeholder": "Describe your request..." }
